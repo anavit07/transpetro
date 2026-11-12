@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rota Instrumentação · Transpetro 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F5F3;--card:#FFFFFF;--ink:#23262B;--muted:#5F6670;--line:#E3E4E1;--acc:#C2560C;--acc2:#F07A1F;--accbg:#FDF0E6;--ok:#1F7A4D;--okbg:#E6F4EC;--bad:#B3261E;--badbg:#FBEAE8;--warn:#8A5A00;--warnbg:#FFF4D6;--esp:#C2560C;--por:#2F5FA8;--mat:#2E7D5B;--r:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:5;background:rgba(245,245,243,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topin{max-width:760px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--acc);display:grid;place-items:center;flex:none}
+.brand b{display:block;font-size:15px;line-height:1.2}.brand span{font-size:12px;color:var(--muted)}
+main{max-width:760px;margin:0 auto;padding:14px 14px 96px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:0 0 12px}
+h2{font-size:19px;margin:0 0 6px}h3{font-size:16px;margin:4px 0 8px}h4{font-size:14px;margin:12px 0 2px;color:var(--acc)}
+.sec{margin:18px 4px 8px;font-size:15px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+p{margin:6px 0}.muted{color:var(--muted)}.small{font-size:14px}.center{text-align:center}
+.eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.big{font-size:38px;font-weight:700;color:var(--acc);line-height:1.15;margin:2px 0}
+.hero{border-top:4px solid var(--acc2)}
+.row{display:flex;align-items:center;gap:8px}.between{justify-content:space-between}.wrap{flex-wrap:wrap}.gap{gap:8px;margin:10px 0}.grow{flex:1;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid2>.card{margin:0}
+.grid2+.card,.card+.grid2,.grid2+.grid2{margin-top:12px}
+.stat .num{font-size:28px;font-weight:700}
+.bar{height:8px;background:#ECEDEA;border-radius:8px;overflow:hidden;margin:6px 0 12px}.bar span{display:block;height:100%;background:var(--acc2);border-radius:8px;transition:width .3s}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:12px 16px;font:600 15px Inter,system-ui,sans-serif;min-height:46px;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:default}.btn.primary{background:var(--acc);border-color:var(--acc);color:#fff}.btn.sm{min-height:36px;padding:6px 12px;font-size:14px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--muted)}.btn.full{width:100%;margin-top:12px}.btn.danger{color:var(--bad);border-color:#EBC3BF}.btn.warnb{background:var(--warnbg);border-color:#EAD39A}
+.chip{display:inline-block;font-size:13px;padding:3px 10px;border-radius:999px;background:#F0F1EE;color:var(--ink);border:1px solid var(--line);margin:2px 2px 2px 0;font-family:inherit}
+button.chip{cursor:pointer;min-height:34px}
+.chip.ok{background:var(--okbg);color:var(--ok);border-color:#BFE0CC}.chip.bad{background:var(--badbg);color:var(--bad);border-color:#F0C6C2}.chip.warn{background:var(--warnbg);color:var(--warn);border-color:#EAD39A}
+.chip.esp{background:var(--accbg);color:var(--acc);border-color:#F3CFB3}.chip.por{background:#E8EFF9;color:var(--por);border-color:#C6D5EE}.chip.mat{background:#E5F2EC;color:var(--mat);border-color:#BFDCCD}
+.chip.sim{background:#F3E8FB;color:#6B3A8C;border-color:#DCC6EC}.chip.simulado{background:var(--accbg);color:var(--acc)}.chip.prova{background:var(--ink);color:#fff}.chip.descanso{background:var(--okbg);color:var(--ok)}
+.plan{font-size:15px}
+label{display:block;font-size:14px;font-weight:600;margin:10px 0 0}
+select,textarea,input[type=file]{width:100%;margin-top:4px;font:15px Inter,system-ui,sans-serif;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);min-height:44px}
+textarea{min-height:110px}
+label.check{display:flex;gap:10px;align-items:flex-start;font-weight:500;margin:10px 0}label.check input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--acc)}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px}.seg button{flex:1;min-width:90px;min-height:42px;border:1px solid var(--line);background:#fff;border-radius:10px;font:600 14px Inter,system-ui,sans-serif;color:var(--ink);cursor:pointer}.seg button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.qrow,.trow{display:flex;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line);font-size:14px}.qrow:first-of-type,.trow:first-child{border-top:0}
+.tag{font-size:12px;font-weight:700;background:#F0F1EE;border-radius:6px;padding:2px 7px;white-space:nowrap}.tag.sim{background:#F3E8FB;color:#6B3A8C}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:8px}.clock{font-weight:700;font-variant-numeric:tabular-nums;color:var(--acc);font-size:18px;min-width:56px;text-align:right}
+.enun{font-size:16px;line-height:1.6;margin:14px 0;white-space:normal}
+mark{background:#FFE2C7;color:inherit;border-radius:4px;padding:0 2px}
+.alts{display:flex;flex-direction:column;gap:8px;margin:8px 0}
+.alt{text-align:left;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;font:15px/1.45 Inter,system-ui,sans-serif;color:var(--ink);cursor:pointer;min-height:48px;width:100%;margin:4px 0}
+.alt.sel{border-color:var(--acc);background:var(--accbg)}.alt.right{border-color:var(--ok);background:var(--okbg)}.alt.wrong{border-color:var(--bad);background:var(--badbg)}.alt:disabled{cursor:default;opacity:1}
+.lei{background:#FAFAF8;border:1px dashed #D7D8D4;border-radius:12px;padding:12px;margin-top:8px}
+.fb{border-radius:12px;padding:12px 14px;margin:12px 0}.fb.ok{background:var(--okbg);color:#14532D}.fb.bad{background:var(--badbg);color:#7F1D1D}.dica{margin-top:6px;font-size:14px}
+.okt{color:var(--ok);font-weight:600}.badt{color:var(--bad);font-weight:600}
+.exp p{font-size:15px}
+details>summary{cursor:pointer;font-weight:600;padding:4px 0;list-style-position:outside}
+details.rev{border-top:1px solid var(--line);padding:8px 0}
+.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:6px;margin:12px 0}.navgrid button{min-height:42px;border:1px solid var(--line);background:#fff;border-radius:8px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;color:var(--ink)}
+.navgrid .done{background:#ECEDEA}.navgrid .mk{border-color:#D9A400;box-shadow:inset 0 -3px 0 #D9A400}.navgrid .cur{background:var(--ink);color:#fff}
+.opt{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--line);padding:12px 0}.opt .btn{align-self:flex-start;margin-top:6px}
+.day.today{border:2px solid var(--acc2)}.day.past{opacity:.8}.day.simulado{background:#FFFBF7}.day.prova{background:var(--ink);color:#fff}.day.prova .muted{color:#ddd}
+.revs{margin:6px 0}
+.rv{padding:8px 0;border-top:1px solid var(--line)}.rv:first-of-type{border-top:0}
+.menu{display:flex;flex-direction:column;padding:14px 0;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}.menu:first-of-type{border-top:0}
+.fcard summary{display:flex;flex-direction:column;gap:6px}.fcard code{font:600 15px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--accbg);color:#7A3608;padding:6px 8px;border-radius:8px;white-space:normal}
+dl{margin:10px 0 0}dt{font-size:13px;font-weight:700;color:var(--muted);margin-top:8px}dd{margin:2px 0 0;font-size:15px}
+.spark{display:flex;gap:8px;align-items:flex-end;height:110px;padding-top:6px}.sb{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}.sb span{width:100%;background:#F3CFB3;border-radius:6px 6px 0 0;min-height:2px}.sb span.full{background:var(--acc)}.sb small{font-size:12px;color:var(--muted);margin-top:4px}
+.hide{display:none}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:6}
+nav.tabs .in{display:flex;max-width:760px;width:100%}
+nav.tabs a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px 10px;font-size:12px;font-weight:600;color:var(--muted);text-decoration:none;min-height:58px}
+nav.tabs a svg{width:22px;height:22px}nav.tabs a.on{color:var(--acc)}
+#toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:9;max-width:90vw}
+#toast.show{opacity:1;transform:translateX(-50%)}
+#dlg{position:fixed;inset:0;background:rgba(20,22,25,.45);display:none;align-items:center;justify-content:center;z-index:10;padding:16px}#dlg.show{display:flex}
+.dbox{background:#fff;border-radius:16px;padding:18px;max-width:420px;width:100%}
+@media (max-width:380px){.big{font-size:32px}.grid2{gap:8px}}
+@media (min-width:700px){main{padding-top:20px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <div class="logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 13l4-4"/><path d="M12 3v2"/></svg></div>
+  <div class="brand"><b>Rota Instrumentação</b><span>Transpetro 2026 · Ênfase 10 · Polo Sul</span></div>
+</div></header>
+<main id="app"></main>
+<nav class="tabs" aria-label="Navegação"><div class="in">
+  <a href="#inicio" data-v="inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Início</a>
+  <a href="#questoes" data-v="questoes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Questões</a>
+  <a href="#cafe" data-v="cafe" onclick="event.preventDefault();iniciarCafe()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M12 3v3"/></svg>Café 10'</a>
+  <a href="#calendario" data-v="calendario"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendário</a>
+  <a href="#mais" data-v="mais"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Mais</a>
+</div></nav>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="dlg" role="dialog" aria-modal="true"></div>
+<script>
+/* ================================================================
+   BANCO DE QUESTÕES
+   - Questões originais: transcritas dos cadernos enviados, com o
+     gabarito oficial conferido. Campo "orig": prova + número.
+   - "simulada: true" = QUESTÃO SIMULADA — ESTILO CESGRANRIO (inédita,
+     criada para cobrir itens do edital 2026 que nunca caíram).
+   - Para acrescentar questões: copie um bloco e preencha os campos.
+   Campos: id, orig, disc ('esp'|'por'|'mat'), ass (código do assunto),
+   sub, tipo ('conceito'|'calculo'|'afirmativas'), dif (1 fácil, 2 média,
+   3 difícil), enun, alts [A..E], gab, exp {cobra, reconhecer, resolver,
+   armadilha}, dica, chaves (palavras-chave do enunciado)
+   ================================================================ */
+const BANK = [
+// ---------------- METROLOGIA ----------------
+{id:"P11-21",orig:"P11 Q21",disc:"esp",ass:"MET",sub:"Rastreabilidade",tipo:"conceito",dif:1,
+enun:"Tendo todas as incertezas determinadas, o valor de um padrão que consiste em poder relacionar-se a referências determinadas, geralmente padrões nacionais ou internacionais, por intermédio de uma cadeia ininterrupta das comparações, é denominado",
+alts:["acompanhamento","investigação","apuração","rastreabilidade","pesquisa"],gab:"D",
+chaves:["cadeia ininterrupta","padrões nacionais ou internacionais"],
+exp:{cobra:"A definição de rastreabilidade metrológica (VIM).",reconhecer:"'Cadeia ininterrupta de comparações' + 'padrão nacional/internacional' é sempre rastreabilidade.",resolver:"Rastreabilidade = o resultado pode ser ligado a um padrão de referência por uma cadeia documentada e contínua de calibrações, cada uma com sua incerteza.",armadilha:"As outras palavras são do vocabulário comum, não do VIM. A banca repetiu esta definição em 2018 (P18 Q22)."},
+dica:"Viu 'cadeia ininterrupta'? Marque rastreabilidade."},
+{id:"P11-23",orig:"P11 Q23",disc:"esp",ass:"MET",sub:"Critério de aceitação",tipo:"conceito",dif:1,
+enun:"Considerando que CA é Critério de Aceitação de Equipamento na análise de certificação de calibração de um equipamento, é correto afirmar que",
+alts:["|erro| − |incerteza| = CA","|erro| − |incerteza| ≤ CA","|erro| + |incerteza| = CA","|erro| + |incerteza| ≤ CA","|erro| + |incerteza| ≥ CA"],gab:"D",
+chaves:["Critério de Aceitação","certificado de calibração"],
+exp:{cobra:"A regra para aprovar um instrumento a partir do certificado de calibração.",reconhecer:"Aparece 'CA', 'certificado de calibração' e 'aceitação'.",resolver:"No pior caso, o erro real pode ser o erro encontrado mais a incerteza. Por isso soma-se: |erro| + |incerteza|. O instrumento é aprovado se essa soma não passar do limite: ≤ CA.",armadilha:"Subtrair a incerteza deixaria passar instrumento ruim. O sinal '=' é muito restritivo e o '≥' inverte a lógica."},
+dica:"Aceitação = soma tudo e tem que caber no limite: erro + incerteza ≤ CA."},
+{id:"P18-21",orig:"P18 Q21",disc:"esp",ass:"MET",sub:"Incerteza e desvio padrão",tipo:"calculo",dif:2,
+enun:"Durante o processo de calibração de um instrumento de medição de corrente, obteve-se um limite de erro estatístico igual a 0,003 A, para um intervalo com coeficiente de confiança de 99,7%. Qual o valor aproximado do desvio padrão do valor médio desse processo de calibração?",
+alts:["0,0005 A","0,001 A","0,002 A","0,003 A","0,015 A"],gab:"B",
+chaves:["99,7%","desvio padrão","limite de erro"],
+exp:{cobra:"Relação entre nível de confiança e número de desvios padrão (distribuição normal).",reconhecer:"Os números 68%, 95% e 99,7% indicam 1σ, 2σ e 3σ.",resolver:"99,7% corresponde a ±3σ. Então 3σ = 0,003 A → σ = 0,003 ÷ 3 = 0,001 A.",armadilha:"Usar 2σ dá 0,0015 (não existe) e marcar o próprio limite (0,003) é esquecer de dividir."},
+dica:"68 – 95 – 99,7 = 1σ – 2σ – 3σ."},
+{id:"P18-23",orig:"P18 Q23",disc:"esp",ass:"MET",sub:"Algarismos significativos",tipo:"calculo",dif:2,
+enun:"Um técnico fez a medição de comprimento de três barras distintas, sendo cada medida feita com um instrumento diferente. As medidas obtidas foram 123,7 mm, 257,94 mm e 33,426 mm. Qual o valor aproximado para a soma das medidas dessas três barras, em mm?",
+alts:["415","415,1","415,06","415,07","415,066"],gab:"B",
+chaves:["instrumento diferente","valor aproximado","soma"],
+exp:{cobra:"Arredondamento de uma soma de medidas com resoluções diferentes.",reconhecer:"Medidas com quantidades diferentes de casas decimais sendo somadas.",resolver:"Soma exata: 123,7 + 257,94 + 33,426 = 415,066. Na soma, o resultado fica com as casas decimais da medida menos precisa (123,7 → 1 casa). Resultado: 415,1 mm.",armadilha:"415,066 é a conta 'da calculadora', mas aparenta uma precisão que a medida de 123,7 não tem."},
+dica:"Soma e subtração: fica o menor número de casas decimais."},
+{id:"T23-22",orig:"T23 Q22",disc:"esp",ass:"MET",sub:"Incerteza combinada",tipo:"calculo",dif:2,
+enun:"Na Tabela abaixo, são listados os valores e as incertezas padrão das variáveis a, b e c.\na = 3,75 (incerteza padrão 0,1)\nb = 5,05 (incerteza padrão 0,2)\nc = 2,47 (incerteza padrão 0,2)\nQual a incerteza padrão combinada para o resultado da expressão f = (a − b + c)?",
+alts:["0,10","0,15","0,20","0,25","0,30"],gab:"E",
+chaves:["incerteza padrão combinada","soma e subtração"],
+exp:{cobra:"Propagação de incertezas em soma e subtração.",reconhecer:"Pede 'incerteza combinada' de uma expressão só com + e −.",resolver:"Em soma ou subtração, os sinais não importam: u = √(0,1² + 0,2² + 0,2²) = √(0,01 + 0,04 + 0,04) = √0,09 = 0,30.",armadilha:"Somar direto dá 0,5 (não existe). Subtrair por causa do '−b' é o erro que a banca espera."},
+dica:"Incerteza combinada = raiz da soma dos quadrados, sempre com sinal +."},
+{id:"T23-24",orig:"T23 Q24",disc:"esp",ass:"MET",sub:"Características do instrumento",tipo:"conceito",dif:1,
+enun:"Ao analisar o sinal medido por um instrumento, um técnico observou uma mudança indesejável e lenta do valor medido com o passar do tempo. Em sua análise, esse técnico julgou que fatores intrínsecos estariam causando tal comportamento. O comportamento do sinal medido por esse instrumento é denominado",
+alts:["sensibilidade","histérese","zona morta","confiabilidade","drift"],gab:"E",
+chaves:["lenta","com o passar do tempo"],
+exp:{cobra:"Vocabulário de características de instrumentos.",reconhecer:"'Mudança lenta com o tempo' = deriva (drift).",resolver:"Drift (deriva) é a variação lenta da indicação ao longo do tempo, com a entrada constante.",armadilha:"Histerese depende do sentido (subindo x descendo). Zona morta é faixa sem resposta. Nenhuma das duas é 'com o tempo'."},
+dica:"Tempo = drift. Sentido = histerese. Sem resposta = zona morta."},
+{id:"P18-40",orig:"P18 Q40",disc:"esp",ass:"MET",sub:"Span",tipo:"conceito",dif:1,
+enun:"Uma linguagem técnica no ambiente industrial é fundamental e define algumas características próprias de medida dos diferentes equipamentos da instrumentação industrial. Nesse contexto, a definição de Span é:",
+alts:["faixa da variável medida dentro de cujos limites os valores superior e inferior estão compreendidos.","o ponto no qual o controlador é ajustado para um determinado valor.","diferença entre o valor lido ou transmitido pelo instrumento em relação ao valor real da variável medida.","diferença algébrica entre os valores superior e inferior da faixa de medida.","proximidade da medida de uma variável do seu valor verdadeiro."],gab:"D",
+chaves:["Span"],
+exp:{cobra:"Diferença entre range (faixa) e span (alcance).",reconhecer:"A pergunta é a definição de um termo em inglês.",resolver:"Range é a faixa (ex.: 50 a 150 °C). Span é a diferença superior − inferior (150 − 50 = 100 °C).",armadilha:"(A) é a definição de range. (B) é setpoint, (C) é erro e (E) é exatidão. A banca coloca todas as definições vizinhas."},
+dica:"Span é um número só: superior menos inferior."},
+{id:"T23-39",orig:"T23 Q39",disc:"esp",ass:"MET",sub:"Campo de tolerância",tipo:"conceito",dif:1,
+enun:"Ao longo do processo de medição, um operador recebe a informação de que um dos furos encontrados em uma peça tem dimensão nominal de 38 mm, com afastamentos superior e inferior respectivamente iguais a 64 µm e a 22 µm. O conceito associado à diferença entre a dimensão máxima e a dimensão mínima é o de",
+alts:["deriva instrumental","campo de tolerância","erro máximo admissível","erro no ponto de controle","incerteza de medição instrumental"],gab:"B",
+chaves:["dimensão máxima","dimensão mínima","afastamentos"],
+exp:{cobra:"Definição de tolerância dimensional.",reconhecer:"'Diferença entre a dimensão máxima e a mínima'.",resolver:"Campo de tolerância = dimensão máxima − dimensão mínima = 64 − 22 = 42 µm.",armadilha:"Os números são dados desnecessários: a pergunta é só o nome do conceito."},
+dica:"Máximo − mínimo da peça = campo de tolerância."},
+// ---------------- UNIDADES / TEMPERATURA ----------------
+{id:"T08-31",orig:"T08 Q31",disc:"esp",ass:"UNI",sub:"Pascal",tipo:"conceito",dif:1,
+enun:"O Pascal é uma unidade de",
+alts:["pressão, equivalente a N/m².","pressão, equivalente a N/cm².","densidade, equivalente a kg/cm³.","densidade, equivalente a kg/m³.","viscosidade, equivalente a N/m.s."],gab:"A",
+chaves:["Pascal"],
+exp:{cobra:"Unidade de pressão no SI.",reconhecer:"Pergunta direta sobre unidade.",resolver:"Pressão = força ÷ área. No SI: newton ÷ metro quadrado = pascal. 1 Pa = 1 N/m².",armadilha:"N/cm² parece certo porque também é pressão, mas não é o SI. A mesma questão voltou em 2011 (P11 Q35)."},
+dica:"SI usa metro, nunca centímetro: Pa = N/m²."},
+{id:"P12-39",orig:"P12 Q39",disc:"esp",ass:"UNI",sub:"bar e pascal",tipo:"calculo",dif:1,
+enun:"A pressão medida através de um manômetro do tipo tubo de vidro é de 1,5 bar, o que corresponde a",
+alts:["15 psi","1,5 atm","1,5 mmHg","1,5 N/m²","1,5 × 10⁵ Pa"],gab:"E",
+chaves:["bar","corresponde a"],
+exp:{cobra:"Conversões de pressão.",reconhecer:"Uma unidade e várias opções em outras unidades.",resolver:"1 bar = 10⁵ Pa. Então 1,5 bar = 1,5 × 10⁵ Pa.",armadilha:"1 bar ≈ 14,5 psi, então 1,5 bar ≈ 21,8 psi (não 15). bar ≈ atm, mas não é igual."},
+dica:"1 bar = 100 000 Pa ≈ 14,5 psi ≈ 1 atm."},
+{id:"P12-36",orig:"P12 Q36",disc:"esp",ass:"TEM",sub:"Escala Fahrenheit",tipo:"conceito",dif:1,
+enun:"A escala Fahrenheit ainda é utilizada em países de língua inglesa. Nessa escala, a temperatura de zero absoluto corresponde a",
+alts:["32,00 °F","0,00 °F","−212,00 °F","−273,16 °F","−459,69 °F"],gab:"E",
+chaves:["zero absoluto","Fahrenheit"],
+exp:{cobra:"Zero absoluto nas escalas de temperatura.",reconhecer:"'Zero absoluto' em outra escala.",resolver:"0 K = −273,15 °C = −459,67 °F (≈ −459,69 na prova).",armadilha:"−273 é o zero absoluto em Celsius, não em Fahrenheit. 32 °F é o gelo."},
+dica:"Zero absoluto: 0 K = −273 °C = −460 °F."},
+{id:"P18-24",orig:"P18 Q24",disc:"esp",ass:"TEM",sub:"Conversão °F → K",tipo:"calculo",dif:2,
+enun:"Um técnico de instrumentação está trabalhando em conjunto com um engenheiro de processo na instalação de um instrumento de medição de temperatura em uma caldeira. O instrumento instalado mostra, em seu visor, a temperatura medida na escala Fahrenheit (F), indicando, no momento do teste, a temperatura de 122 °F. Qual o valor dessa temperatura, na escala absoluta?",
+alts:["40","50","273","323,15","581,67"],gab:"D",
+chaves:["Fahrenheit","escala absoluta"],
+exp:{cobra:"Conversão entre escalas de temperatura.",reconhecer:"'Escala absoluta' = kelvin.",resolver:"°C = (°F − 32) × 5/9 = (122 − 32) × 5/9 = 90 × 5/9 = 50 °C. K = 50 + 273,15 = 323,15 K.",armadilha:"50 é a resposta em Celsius: quem para no meio marca B. 581,67 é Rankine (absoluta em Fahrenheit)."},
+dica:"Leia até o fim: 'absoluta' pede kelvin."},
+{id:"P12-55",orig:"P12 Q55",disc:"esp",ass:"TEM",sub:"Termopares",tipo:"conceito",dif:2,
+enun:"Os termopares são elementos primários de medição em que a",
+alts:["junção mantida à temperatura de referência é chamada de junta de referência, enquanto a outra é a junta fria.","força eletromotriz que se desenvolve em um circuito que apresenta junta fria e quente depende somente das temperaturas das juntas e dos metais que compõem os condutores.","associação de dois termopares E1 e E2 em série gera força eletromotriz resultante igual a E1.E2/(E1+E2).","associação de dois termopares E1 e E2 em oposição gera força eletromotriz resultante igual a E1+E2.","utilização de um termopar do tipo B (Pt-Rh30/Pt-Rh6(−)) tem seu uso recomendado para atmosferas altamente oxidantes."],gab:"B",
+chaves:["termopares","força eletromotriz"],
+exp:{cobra:"Princípio do termopar (efeito Seebeck).",reconhecer:"Alternativas longas sobre juntas e associações de termopares.",resolver:"A fem depende só da diferença de temperatura entre as juntas e do par de metais (lei dos metais homogêneos). Em série, as fem somam; em oposição, subtraem.",armadilha:"(A): junta de referência É a junta fria, não 'a outra'. (C) e (D) trocam as regras de série e oposição."},
+dica:"Série soma, oposição subtrai. Junta fria = junta de referência."},
+// ---------------- VAZÃO E FLUIDOS ----------------
+{id:"T08-29",orig:"T08 Q29",disc:"esp",ass:"VAZ",sub:"Continuidade Q = A·v",tipo:"calculo",dif:2,
+enun:"Em um tubo com 200 mm de diâmetro interno escoa um fluido a uma velocidade de 0,8 m/s. Nesta condição, a vazão, em L/s, é de",
+alts:["12,56","15,70","18,44","25,12","31,40"],gab:"D",
+chaves:["diâmetro interno","velocidade","vazão em L/s"],
+exp:{cobra:"Vazão volumétrica a partir de área e velocidade.",reconhecer:"Dá diâmetro e velocidade, pede vazão.",resolver:"D = 200 mm = 0,2 m → r = 0,1 m. A = π·r² = 3,14 × 0,01 = 0,0314 m². Q = A·v = 0,0314 × 0,8 = 0,02512 m³/s. × 1000 = 25,12 L/s.",armadilha:"Usar o diâmetro como raio dá 100,48. Esquecer ×1000 dá 0,025. As alternativas são resultados de erros comuns."},
+dica:"Diâmetro ÷ 2, mm → m, e no fim m³/s × 1000 = L/s."},
+{id:"P18-59",orig:"P18 Q59",disc:"esp",ass:"VAZ",sub:"Continuidade A₁v₁ = A₂v₂",tipo:"calculo",dif:1,
+enun:"Em um sistema de sopro, o ar escoa em regime permanente e com baixa velocidade através de um bocal com áreas de entrada e saída iguais a 0,2 m² e 0,04 m², respectivamente. Assumindo que a velocidade do ar na saída do bocal seja igual a 25 m/s, qual deve ser a velocidade do ar, em m/s, na entrada do bocal?",
+alts:["1","5","10","15","20"],gab:"B",
+chaves:["regime permanente","áreas de entrada e saída","velocidade"],
+exp:{cobra:"Equação da continuidade.",reconhecer:"Duas áreas e uma velocidade; pede a outra velocidade.",resolver:"A₁·v₁ = A₂·v₂ → 0,2·v₁ = 0,04 × 25 = 1 → v₁ = 5 m/s.",armadilha:"Área maior = velocidade menor. Quem multiplica em vez de dividir encontra 125."},
+dica:"Cano largo, fluido lento. Cano estreito, fluido rápido."},
+{id:"P12-58",orig:"P12 Q58",disc:"esp",ass:"VAZ",sub:"Pressão dinâmica",tipo:"calculo",dif:1,
+enun:"Um fluido tem massa específica igual a ρ e flui a 10 m/s em um duto de diâmetro igual a 5 cm. Qual o valor da pressão dinâmica gerada pela circulação desse fluido? Dado: aceleração da gravidade = 10 m/s²",
+alts:["5 ρ","10 ρ","20 ρ","50 ρ","100 ρ"],gab:"D",
+chaves:["pressão dinâmica","massa específica","velocidade"],
+exp:{cobra:"Termo dinâmico da equação de Bernoulli.",reconhecer:"'Pressão dinâmica' sempre leva a ½ρv².",resolver:"p = ½ × ρ × v² = ½ × ρ × 10² = 50ρ.",armadilha:"O diâmetro e a gravidade são dados desnecessários, colocados para você usá-los errado."},
+dica:"Pressão dinâmica = metade de ρ vezes v ao quadrado. Ignore o resto."},
+{id:"T08-32",orig:"T08 Q32",disc:"esp",ass:"VAZ",sub:"Placa de orifício",tipo:"conceito",dif:1,
+enun:"A placa de orifício é utilizada para a medição de",
+alts:["pressão.","nível.","temperatura.","vazão.","densidade."],gab:"D",
+chaves:["placa de orifício"],
+exp:{cobra:"Função do elemento deprimogênio mais cobrado.",reconhecer:"Pergunta direta.",resolver:"A placa cria uma restrição e uma diferença de pressão (ΔP). A vazão é proporcional a √ΔP.",armadilha:"Ela gera pressão diferencial, mas a variável medida é vazão. A placa caiu nas 5 provas."},
+dica:"Placa, Venturi, bocal, Pitot: medem vazão por ΔP."},
+{id:"P11-56",orig:"P11 Q56",disc:"esp",ass:"VAZ",sub:"Placa excêntrica",tipo:"conceito",dif:2,
+enun:"Na medição da vazão de um fluido particulado, realizada por meio de uma placa de orifício, é recomendado que o orifício seja do tipo",
+alts:["concêntrico de canto vivo","concêntrico de canto arredondado","excêntrico e posicionado no topo do tubo","excêntrico e posicionado na base do tubo","segmental e posicionado no topo do tubo"],gab:"D",
+chaves:["particulado","placa de orifício"],
+exp:{cobra:"Escolha do tipo de placa conforme o fluido.",reconhecer:"Fluido 'sujo', com sólidos ou com gás.",resolver:"Sólidos são pesados e vão para baixo: orifício excêntrico na base deixa passar. Gás em líquido vai para cima: orifício no topo.",armadilha:"Topo x base é a troca clássica. A concêntrica entope com sólidos."},
+dica:"Sólido desce → furo embaixo. Gás sobe → furo em cima."},
+{id:"P12-37",orig:"P12 Q37",disc:"esp",ass:"VAZ",sub:"Medidor sem perda de carga",tipo:"conceito",dif:1,
+enun:"Entre os medidores de vazão, aquele que NÃO gera perda de pressão na linha é o(a)",
+alts:["ultrassônico (efeito doppler)","tubo de pitot","efeito coriolis","turbina","placa de orifício"],gab:"A",
+chaves:["NÃO","perda de pressão"],
+exp:{cobra:"Medidores intrusivos x não intrusivos.",reconhecer:"Pergunta com NÃO sobre perda de carga.",resolver:"O ultrassônico mede de fora do escoamento (ou sem obstruir): não há perda de pressão.",armadilha:"Todos os outros colocam algo dentro do fluxo. Leia o NÃO duas vezes."},
+dica:"Não encosta no fluido = não perde pressão: ultrassônico (e eletromagnético)."},
+// ---------------- TRANSMISSORES ----------------
+{id:"P11-26",orig:"P11 Q26",disc:"esp",ass:"TRA",sub:"Transmissor pneumático",tipo:"conceito",dif:1,
+enun:"Os transmissores de sinais pneumáticos e hidráulicos são recomendados para ambientes explosivos porque",
+alts:["não geram fagulhas.","não transmitem potência.","trabalham com alta vazão.","trabalham com baixa potência.","trabalham com baixa pressão."],gab:"A",
+chaves:["ambientes explosivos","pneumáticos"],
+exp:{cobra:"Vantagem do sinal pneumático em área classificada.",reconhecer:"'Ambiente explosivo' + 'pneumático'.",resolver:"Sem eletricidade não há faísca: não há fonte de ignição.",armadilha:"'Baixa potência' parece técnico, mas o motivo é a ausência de faísca."},
+dica:"Explosivo → pneumático, porque ar não faz faísca."},
+{id:"P11-27",orig:"P11 Q27",disc:"esp",ass:"TRA",sub:"Ruído eletromagnético",tipo:"conceito",dif:1,
+enun:"Em ambientes sujeitos a elevados índices de ruídos e/ou interferências eletromagnéticas, os transmissores de sinais empregados devem ser do tipo",
+alts:["digitais ou a rádio","elétricos ou a rádio","hidráulicos ou digitais","pneumáticos ou a rádio","pneumáticos ou hidráulicos"],gab:"E",
+chaves:["interferências eletromagnéticas"],
+exp:{cobra:"Imunidade a interferência eletromagnética.",reconhecer:"'Ruído' ou 'interferência eletromagnética'.",resolver:"Só sinais que não são elétricos são imunes: pneumático e hidráulico.",armadilha:"Toda alternativa com 'digital', 'elétrico' ou 'rádio' tem um item errado."},
+dica:"Interferência eletromagnética só atrapalha o que é elétrico."},
+{id:"P12-33",orig:"P12 Q33",disc:"esp",ass:"TRA",sub:"Alimentação a 4 fios",tipo:"conceito",dif:1,
+enun:"Os transmissores em que a alimentação é efetuada a 110 / 115 / 127 volts ou a 220 / 240 volts, em corrente alternada, e nos quais um par independente de terminais fornece o sinal de 4-20 mA são alimentados a",
+alts:["2 fios","3 fios","4 fios","5 fios","6 fios"],gab:"C",
+chaves:["corrente alternada","par independente","4-20 mA"],
+exp:{cobra:"Tipos de ligação de transmissor.",reconhecer:"Alimentação separada do sinal.",resolver:"2 fios de alimentação + 2 fios de sinal = 4 fios. No 2 fios, o próprio loop 4–20 mA alimenta (24 Vcc).",armadilha:"A mesma ideia caiu em 2018 (P18 Q32) com corrente alternada x contínua como pegadinha."},
+dica:"Alimentação CA separada do sinal = 4 fios."},
+// ---------------- VÁLVULAS ----------------
+{id:"T08-34",orig:"T08 Q34",disc:"esp",ass:"VAL",sub:"Sinal pneumático",tipo:"conceito",dif:1,
+enun:"As válvulas de controle que operam com pressão na faixa de 0,2 a 1,0 bar são as",
+alts:["hidráulicas.","pneumáticas.","motorizadas.","manuais.","com posicionadores."],gab:"B",
+chaves:["0,2 a 1,0 bar"],
+exp:{cobra:"Faixa padrão do sinal pneumático.",reconhecer:"0,2–1,0 bar ou 3–15 psi.",resolver:"O sinal pneumático padrão é 3 a 15 psi, que é cerca de 0,2 a 1,0 bar.",armadilha:"Posicionador também usa ar, mas a pergunta é o tipo de válvula."},
+dica:"3–15 psi = 0,2–1,0 bar = pneumático. 4–20 mA = eletrônico."},
+{id:"P11-32",orig:"P11 Q32",disc:"esp",ass:"VAL",sub:"Elemento final de controle",tipo:"conceito",dif:1,
+enun:"Um elemento final de controle é um dispositivo que",
+alts:["atua diretamente sobre o controlador.","converte o sinal da variável a ser controlada e o envia ao sistema de controle.","opera internamente no sistema de controle, e sua saída é sempre um sinal elétrico.","recebe o sinal do processo e o converte a um sinal elétrico.","recebe o sinal de controle e atua no processo para manter a variável a ser controlada em um valor predeterminado."],gab:"E",
+chaves:["elemento final de controle"],
+exp:{cobra:"Papel de cada parte da malha.",reconhecer:"Definição de elemento da malha.",resolver:"Malha: sensor/transmissor mede → controlador decide → elemento final (válvula, bomba, resistência) atua no processo.",armadilha:"(B) e (D) descrevem o transmissor. A banca troca as funções entre si."},
+dica:"Elemento final recebe a ordem e mexe no processo."},
+{id:"P11-33",orig:"P11 Q33",disc:"esp",ass:"VAL",sub:"Válvula rotativa",tipo:"conceito",dif:1,
+enun:"A válvula hidráulica, um dos principais componentes de um sistema de controle, pode ser de deslocamento linear ou rotativo. Um exemplo de deslocamento rotativo ocorre na válvula",
+alts:["globo convencional","globo angular","borboleta","guilhotina","de diafragma"],gab:"C",
+chaves:["deslocamento rotativo"],
+exp:{cobra:"Classificação das válvulas pelo movimento.",reconhecer:"Linear x rotativo.",resolver:"Rotativas: borboleta, esfera e macho (giram ¼ de volta). Lineares: globo, gaveta, guilhotina, diafragma.",armadilha:"'Globo angular' tem 'ângulo' no nome, mas o movimento da haste é linear."},
+dica:"Gira = borboleta, esfera, macho."},
+{id:"P11-34",orig:"P11 Q34",disc:"esp",ass:"VAL",sub:"Posicionador",tipo:"conceito",dif:1,
+enun:"Um posicionador é um dispositivo utilizado junto de uma válvula para, entre outras funções,",
+alts:["aumentar o atrito na haste da válvula.","recolocar a válvula na abertura correta.","fechar a válvula em situações de emergência.","diminuir a velocidade da resposta da válvula.","diminuir a perda de carga gerada pela válvula no escoamento."],gab:"B",
+chaves:["posicionador"],
+exp:{cobra:"Função do posicionador.",reconhecer:"Pergunta sobre acessório da válvula.",resolver:"O posicionador compara o sinal recebido com a posição real da haste e corrige até a abertura ficar certa. Também vence atrito e acelera a resposta.",armadilha:"Fechar em emergência é papel da válvula solenoide/SIS. 'Diminuir velocidade' é o contrário."},
+dica:"Posicionador = garante a posição certa."},
+// ---------------- ISA ----------------
+{id:"T08-26",orig:"T08 Q26",disc:"esp",ass:"ISA",sub:"Letras de identificação",tipo:"conceito",dif:1,
+enun:"O instrumento tipo LSH utilizado em controle de processos industriais é um(a)",
+alts:["indicador de vazão.","transmissor de temperatura.","manômetro de linha.","chave de nível baixo.","chave de nível alto."],gab:"E",
+chaves:["LSH"],
+exp:{cobra:"Leitura das letras ISA 5.1.",reconhecer:"Sigla de 2 a 4 letras.",resolver:"1ª letra = variável: L (nível). Depois a função: S (chave). Último modificador: H (alto). LSH = chave de nível alto.",armadilha:"H (high) x L (low). O L do começo é nível; o L do fim seria 'baixo'."},
+dica:"Primeira letra = o que mede. As outras = o que faz."},
+{id:"P18-36",orig:"P18 Q36",disc:"esp",ass:"ISA",sub:"Letras de identificação",tipo:"conceito",dif:1,
+enun:"Uma grande indústria do ramo petrolífero pretende realizar a manutenção em uma das suas malhas de controle. Uma equipe de instrumentistas terá que trocar alguns instrumentos e transmissores que apresentaram defeito, como os PIC, LIC, FT e TT que, nessa ordem, são responsáveis pelo controle e a transmissão das variáveis",
+alts:["pressão, nível, vazão e nível","pressão, nível, vazão e temperatura","pressão, nível, densidade e temperatura","nível, vazão, densidade e temperatura","nível, densidade, vazão e pressão"],gab:"B",
+chaves:["PIC","LIC","FT","TT"],
+exp:{cobra:"Primeira letra ISA = variável.",reconhecer:"Lista de siglas.",resolver:"P = pressão, L = nível (level), F = vazão (flow), T = temperatura. D seria densidade.",armadilha:"F não é 'fluido' nem densidade: é vazão."},
+dica:"P pressão · L nível · F vazão · T temperatura · A análise · D densidade."},
+{id:"P18-39",orig:"P18 Q39",disc:"esp",ass:"ISA",sub:"Segunda letra",tipo:"conceito",dif:1,
+enun:"Para um projeto de engenharia, a simbologia e a identificação dos instrumentos são fundamentais para estruturar o projeto. A ISA (The Instrumentation, Systems & Automation Society) conceitua que cada instrumento será identificado por conjunto de Letras e Números. A segunda letra do conjunto de letras",
+alts:["representa a função do instrumento na malha","representa a variável de medida","representa a possibilidade de instalação em ambiente restrito","indica a malha do processo no qual o instrumento está inserido","indica a área/fábrica à qual pertence o instrumento"],gab:"A",
+chaves:["segunda letra"],
+exp:{cobra:"Estrutura do tag ISA.",reconhecer:"'Primeira letra' ou 'segunda letra'.",resolver:"Letras: 1ª = variável medida; seguintes = função (I indica, C controla, T transmite...). Números = malha.",armadilha:"(B) é a primeira letra. (D) é o número da malha."},
+dica:"Letra 1 = variável. Letra 2 em diante = função. Número = malha."},
+// ---------------- CONTROLE ----------------
+{id:"P11-44",orig:"P11 Q44",disc:"esp",ass:"CTL",sub:"Ação derivativa",tipo:"conceito",dif:1,
+enun:"Quando existem ruídos em um sistema de controle, NÃO devem ser empregados controladores que possuam efeito",
+alts:["integral","derivativo","proporcional","de avanço e atraso","de filtragem"],gab:"B",
+chaves:["ruídos","NÃO"],
+exp:{cobra:"Efeito de cada ação do PID.",reconhecer:"Ruído + 'NÃO usar'.",resolver:"A ação derivativa reage à taxa de variação. Ruído muda rápido, então o derivativo o amplifica.",armadilha:"Filtragem ajuda contra ruído; integral não amplifica ruído."},
+dica:"D = derivada = amplifica ruído."},
+{id:"P11-46",orig:"P11 Q46",disc:"esp",ass:"CTL",sub:"Erro em regime",tipo:"conceito",dif:1,
+enun:"Quando se necessita diminuir o erro em regime de um sistema de controle, recomenda-se utilizar um controlador do tipo",
+alts:["P","PI","PD","PDD","PID"],gab:"B",
+chaves:["erro em regime"],
+exp:{cobra:"Ação integral e offset.",reconhecer:"'Erro em regime', 'offset', 'perturbação constante'.",resolver:"A ação integral acumula o erro ao longo do tempo e só para quando ele zera. Por isso o PI elimina o offset.",armadilha:"PID também tem I, mas a resposta mais direta e clássica é PI. P sozinho deixa offset."},
+dica:"Offset ou erro em regime → coloque I."},
+{id:"P12-49",orig:"P12 Q49",disc:"esp",ass:"CTL",sub:"Sobressinal e sintonia",tipo:"conceito",dif:2,
+enun:"Um sistema de controle realimentado por um controlador PID apresenta um percentual de ultrapassagem (sobrepasso) de 40% para uma entrada do tipo degrau. Qual mudança deve ser feita na sintonia desse controlador para reduzir o percentual de ultrapassagem?",
+alts:["Reduzir os ganhos proporcional e integral e aumentar o ganho derivativo.","Reduzir o ganho derivativo, mantendo os valores dos ganhos proporcional e integral.","Aumentar o ganho integral e manter os valores dos ganhos proporcional e derivativo.","Aumentar os ganhos proporcional e integral e manter o valor do ganho derivativo.","Aumentar o ganho proporcional, mantendo os valores dos ganhos derivativo e integral."],gab:"A",
+chaves:["ultrapassagem","sintonia"],
+exp:{cobra:"Como cada ganho afeta o sobressinal.",reconhecer:"'Sobressinal', 'ultrapassagem', 'overshoot'.",resolver:"Mais P e mais I deixam o sistema mais agressivo e aumentam o sobressinal. O D amortece. Para reduzir: menos P, menos I, mais D.",armadilha:"Toda alternativa que AUMENTA P ou I piora o sobressinal."},
+dica:"Sobressinal alto: acalme P e I, reforce D."},
+// ---------------- SIS ----------------
+{id:"T08-37",orig:"T08 Q37",disc:"esp",ass:"SIS",sub:"Intertravamentos",tipo:"conceito",dif:2,
+enun:"São dispositivos de segurança que fazem parte dos sistemas instrumentados de segurança:",
+alts:["válvula de alívio de pressão e intertravamento ativo.","intertravamento ativo e intertravamento permissivo.","intertravamento permissivo e dosímetro de radiação.","dosímetro de radiação e disco de ruptura.","disco de ruptura e válvula de alívio de pressão."],gab:"B",
+chaves:["sistemas instrumentados de segurança"],
+exp:{cobra:"O que é 'instrumentado'.",reconhecer:"'Instrumentado' = sensor + lógica + atuador.",resolver:"SIS tem sensores, lógica e elemento final. Intertravamentos ativo e permissivo são funções do SIS.",armadilha:"Válvula de alívio e disco de ruptura protegem, mas são mecânicos: não são instrumentados."},
+dica:"Se não tem sensor e lógica, não é SIS."},
+{id:"P18-47",orig:"P18 Q47",disc:"esp",ass:"SIS",sub:"Intertravamento permissivo",tipo:"conceito",dif:2,
+enun:"Dentro do Sistema Instrumentado de Segurança (SIS), há duas formas de operação: o intertravamento Ativo e o Passivo (Permissivo). Está-se diante de uma forma de operação de intertravamento passivo quando:",
+alts:["Há um aumento da pressão, ultrapassando o limite máximo seguro.","Há uma diminuição da temperatura, ultrapassando o limite mínimo seguro.","A pressão está dentro dos valores de limites máximo e mínimo seguros.","O acionamento de uma resistência elétrica em um tanque se dá somente após a detecção do nível.","Há o transbordamento de um fluido em um reservatório devido ao acionamento de uma bomba em uma malha de controle, ultrapassando o limite máximo seguro de nível."],gab:"D",
+chaves:["permissivo","somente após"],
+exp:{cobra:"Diferença entre intertravamento ativo e permissivo.",reconhecer:"'Só liga depois que...' = permissivo.",resolver:"Permissivo: uma condição precisa ser satisfeita para PERMITIR a ação (resistência só liga se houver nível). Ativo: age para desligar quando um limite é ultrapassado.",armadilha:"(A), (B) e (E) descrevem situações em que o intertravamento ativo agiria."},
+dica:"Permissivo = 'só deixa ligar se...'. Ativo = 'desliga quando...'."},
+{id:"P12-42",orig:"P12 Q42",disc:"esp",ass:"SIS",sub:"SIL 2",tipo:"calculo",dif:2,
+enun:"Qual o grau aceitável de sucesso esperado para um sistema de controle com SIL nível 2 e disponibilidade desejada de 99,00%?",
+alts:["1","10","100","1000","10000"],gab:"C",
+chaves:["SIL","disponibilidade"],
+exp:{cobra:"Relação entre SIL, PFD e fator de redução de risco.",reconhecer:"SIL + disponibilidade em %.",resolver:"Disponibilidade 99% → PFD = 1 − 0,99 = 0,01 = 10⁻². Fator de redução de risco = 1/PFD = 100.",armadilha:"Confundir SIL 2 com 'fator 10'. SIL 1: 10–100; SIL 2: 100–1000; SIL 3: 1000–10000."},
+dica:"PFD = 1 − disponibilidade. Fator = 1 ÷ PFD."},
+{id:"T23-31",orig:"T23 Q31",disc:"esp",ass:"SIS",sub:"F&G e ESD",tipo:"conceito",dif:1,
+enun:"Alguns sistemas são extremamente importantes para o funcionamento seguro de uma indústria. Em uma plataforma, por exemplo, os sistemas de Fogo e Gás (Fire & Gas) e de Desligamento de Emergência (ESD – Emergency Shutdown) são cruciais para a segurança. Os sistemas de Fire & Gas e de ESD são classificados como sistemas",
+alts:["instrumentados de segurança","automáticos de segurança","de segurança aumentada","ciberfísicos","críticos"],gab:"A",
+chaves:["Fire & Gas","ESD"],
+exp:{cobra:"Exemplos de SIS.",reconhecer:"F&G, ESD, intertravamento de emergência.",resolver:"São SIS: detectam condição perigosa (sensores), decidem (lógica) e atuam (válvulas, alarmes).",armadilha:"'Automáticos' e 'críticos' parecem certos, mas o nome técnico é 'instrumentados de segurança'."},
+dica:"F&G e ESD = SIS."},
+// ---------------- REDES ----------------
+{id:"T08-30",orig:"T08 Q30",disc:"esp",ass:"RED",sub:"HART",tipo:"conceito",dif:1,
+enun:"O tipo de protocolo de rede industrial que superpõe o sinal eletrônico de 4 a 20 mA com impulsos digitais que transmitem sinais de diagnóstico e calibração é o",
+alts:["Ethernet.","Profibus.","Modbus.","Hart.","Foundation Fieldbus."],gab:"D",
+chaves:["superpõe","4 a 20 mA","digitais"],
+exp:{cobra:"Protocolos de rede e suas características.",reconhecer:"Digital 'por cima' do 4–20 mA.",resolver:"HART modula um sinal digital (FSK) sobre o loop analógico de 4–20 mA, sem atrapalhar a medição.",armadilha:"Fieldbus também é digital, mas substitui o 4–20 mA, não se soma a ele."},
+dica:"HART = digital pegando carona no 4–20 mA."},
+// ---------------- MANUTENÇÃO ----------------
+{id:"T08-39",orig:"T08 Q39",disc:"esp",ass:"MAN",sub:"Preditiva",tipo:"conceito",dif:1,
+enun:"Um cupom de corrosão instalado em uma tubulação de produção tem aplicação no tipo de manutenção",
+alts:["corretiva.","sistemática.","extensiva.","preditiva.","proativa."],gab:"D",
+chaves:["cupom de corrosão"],
+exp:{cobra:"Tipos de manutenção.",reconhecer:"Algo que acompanha a condição do equipamento.",resolver:"O cupom mede a taxa de corrosão ao longo do tempo: é monitoramento de condição, logo preditiva.",armadilha:"'Sistemática' é preventiva por calendário."},
+dica:"Mede/monitora a condição = preditiva."},
+{id:"P11-40",orig:"P11 Q40",disc:"esp",ass:"MAN",sub:"Preventiva",tipo:"conceito",dif:1,
+enun:"Caracteriza o emprego da manutenção preventiva, a",
+alts:["troca do pneu do carro após ter furado.","troca de óleo após verificar-se na vareta que ele estava abaixo do especificado.","verificação se está na hora de substituição do pneu devido ao desgaste, medindo a distância do perfil rodante e a marca de troca.","substituição de uma bateria automotiva quando ela atingiu o período de troca especificado pelo fabricante.","substituição de uma lâmpada depois de ter queimado."],gab:"D",
+chaves:["preventiva"],
+exp:{cobra:"Diferença entre corretiva, preventiva e preditiva.",reconhecer:"Exemplos do dia a dia para classificar.",resolver:"Preventiva = pelo prazo do fabricante, mesmo sem defeito (bateria). Preditiva = medindo a condição (vareta, desgaste do pneu). Corretiva = depois da falha (pneu furado, lâmpada queimada).",armadilha:"(B) e (C) parecem preventivas, mas dependem de medir: são preditivas."},
+dica:"Prazo = preventiva. Medição = preditiva. Quebrou = corretiva."},
+{id:"P12-27",orig:"P12 Q27",disc:"esp",ass:"MAN",sub:"Tipos de manutenção",tipo:"afirmativas",dif:2,
+enun:"Considere as afirmações que versam sobre os diversos tipos de manutenção.\nI - A troca de lubrificante realizada conforme recomendação do fabricante do equipamento é uma ação de manutenção preventiva.\nII - A substituição de um componente por consequência da parada inesperada de um equipamento é uma ação de manutenção corretiva.\nIII - O desmonte para análise, em data previamente determinada pelo fabricante do equipamento, mesmo sem identificação de falha, é uma ação de manutenção corretiva.\nIV - A monitoração do nível de vibração em um mancal de um equipamento rotativo é uma ação de manutenção preditiva.\nEstá correto o que se afirma em",
+alts:["I e III, apenas.","I, II e III, apenas.","I, II e IV, apenas.","II, III e IV, apenas.","I, II, III e IV."],gab:"C",
+chaves:["data previamente determinada","sem identificação de falha"],
+exp:{cobra:"Classificar exemplos de manutenção.",reconhecer:"Afirmativas I a IV com exemplos.",resolver:"I preventiva (prazo) ✓. II corretiva (após falha) ✓. III: data marcada e sem falha é PREVENTIVA, não corretiva ✗. IV preditiva (vibração) ✓. Resposta: I, II e IV.",armadilha:"O item III troca a palavra final. Leia sempre a última palavra da afirmativa."},
+dica:"Em afirmativas, a pegadinha costuma estar na última palavra."},
+{id:"P11-38",orig:"P11 Q38",disc:"esp",ass:"MAN",sub:"Comissionamento",tipo:"conceito",dif:1,
+enun:"Em sistemas de manutenção, o termo comissionamento é definido",
+alts:["como o emprego sistemático das três abordagens de manutenção.","como o modelo pelo qual as equipes de manutenção são designadas para suas atividades diárias, tendo como direcionador a experiência do líder da equipe.","como garantia de operação em grandes empreendimentos industriais que necessitam de intenso envolvimento do pessoal de produção com as técnicas de manutenção.","pelo uso de sistemas de manutenção que buscam minimizar os custos e o tempo de parada da operação, empregando tanto a abordagem preventiva quanto a preditiva.","pelo conjunto de técnicas e procedimentos de engenharia aplicados de forma integrada a uma unidade (ou planta) industrial, com vistas a torná-la operacional, dentro dos requisitos estabelecidos pelo cliente final."],gab:"E",
+chaves:["comissionamento"],
+exp:{cobra:"Definição de comissionamento.",reconhecer:"Palavra 'comissionamento'.",resolver:"Comissionamento = verificar e preparar a planta (ou equipamento) para operar conforme os requisitos do cliente.",armadilha:"As outras falam de manutenção em geral. Em 2023 caiu de novo (T23 Q57)."},
+dica:"Comissionar = deixar pronto para operar, conforme especificado."},
+// ---------------- ANALÍTICA / SEGURANÇA ----------------
+{id:"T08-35",orig:"T08 Q35",disc:"esp",ass:"ANA",sub:"Cromatografia",tipo:"conceito",dif:1,
+enun:"Os gases utilizados como gás de arraste nos cromatógrafos são:",
+alts:["hidrogênio, oxigênio, nitrogênio e argônio.","oxigênio, nitrogênio, argônio e hélio.","nitrogênio, argônio, hélio e hidrogênio.","argônio, hélio, hidrogênio e oxigênio.","hélio, hidrogênio, oxigênio e nitrogênio."],gab:"C",
+chaves:["gás de arraste"],
+exp:{cobra:"Gás de arraste do cromatógrafo.",reconhecer:"Lista de gases.",resolver:"O gás de arraste não pode reagir com a amostra: N₂, Ar, He, H₂.",armadilha:"Todas as erradas têm oxigênio, que é reativo. Elimine pelo O₂."},
+dica:"Gás de arraste nunca é oxigênio."},
+{id:"P11-60",orig:"P11 Q60",disc:"esp",ass:"ANA",sub:"Cromatografia",tipo:"conceito",dif:1,
+enun:"A cromatografia de gás é uma técnica utilizada para medir a",
+alts:["vazão de um gás ou líquido volátil","energia de um gás ou líquido volátil","densidade de um gás ou líquido volátil","velocidade de um gás ou líquido volátil","composição de um gás ou líquido volátil"],gab:"E",
+chaves:["cromatografia"],
+exp:{cobra:"O que cada analisador mede.",reconhecer:"Cromatógrafo.",resolver:"A coluna separa os componentes; o detector mede cada um: composição.",armadilha:"Densidade tem densímetro; vazão tem medidor de vazão."},
+dica:"Cromatógrafo = composição."},
+{id:"T23-32",orig:"T23 Q32",disc:"esp",ass:"SEG",sub:"Mapa de risco",tipo:"conceito",dif:1,
+enun:"Um técnico participou de uma comissão instituída pela CIPA de sua empresa para a elaboração de um mapa de riscos do setor em que ele trabalha. Ele identificou que no seu setor existem riscos físicos, químicos e ergonômicos. As cores que deverão ser incluídas no mapa de risco do setor em que o técnico trabalha são, respectivamente,",
+alts:["preto, marrom e laranja","laranja, verde e vermelho","laranja, marrom e azul","verde, vermelho e amarelo","verde, vermelho e azul"],gab:"D",
+chaves:["mapa de riscos","respectivamente"],
+exp:{cobra:"Cores do mapa de riscos.",reconhecer:"Mapa de risco + tipos de risco.",resolver:"Físico verde, químico vermelho, biológico marrom, ergonômico amarelo, acidente azul.",armadilha:"'Respectivamente' exige a ordem certa. Azul é acidente, não ergonômico."},
+dica:"Verde Físico · Vermelho Químico · Marrom Biológico · Amarelo Ergonômico · Azul Acidente."},
+{id:"T23-38",orig:"T23 Q38",disc:"esp",ass:"SEG",sub:"NR-35",tipo:"conceito",dif:1,
+enun:"Um técnico de instrumentação identificou que um sensor de vazão estava danificado. O sensor estava instalado em uma tubulação que estava a uma dada altura do chão. O técnico não pôde fazer a intervenção, pois seu treinamento de NR 35 — Trabalho em altura — estava vencido. A altura mínima, em metros, do nível inferior para que um trabalho que tenha risco de queda seja considerado um trabalho em altura, conforme essa norma, é de",
+alts:["5","3","2","4","1"],gab:"C",
+chaves:["NR 35","altura mínima"],
+exp:{cobra:"Definição da NR-35.",reconhecer:"Trabalho em altura.",resolver:"Trabalho em altura = acima de 2 m do nível inferior, com risco de queda.",armadilha:"A ordem das alternativas está embaralhada de propósito."},
+dica:"NR-35: acima de 2 metros."},
+// ---------------- ELETRÔNICA ----------------
+{id:"P18-52",orig:"P18 Q52",disc:"esp",ass:"ELA",sub:"Amp-op inversor",tipo:"calculo",dif:2,
+enun:"Na eletrônica moderna, o uso de amplificadores de ganho é muito comum e está presente em vários componentes industriais, como em alguns transmissores que precisam condicionar o sinal antes de enviá-lo ao controlador. Em um Amplificador Inversor, as resistências R1 (entrada) e Rf (realimentação) valem, respectivamente, 10 Ω e 50 Ω e a entrada Vi = 100 mVcc. O valor esperado na saída, Vo, do amplificador, em mV, é",
+alts:["500","100","−500","−100","−50"],gab:"C",
+chaves:["Inversor","Rf","R1"],
+exp:{cobra:"Ganho do amplificador inversor.",reconhecer:"'Inversor' + dois resistores.",resolver:"Vo = −(Rf/R1)·Vi = −(50/10) × 100 = −500 mV.",armadilha:"Esquecer o sinal negativo leva a 500 (A). 'Inversor' = saída com sinal trocado. (Enunciado adaptado: a figura foi descrita em texto.)"},
+dica:"Inversor = menos (Rf ÷ R1)."},
+{id:"P18-54",orig:"P18 Q54",disc:"esp",ass:"ELA",sub:"Transistor",tipo:"calculo",dif:1,
+enun:"Um técnico precisa substituir um transistor em uma placa eletrônica. O ganho de corrente desse transistor (β) possui um valor de 200. Assim, sabendo-se que a corrente no coletor vale 10 mA, o valor da corrente de base, em mA, é",
+alts:["20","10","5","0,5","0,05"],gab:"E",
+chaves:["ganho de corrente","coletor","base"],
+exp:{cobra:"Relação IC = β·IB.",reconhecer:"β + uma corrente.",resolver:"IB = IC ÷ β = 10 ÷ 200 = 0,05 mA.",armadilha:"Multiplicar dá 2000 (não existe). A base sempre tem corrente MENOR que o coletor."},
+dica:"Base é pequena: divida pelo β."},
+{id:"P12-24",orig:"P12 Q24",disc:"esp",ass:"DIG",sub:"Resolução do conversor AD",tipo:"calculo",dif:3,
+enun:"Um conversor analógico-digital de 12 bits, com faixa de entrada de 0 V a 10 V, foi utilizado em conjunto com um termômetro cuja saída varia linearmente entre 0 V e 1 V para uma faixa de temperatura compreendida entre 0 °C e 100 °C. A resolução desse sistema, em °C, será de, aproximadamente,",
+alts:["2,4","0,12","0,24","0,024","0,0024"],gab:"C",
+chaves:["12 bits","faixa de entrada","resolução"],
+exp:{cobra:"Resolução de conversor AD com sensor que não usa a faixa toda.",reconhecer:"Número de bits + faixa em volts.",resolver:"Passo do AD = 10 V ÷ 2¹² = 10 ÷ 4096 ≈ 2,44 mV. Sensor: 1 V = 100 °C → 1 mV = 0,1 °C. Resolução = 2,44 × 0,1 ≈ 0,24 °C.",armadilha:"Se você usar 100 °C ÷ 4096 = 0,024, esquece que o sensor ocupa só 1 V dos 10 V do conversor."},
+dica:"Resolução = faixa do AD ÷ 2ⁿ, depois converta volts para a variável."},
+// ---------------- SIMULADAS (itens do edital que nunca caíram) ----------------
+{id:"SIM-01",orig:"QUESTÃO SIMULADA — ESTILO CESGRANRIO",simulada:true,disc:"esp",ass:"VAL",sub:"Válvula solenoide",tipo:"conceito",dif:1,
+enun:"Em uma malha com intertravamento, o acessório da válvula de controle que, ao ser desenergizado, despressuriza o atuador e leva a válvula para a sua posição de segurança é a(o)",
+alts:["posicionador eletropneumático","válvula solenoide","filtro regulador de ar","chave fim de curso","transdutor I/P"],gab:"B",
+chaves:["desenergizado","posição de segurança"],
+exp:{cobra:"Acessórios da válvula (item 4 do edital).",reconhecer:"'Desenergizar', 'trip', 'posição de falha'.",resolver:"A solenoide de 3 vias corta o ar do atuador quando desenergizada e alivia a pressão: a mola leva a válvula para a posição segura.",armadilha:"Posicionador e I/P controlam a posição normal. Chave fim de curso só indica posição."},
+dica:"Desligou e a válvula foi para a segurança = solenoide."},
+{id:"SIM-02",orig:"QUESTÃO SIMULADA — ESTILO CESGRANRIO",simulada:true,disc:"esp",ass:"VAL",sub:"Filtro regulador",tipo:"conceito",dif:1,
+enun:"O acessório instalado na alimentação de ar de instrumento de uma válvula de controle, responsável por reter umidade e partículas e por manter constante a pressão de suprimento do posicionador, é o(a)",
+alts:["válvula solenoide","chave fim de curso","filtro regulador","booster pneumático","volante manual"],gab:"C",
+chaves:["ar de instrumento","pressão de suprimento"],
+exp:{cobra:"Acessórios da válvula (item 4 do edital).",reconhecer:"Limpar o ar + manter a pressão.",resolver:"O filtro regulador faz as duas coisas: filtra o ar e regula a pressão de alimentação.",armadilha:"O booster aumenta a vazão de ar para acelerar a válvula; não filtra."},
+dica:"Filtra e regula = filtro regulador."},
+{id:"SIM-03",orig:"QUESTÃO SIMULADA — ESTILO CESGRANRIO",simulada:true,disc:"esp",ass:"CTL",sub:"Sintonia Ziegler-Nichols",tipo:"conceito",dif:2,
+enun:"No método de sintonia de Ziegler-Nichols em malha fechada, com as ações integral e derivativa desativadas, o ganho proporcional é aumentado até que a variável de processo apresente",
+alts:["erro em regime nulo","oscilação sustentada, de amplitude constante","sobressinal de exatamente 25%","resposta superamortecida","saturação do elemento final de controle"],gab:"B",
+chaves:["Ziegler-Nichols","malha fechada","ganho proporcional"],
+exp:{cobra:"Sintonia do PID (item 10 do edital).",reconhecer:"'Ziegler-Nichols' + 'malha fechada'.",resolver:"Aumenta-se Kp até a oscilação sustentada. Esse é o ganho crítico (Ku), e o período da oscilação é Pu. Com Ku e Pu, a tabela dá Kp, Ti e Td.",armadilha:"Os 25% (decaimento 1/4) são o critério de qualidade da resposta já sintonizada, não o ponto de parada do ensaio."},
+dica:"ZN malha fechada: suba o P até oscilar sem parar."},
+{id:"SIM-04",orig:"QUESTÃO SIMULADA — ESTILO CESGRANRIO",simulada:true,disc:"esp",ass:"VAL",sub:"Coeficiente Cv",tipo:"conceito",dif:2,
+enun:"No dimensionamento de válvulas de controle, o coeficiente de vazão Cv representa a",
+alts:["vazão de água, em galões por minuto a cerca de 60 °F, que passa pela válvula totalmente aberta com queda de pressão de 1 psi","pressão máxima que a válvula suporta fechada","relação entre a maior e a menor vazão controlável","força que o atuador precisa fazer para fechar a válvula","perda de carga da válvula, em psi, para a vazão máxima"],gab:"A",
+chaves:["dimensionamento","Cv"],
+exp:{cobra:"Dimensionamento de válvula (item 16 do edital).",reconhecer:"'Cv' ou 'coeficiente de vazão'.",resolver:"Cv = vazão de água (gpm) com ΔP de 1 psi, válvula toda aberta. Para líquidos: Q = Cv·√(ΔP/d).",armadilha:"(C) é a rangeabilidade. (E) inverte: Cv é vazão, não perda de carga."},
+dica:"Cv: galões de água por minuto com 1 psi de queda."},
+{id:"SIM-05",orig:"QUESTÃO SIMULADA — ESTILO CESGRANRIO",simulada:true,disc:"esp",ass:"PRE",sub:"Nível por pressão",tipo:"calculo",dif:2,
+enun:"Um transmissor de pressão instalado no fundo de um tanque aberto mede o nível de um líquido de densidade relativa 0,8. Para uma coluna de líquido de 2 m, a pressão medida, em kPa, é (considere g = 10 m/s² e massa específica da água = 1.000 kg/m³)",
+alts:["8","16","20","25","160"],gab:"B",
+chaves:["densidade relativa","coluna de líquido"],
+exp:{cobra:"Medição de nível por pressão hidrostática (item 6 do edital).",reconhecer:"Nível + pressão + densidade.",resolver:"ρ = 0,8 × 1000 = 800 kg/m³. P = ρ·g·h = 800 × 10 × 2 = 16 000 Pa = 16 kPa.",armadilha:"Usar a densidade da água dá 20. Esquecer de dividir por 1000 dá 16 000."},
+dica:"P = ρ·g·h. Sempre converta a densidade relativa para kg/m³."},
+{id:"SIM-06",orig:"QUESTÃO SIMULADA — ESTILO CESGRANRIO",simulada:true,disc:"esp",ass:"ANA",sub:"Analisador de O₂",tipo:"conceito",dif:2,
+enun:"O analisador de oxigênio do tipo célula de zircônia, usado em gases de combustão, determina a concentração de O₂ a partir",
+alts:["da tensão gerada pela diferença de concentração de oxigênio entre os dois lados da célula aquecida","da absorção de radiação infravermelha pelo oxigênio","da variação do pH do gás","do tempo de retenção em uma coluna","da condutividade elétrica da água de condensado"],gab:"A",
+chaves:["zircônia","oxigênio"],
+exp:{cobra:"Analisadores (item 17 do edital).",reconhecer:"Zircônia + O₂.",resolver:"A zircônia aquecida conduz íons de oxigênio. A diferença de concentração entre o gás e o ar de referência gera uma tensão (mV) proporcional ao log da razão.",armadilha:"Tempo de retenção é cromatografia; condutividade é condutivímetro. A banca mistura analisadores."},
+dica:"Zircônia = O₂ por tensão gerada."},
+// ======================= PORTUGUÊS =======================
+{id:"T08-08",orig:"T08 Q8",disc:"por",ass:"CRA",sub:"Há, a e à",tipo:"conceito",dif:2,
+enun:"___ vários anos, existem hábitos pouco recomendáveis como copiar obras alheias. ___ partir de livros reconhecidos, faz-se, ___ margem dos bons costumes, ___ prática da cópia.\nA opção que preenche as lacunas do texto acima com as palavras corretamente escritas, de acordo com a norma culta, é",
+alts:["À, A, a, à","A, À, à, a","A, A, há, à","Há, A, à, a","Há, À, a, a"],gab:"D",
+chaves:["lacunas","vários anos","partir"],
+exp:{cobra:"Há (tempo passado) e crase.",reconhecer:"Lacunas com a / à / há.",resolver:"1) 'Há vários anos' = tempo decorrido (pode trocar por 'faz'). 2) 'A partir': antes de verbo nunca há crase. 3) 'À margem': locução feminina = crase. 4) 'a prática': artigo só, sujeito de 'faz-se'.",armadilha:"'À partir' é o erro mais comum: verbo nunca leva crase."},
+dica:"Dá para trocar por 'faz'? Use HÁ. Antes de verbo? Nunca crase."},
+{id:"T08-09",orig:"T08 Q9",disc:"por",ass:"CVE",sub:"Concordância verbal",tipo:"conceito",dif:2,
+enun:"Em qual das frases a seguir a concordância verbal segue a norma culta?",
+alts:["Mais de um jornal comentaram o lançamento do novo dicionário.","Ontem foi lançado, com um grande evento, mais dois volumes da Enciclopédia.","Tanto o Aurélio quanto o Houaiss passam por atualizações periódicas.","O Aurélio ou o Houaiss receberam o prêmio de melhor dicionário do ano.","Trinta por cento dos dicionários apresenta algum verbete falso."],gab:"C",
+chaves:["concordância verbal"],
+exp:{cobra:"Concordância com sujeitos especiais.",reconhecer:"Frases com 'mais de um', porcentagem, 'ou', 'tanto... quanto'.",resolver:"'Tanto A quanto B' = sujeito composto → plural (passam). 'Mais de um jornal' → singular. 'Foram lançados mais dois volumes'. 'Ou' de exclusão → singular (recebeu). 'Trinta por cento dos dicionários' → concorda com 'dicionários' (apresentam).",armadilha:"O verbo antes do sujeito (B) engana: inverta a frase para testar."},
+dica:"Coloque o sujeito antes do verbo e leia de novo."},
+{id:"T08-10",orig:"T08 Q10",disc:"por",ass:"CON",sub:"Concessão",tipo:"conceito",dif:1,
+enun:"Analise a sentença: “Quem repete o verbete falso é porque copiou, por mais que o disfarce.”\nA ideia concessiva de por mais que só NÃO se mantém se essa expressão for substituída por",
+alts:["embora.","conquanto.","contanto que.","mesmo que.","ainda que."],gab:"C",
+chaves:["concessiva","NÃO"],
+exp:{cobra:"Valor dos conectivos.",reconhecer:"Pede o conectivo que muda o sentido.",resolver:"Concessão = 'apesar de': embora, conquanto, mesmo que, ainda que, por mais que. 'Contanto que' é CONDIÇÃO (= desde que).",armadilha:"'Contanto' parece 'conquanto'. São opostos no sentido."},
+dica:"Concessão = 'apesar de'. Condição = 'desde que'."},
+{id:"P11-07",orig:"P11 Q7 (enunciado adaptado)",disc:"por",ass:"CVE",sub:"Haver e fazer",tipo:"conceito",dif:1,
+enun:"Por fugir à norma-padrão, a frase que seria provável alvo de críticas está presente em:",
+alts:["Somos todos falantes do mesmo idioma.","Fazem dois meses que surgiu a polêmica.","Sempre há mais dúvidas que certezas sobre a língua.","Sou eu que não quero mais discutir sobre esse assunto.","A maior parte das pessoas aceitam a variação linguística."],gab:"B",
+chaves:["norma-padrão"],
+exp:{cobra:"Verbos impessoais.",reconhecer:"'Fazer' ou 'haver' indicando tempo.",resolver:"'Fazer' indicando tempo decorrido é impessoal: fica no singular. Correto: 'Faz dois meses'.",armadilha:"(E) 'A maior parte das pessoas aceitam' é aceito pela norma (concordância com o especificador). O erro claro é (B)."},
+dica:"Faz e há de tempo: sempre singular."},
+{id:"P12-04",orig:"P12 Q4",disc:"por",ass:"CVE",sub:"Concordância verbal",tipo:"conceito",dif:1,
+enun:"A concordância está de acordo com a norma-padrão em:",
+alts:["Vai acontecer muitas inovações no século XXI.","Existe cientistas que investigam produtos para 2050.","A maioria dos brasileiros acredita que o mundo vai melhorar.","O passeio aos planetas e às estações espaciais vão ser normais no futuro.","Daqui a alguns anos, provavelmente haverão lojas com robôs vendedores."],gab:"C",
+chaves:["concordância"],
+exp:{cobra:"Sujeito posposto e verbo haver.",reconhecer:"Verbo antes do sujeito; 'haver'.",resolver:"(A) Vão acontecer muitas inovações. (B) Existem cientistas. (D) O passeio... vai ser normal (núcleo 'passeio'). (E) haverá lojas (haver = existir é impessoal). (C) está correta.",armadilha:"'Haverão' soa natural, mas 'haver' no sentido de existir não vai para o plural."},
+dica:"Haver = existir → singular. Existir → concorda normalmente."},
+{id:"P18-03",orig:"P18 Q3",disc:"por",ass:"CRA",sub:"Crase obrigatória",tipo:"conceito",dif:2,
+enun:"A frase em que o uso do sinal indicativo da crase é obrigatório na palavra destacada (a) é:",
+alts:["A elevação da temperatura da Terra tem concorrido para gerar prejuízos inigualáveis a todas as nações.","Os fabricantes de agrotóxicos recusam-se a reconhecer a responsabilidade que possuem nos danos ao meio ambiente.","O aquecimento do planeta tem estado aliado a índices muito altos de gases do efeito estufa liberados pelos países industrializados.","Os grandes temporais causam imensos danos a população em razão da sua potência destruidora.","Os países desenvolvidos atingiram a meta de redução da poluição estabelecida pelos cientistas em reuniões mundiais."],gab:"D",
+chaves:["crase","obrigatório"],
+exp:{cobra:"Quando a crase é obrigatória.",reconhecer:"'a' antes de palavras diferentes.",resolver:"Crase = preposição 'a' + artigo 'a'. 'Causar danos a (prep.) + a população (artigo)' → à população. Teste: troque por masculino: 'danos ao povo' → tem 'ao', então tem crase.",armadilha:"(A) antes de 'todas' (pronome) não tem crase. (B) antes de verbo, nunca. (C) antes de palavra masculina ('índices'), nunca."},
+dica:"Troque por masculino: deu 'ao'? Então é 'à'."},
+{id:"P18-09",orig:"P18 Q9",disc:"por",ass:"CRA",sub:"Há x a",tipo:"conceito",dif:2,
+enun:"A palavra destacada (a / há) está corretamente empregada de acordo com a norma-padrão da língua portuguesa em:",
+alts:["As atletas olímpicas se esforçaram para conquistar os títulos cobiçados a poucos dias do encerramento do campeonato.","Daqui há menos de dois anos, o Japão será o anfitrião dos Jogos Olímpicos e os preparativos estão adiantados.","Os jogadores brasileiros de futebol estão há poucos meses de se dirigirem à Rússia para participar da Copa do Mundo.","Os japoneses comemoravam, a alguns anos, a escolha de Tóquio como sede dos Jogos Olímpicos de 2020, derrotando Istambul e Madri.","Um dos estádios onde serão realizados os Jogos Olímpicos está situado há apenas poucos quilômetros do centro da capital."],gab:"A",
+chaves:["há","a"],
+exp:{cobra:"Há (passado) x a (futuro e distância).",reconhecer:"'há' e 'a' antes de tempo ou distância.",resolver:"HÁ = tempo passado (troca por 'faz'). A = tempo futuro ou distância. (A) 'a poucos dias do encerramento' = faltando dias → futuro → 'a' ✓. (B) daqui a. (C) estão a poucos meses. (D) há alguns anos. (E) a poucos quilômetros.",armadilha:"'Daqui há' é o erro mais comum. 'Daqui' já indica futuro: daqui A."},
+dica:"Já passou = HÁ. Vai acontecer ou distância = A."},
+{id:"P18-07",orig:"P18 Q7",disc:"por",ass:"CVE",sub:"Núcleo do sujeito",tipo:"conceito",dif:2,
+enun:"A forma verbal destacada está empregada de acordo com as exigências da norma-padrão da língua portuguesa em:",
+alts:["A discussão sobre os direitos humanos têm evidenciado a necessidade de garantir o acesso de todas as pessoas a uma vida sem discriminação.","A proposta dos cientistas que participam dos congressos internacionais sobre as cidades sustentáveis têm sido rejeitadas pelos economistas.","O acordo internacional sobre mudanças climáticas aprovado pelos países desenvolvidos podem subsidiar novos hábitos e compromissos das nações em relação ao desenvolvimento.","O enfrentamento dos principais problemas ambientais, sociais e econômicos decorrentes do manejo inadequado dos resíduos sólidos devem ser iniciados imediatamente.","Os avanços obtidos pelo mundo na construção de uma agenda global para enfrentar a explosão urbana planetária em 2050 devem ser valorizados."],gab:"E",
+chaves:["forma verbal"],
+exp:{cobra:"Concordância com o núcleo do sujeito.",reconhecer:"Sujeito longo, núcleo longe do verbo.",resolver:"Ache o núcleo: (A) discussão → tem. (B) proposta → tem sido rejeitada. (C) acordo → pode. (D) enfrentamento → deve ser iniciado. (E) avanços → devem ✓.",armadilha:"A banca coloca um plural perto do verbo ('direitos humanos', 'cientistas') para enganar."},
+dica:"Pergunte 'o que/quem?' ao verbo e ache UMA palavra: o núcleo."},
+{id:"T23-06",orig:"T23 Q6",disc:"por",ass:"CON",sub:"Conclusão",tipo:"conceito",dif:1,
+enun:"No trecho “Esses venenos seriam, portanto, um mal necessário, de acordo com esses produtores.”, a palavra destacada (portanto) veicula a relação lógica de",
+alts:["adição","conclusão","concessão","explicação","temporalidade"],gab:"B",
+chaves:["relação lógica","portanto"],
+exp:{cobra:"Valor dos conectivos.",reconhecer:"Uma palavra destacada + 'relação lógica'.",resolver:"Portanto, logo, por isso, então = conclusão.",armadilha:"'Explicação' (pois, porque) é a vizinha mais confundida."},
+dica:"Portanto = logo = conclusão."},
+{id:"T23-09",orig:"T23 Q9",disc:"por",ass:"PON",sub:"Vírgula",tipo:"conceito",dif:2,
+enun:"O emprego da vírgula está plenamente de acordo com as exigências da norma-padrão da língua portuguesa em:",
+alts:["A enorme quantidade de agrotóxicos empregados, para exterminar pragas nas plantações contamina as águas e os solos de toda a região.","A função dos agrotóxicos de acordo com os produtores, é reduzir a quantidade de pragas e facilitar a vida do agricultor para que ele tenha seus lucros garantidos.","A presença de pragas nos alimentos, pode sofrer uma grande redução se for possível dar preferência a alimentos cozidos ao invés de in natura.","Estudos realizados em várias partes do mundo têm provado que os alimentos orgânicos, sem uso de fertilizantes químicos, respeitam a saúde dos trabalhadores e dos consumidores.","O depoimento de especialistas que estudam meios de melhorar a produção agrícola, revela que o extermínio de pragas na lavoura tem sido realizado de forma inadequada."],gab:"D",
+chaves:["vírgula"],
+exp:{cobra:"Vírgula entre sujeito e verbo e intercalação.",reconhecer:"Frases longas com uma vírgula 'solta'.",resolver:"(A), (C) e (E) separam o sujeito do verbo com uma vírgula só. (B) abre a intercalação 'de acordo com os produtores' sem a primeira vírgula. (D) isola a intercalação entre duas vírgulas ✓.",armadilha:"Sujeito longo dá vontade de 'respirar' antes do verbo. Na escrita, é proibido."},
+dica:"Intercalação: duas vírgulas ou nenhuma. Sujeito e verbo: nenhuma."},
+{id:"T23-10",orig:"T23 Q10",disc:"por",ass:"CNO",sub:"Concordância nominal",tipo:"conceito",dif:3,
+enun:"De acordo com as regras de concordância nominal da norma-padrão da língua portuguesa, a palavra destacada (o particípio após 'devem ser', 'são' ou 'têm sido') está empregada corretamente em:",
+alts:["A mudança das leis sobre o uso de agrotóxicos e a repressão dos órgãos de vigilância sanitária devem ser implementadas com urgência para evitar mais mortes.","As leis instituídas para proteger os cidadãos e os ensinamentos dos estudiosos sobre o uso de agrotóxicos devem ser divulgadas para que tenham alcance geral.","O desenvolvimento de novas estratégias de plantio e a substituição da agricultura convencional pela orgânica são consideradas uma exigência dos tempos atuais para muitos produtores rurais.","Os estudos realizados por especialistas de saúde em laboratórios e a busca por exterminar doenças contagiosas são indicativas do progresso da medicina nos últimos tempos.","Os procedimentos orientados pelos especialistas e a concessão de verbas públicas pelos órgãos governamentais têm sido entendidas como imprescindíveis para o desenvolvimento da agricultura familiar."],gab:"A",
+chaves:["concordância nominal"],
+exp:{cobra:"Adjetivo/particípio com dois núcleos de gêneros diferentes.",reconhecer:"Sujeito composto e um particípio depois do verbo.",resolver:"Ache os dois núcleos. (A) mudança + repressão (fem.) → implementadas ✓. (B) leis + ensinamentos (masc. no grupo) → divulgados. (C) desenvolvimento + substituição → considerados. (D) estudos + busca → indicativos. (E) procedimentos + concessão → entendidos.",armadilha:"Se há um masculino entre os núcleos, o plural fica no masculino."},
+dica:"Um masculino no grupo = plural masculino."},
+// ======================= MATEMÁTICA =======================
+{id:"T08-12",orig:"T08 Q12",disc:"mat",ass:"PRO",sub:"Divisão em partes iguais",tipo:"calculo",dif:1,
+enun:"Uma empresa de propaganda instalou dois outdoors em uma estrada, o primeiro no km 78 e o segundo no km 246. A mesma empresa pretende instalar outros 7 outdoors entre esses dois, de modo que a distância entre dois outdoors consecutivos seja sempre a mesma. Qual será, em km, essa distância?",
+alts:["21","24","26","28","31"],gab:"A",
+chaves:["entre esses dois","consecutivos"],
+exp:{cobra:"Contar intervalos, não objetos.",reconhecer:"Itens igualmente espaçados entre dois pontos.",resolver:"Distância total: 246 − 78 = 168 km. Com 7 outdoors no meio, são 9 outdoors e 8 intervalos. 168 ÷ 8 = 21 km.",armadilha:"Dividir por 7 dá 24 (B), que está nas alternativas."},
+dica:"n objetos em linha = n − 1 intervalos."},
+{id:"T08-16",orig:"T08 Q16",disc:"mat",ass:"ESP",sub:"Volume do cilindro",tipo:"calculo",dif:2,
+enun:"“Uma pastilha cilíndrica de urânio, de 1 cm de altura e 1 cm de diâmetro, produz a mesma energia que 565 litros de petróleo.” Considere que a quantidade de energia produzida por uma pastilha cilíndrica de urânio seja proporcional ao seu volume. Quantos litros de petróleo são necessários para produzir a mesma quantidade de energia que uma pastilha cilíndrica de urânio com 2 cm de altura e 2 cm de diâmetro produz?",
+alts:["1.130","2.260","2.820","3.390","4.520"],gab:"E",
+chaves:["proporcional ao seu volume","cilíndrica"],
+exp:{cobra:"Como o volume muda quando as medidas mudam.",reconhecer:"Cilindro com medidas dobradas.",resolver:"V = π·r²·h. Dobrando o raio, r² fica ×4. Dobrando a altura, ×2. Volume ×8. 565 × 8 = 4.520 L.",armadilha:"Achar que dobra (1.130) ou quadruplica (2.260)."},
+dica:"Raio entra ao quadrado no volume do cilindro."},
+{id:"T08-18",orig:"T08 Q18",disc:"mat",ass:"EQ",sub:"Sistema soma e diferença",tipo:"calculo",dif:1,
+enun:"Um eletricista autônomo fez dois serviços no mesmo dia e recebeu, ao todo, R$ 56,00. Se um dos serviços custou R$ 4,00 a mais do que o outro, quanto ele recebeu, em reais, pelo serviço mais caro?",
+alts:["23,00","26,00","27,00","30,00","31,00"],gab:"D",
+chaves:["ao todo","a mais"],
+exp:{cobra:"Montar um sistema a partir do texto.",reconhecer:"Soma total + diferença entre dois valores.",resolver:"x + y = 56 e x − y = 4. Somando: 2x = 60 → x = 30.",armadilha:"26 é o serviço mais barato: leia qual dos dois a pergunta quer."},
+dica:"Soma e diferença: o maior = (soma + diferença) ÷ 2."},
+{id:"T08-19",orig:"T08 Q19",disc:"mat",ass:"CMB",sub:"Combinação",tipo:"calculo",dif:2,
+enun:"Para ganhar o prêmio máximo na “Sena”, o apostador precisa acertar as seis “dezenas” sorteadas de um total de 60 “dezenas” possíveis. Certo apostador fez sua aposta marcando dez “dezenas” distintas em um mesmo cartão. Quantas chances de ganhar o prêmio máximo tem esse apostador?",
+alts:["60","110","150","180","210"],gab:"E",
+chaves:["seis dezenas","dez dezenas","chances"],
+exp:{cobra:"Combinação simples.",reconhecer:"Escolher grupos em que a ordem não importa.",resolver:"Cada grupo de 6 entre as 10 marcadas é uma chance: C(10,6) = C(10,4) = (10·9·8·7)/(4·3·2·1) = 5040/24 = 210.",armadilha:"O 60 do texto é dado desnecessário. Usar arranjo dá um número muito maior."},
+dica:"A ordem não importa? Combinação: divida pelo fatorial."},
+{id:"P12-20",orig:"P12 Q20",disc:"mat",ass:"PCT",sub:"Desconto",tipo:"calculo",dif:1,
+enun:"Fábio contratou um empréstimo bancário que deveria ser quitado em 30 de março de 2012. Como conseguiu o dinheiro necessário 30 dias antes dessa data, Fábio negociou com o gerente e conseguiu 5% de desconto. Assim, quitou o empréstimo antecipadamente, pagando R$ 4.940,00. Qual era, em reais, o valor a ser pago por Fábio em 30 de março de 2012?",
+alts:["5.187,00","5.200,00","5.871,00","6.300,00","7.410,00"],gab:"B",
+chaves:["5% de desconto","pagando"],
+exp:{cobra:"Voltar ao valor original depois de um desconto.",reconhecer:"Dá o valor COM desconto e pede o original.",resolver:"Com 5% de desconto, pagou 95%: 0,95·x = 4.940 → x = 4.940 ÷ 0,95 = 5.200.",armadilha:"Somar 5% de 4.940 dá 5.187 (A): o desconto foi sobre o valor original, não sobre 4.940."},
+dica:"Depois do desconto de d%, divida por (1 − d)."},
+{id:"P18-20",orig:"P18 Q20",disc:"mat",ass:"PCT",sub:"Porcentagem do total",tipo:"calculo",dif:1,
+enun:"Os estagiários de uma empresa combinaram fazer uma salada de frutas para seu lanche. A salada de frutas foi feita apenas com frutas de que todos gostam, o que levou à decisão de usarem apenas maçã, laranja e banana. No dia combinado, 20% dos estagiários levaram maçãs, 35% dos estagiários levaram laranjas e os 9 estagiários restantes levaram bananas. Se todos levaram apenas um tipo de fruta, quantos estagiários há na empresa?",
+alts:["18","20","35","40","45"],gab:"B",
+chaves:["restantes","%"],
+exp:{cobra:"Achar o total a partir da parte que sobra.",reconhecer:"Porcentagens de partes + um número absoluto do resto.",resolver:"Bananas = 100% − 20% − 35% = 45%. 0,45·T = 9 → T = 20.",armadilha:"45 é a porcentagem, não o total. Está nas alternativas."},
+dica:"Ache quantos % o número dado representa e divida."},
+{id:"T23-16",orig:"T23 Q16",disc:"mat",ass:"EQ",sub:"Velocidade e tempo",tipo:"calculo",dif:2,
+enun:"Um carro partiu de um ponto A até um ponto B andando com uma velocidade constante de 80 km/h. Posteriormente o carro refez o mesmo percurso, mas agora com velocidade constante igual a 100 km/h, e gastou 30 minutos a menos do que na primeira vez. Quanto tempo o carro levou para ir do ponto A ao ponto B, na primeira vez?",
+alts:["3h","2h30min","2h","1h50min","1h30min"],gab:"B",
+chaves:["mesmo percurso","30 minutos a menos"],
+exp:{cobra:"Equação com distância = velocidade × tempo.",reconhecer:"Mesmo percurso, duas velocidades, diferença de tempo.",resolver:"d/80 − d/100 = 0,5 h. MMC 400: 5d − 4d = 200 → d = 200 km. Tempo 1: 200 ÷ 80 = 2,5 h = 2h30min.",armadilha:"30 min = 0,5 h, não 0,3. A segunda viagem (2h) também aparece nas alternativas."},
+dica:"Minutos → horas: divida por 60."},
+{id:"T23-17",orig:"T23 Q17",disc:"mat",ass:"PRO",sub:"Regra de três composta",tipo:"calculo",dif:2,
+enun:"Em uma fábrica, há um tanque cuja capacidade máxima é de 180 m³. Estando o tanque vazio, três torneiras de mesma vazão gastam oito horas para enchê-lo completamente. Um outro tanque, com capacidade máxima de x metros cúbicos, está sendo construído e, quando vazio, cinco torneiras (com a mesma vazão das anteriores) deverão enchê-lo completamente em apenas y horas. Nessas condições, o valor de y em função de x é definido por",
+alts:["y = 2x/81","y = 2x/54","y = 2x/45","y = 2x/27","y = 2x/75"],gab:"E",
+chaves:["mesma vazão","torneiras","horas"],
+exp:{cobra:"Proporção com vazão.",reconhecer:"Torneiras, tempo e volume.",resolver:"Vazão de 1 torneira: 180 ÷ (3 × 8) = 7,5 m³/h. 5 torneiras: 37,5 m³/h. y = x ÷ 37,5 = 2x/75.",armadilha:"Mais torneiras = menos tempo (grandeza inversa). Calcule a vazão de uma torneira primeiro."},
+dica:"Ache quanto UMA torneira faz por hora."},
+{id:"T23-19",orig:"T23 Q19",disc:"mat",ass:"GEO",sub:"Pitágoras e área",tipo:"calculo",dif:1,
+enun:"O triângulo ABC é retângulo em A. Sabe-se que o comprimento da hipotenusa BC é igual a 20 cm, e que o comprimento do cateto AB é igual a 12 cm. Qual é a área, em cm², do triângulo ABC?",
+alts:["16","48","60","96","240"],gab:"D",
+chaves:["retângulo","hipotenusa","cateto"],
+exp:{cobra:"Teorema de Pitágoras + área.",reconhecer:"Triângulo retângulo com dois lados dados.",resolver:"AC² = 20² − 12² = 400 − 144 = 256 → AC = 16. Área = (12 × 16) ÷ 2 = 96.",armadilha:"Usar a hipotenusa como base: (20 × 12) ÷ 2 = 120 (não existe) ou esquecer o ÷2 (192)."},
+dica:"Área do triângulo retângulo = cateto × cateto ÷ 2."},
+{id:"T23-20",orig:"T23 Q20",disc:"mat",ass:"EQ",sub:"Sistema linear",tipo:"calculo",dif:1,
+enun:"Um consumidor foi ao mercado, comprou 1 kg de batata e 1 kg de cebola e pagou R$ 11,00. No dia seguinte, ele comprou 3 kg de batata e 2 kg de cebola e pagou R$ 28,00. No terceiro dia, ele comprou 2 kg de batata e 1 kg de cebola. Considerando-se que os preços não foram alterados durante esse período, que valor, em R$, o consumidor pagou no terceiro dia?",
+alts:["5","6","16","17","39"],gab:"D",
+chaves:["preços não foram alterados"],
+exp:{cobra:"Sistema 2x2.",reconhecer:"Duas compras com o total pago.",resolver:"b + c = 11; 3b + 2c = 28. Da 1ª: c = 11 − b → 3b + 22 − 2b = 28 → b = 6, c = 5. Terceiro dia: 2·6 + 5 = 17.",armadilha:"6 e 5 são os preços unitários, e estão nas alternativas."},
+dica:"Resolva o sistema e responda o que a pergunta pede, não o x."},
+];
+
+const PROVAS_ROWS=[["T08", 26, "esp", "ISA", "letras de identificação", "conceito", "E", 3, "trocar H (alto) por L (baixo)"], ["T08", 27, "esp", "TRA", "transmissor capacitivo", "conceito", "B", 2, "'inteligente' parece certo, mas a construção descrita é a capacitiva"], ["T08", 28, "esp", "VAZ", "medidores que exigem calibração", "conceito", "C", 2, "misturar elementos deprimogênios (não calibrados) com medidores calibrados"], ["T08", 29, "esp", "VAZ", "continuidade Q=A·v", "calculo", "D", 4, "conversão de unidade (m³/s para L/s) e usar raio x diâmetro"], ["T08", 30, "esp", "RED", "HART", "conceito", "D", 2, "Foundation Fieldbus também é digital, mas não usa 4-20 mA"], ["T08", 31, "esp", "UNI", "pascal", "conceito", "A", 2, "N/cm² parece plausível"], ["T08", 32, "esp", "VAZ", "placa de orifício", "conceito", "D", 5, "ela gera ΔP, mas a variável medida é vazão"], ["T08", 33, "esp", "CTL", "aplicação do PID", "conceito", "E", 3, "'digital' parece moderno, mas a resposta é o tipo de ação contínua"], ["T08", 34, "esp", "VAL", "sinal pneumático padrão", "conceito", "B", 2, "confundir com posicionador"], ["T08", 35, "esp", "ANA", "cromatografia — gás de arraste", "conceito", "C", 2, "alternativas com oxigênio"], ["T08", 36, "esp", "CLP", "ladder", "conceito", "A", 2, "eletrônico x elétrico; lista de instruções é outra linguagem"], ["T08", 37, "esp", "SIS", "intertravamentos", "conceito", "B", 2, "válvula de alívio parece 'segurança', mas não é instrumentada"], ["T08", 38, "esp", "MAT", "ligas com níquel", "conceito", "A", 1, "incluir latão/bronze"], ["T08", 39, "esp", "MAN", "cupom de corrosão", "conceito", "D", 5, "'sistemática' parece técnica"], ["T08", 40, "esp", "ELA", "multímetro", "conceito", "B", 1, "frequência aparece em alguns modelos, mas não é o 'comum'"], ["P11", 21, "esp", "MET", "rastreabilidade", "conceito", "D", 2, ""], ["P11", 22, "esp", "MET", "modelo do erro", "conceito", "B", 1, "sinais trocados nas alternativas"], ["P11", 23, "esp", "MET", "critério de aceitação", "conceito", "D", 1, "subtrair a incerteza ou usar '='"], ["P11", 24, "esp", "TRA", "definição de transmissor", "conceito", "D", 2, "transdutor só converte, não 'envia a distância'"], ["P11", 25, "esp", "VAL", "atuador de dupla ação", "conceito", "B", 1, "'duas posições' soa parecido"], ["P11", 26, "esp", "TRA", "transmissor pneumático em área classificada", "conceito", "A", 1, "'baixa potência' parece técnico"], ["P11", 27, "esp", "TRA", "transmissor em ambiente com ruído EMI", "conceito", "E", 1, "'digital' parece imune, mas é elétrico"], ["P11", 28, "esp", "ISA", "matriz de causa e efeito", "figura", "C", 1, "confundir E com OU"], ["P11", 29, "esp", "ISA", "matriz de causa e efeito", "figura", "D", 1, "confundir E com OU"], ["P11", 30, "esp", "ISA", "diagrama lógico", "figura", "A", 2, "diagrama de blocos/Bode são de controle"], ["P11", 31, "esp", "ISA", "folha de dados", "conceito", "E", 2, "manual de operação parece óbvio"], ["P11", 32, "esp", "VAL", "elemento final de controle", "conceito", "E", 2, "alternativa que descreve transmissor"], ["P11", 33, "esp", "VAL", "válvula rotativa", "conceito", "C", 3, "globo angular parece 'rotativa'"], ["P11", 34, "esp", "VAL", "posicionador", "conceito", "B", 3, "fechar em emergência é função do SIS"], ["P11", 35, "esp", "UNI", "pascal", "conceito", "A", 2, ""], ["P11", 36, "esp", "VAZ", "Venturi e bocal", "conceito", "D", 1, ""], ["P11", 37, "esp", "TEM", "termopar em elemento rotativo", "conceito", "B", 3, ""], ["P11", 38, "esp", "MAN", "comissionamento", "conceito", "E", 2, "alternativas sobre manutenção 'integrada'"], ["P11", 39, "esp", "MAN", "quando a corretiva é melhor", "conceito", "D", 5, ""], ["P11", 40, "esp", "MAN", "preventiva", "conceito", "D", 5, "medir desgaste/vareta é preditiva"], ["P11", 41, "esp", "CLP", "contato de selo", "figura", "E", 3, "achar que o motor para ao soltar o botão"], ["P11", 42, "esp", "CLP", "módulo de saída", "figura", "A", 2, ""], ["P11", 43, "esp", "CLP", "contador", "figura", "C", 2, "confundir preset (contagem) com tensão 127 V"], ["P11", 44, "esp", "CTL", "derivativo e ruído", "conceito", "B", 3, ""], ["P11", 45, "esp", "CTL", "malha aberta instável", "conceito", "B", 3, "PID parece 'mais completo'"], ["P11", 46, "esp", "CTL", "erro em regime", "conceito", "B", 3, "PD parece melhorar tudo"], ["P11", 47, "esp", "RED", "rede aberta x proprietária", "conceito", "B", 1, ""], ["P11", 48, "esp", "RED", "Profibus", "afirmativas", "D", 1, "item III falso ('não pode tempo real')"], ["P11", 49, "esp", "SIS", "sistema ativo", "conceito", "C", 1, "porta corta-fogo/escada são passivos"], ["P11", 50, "esp", "SIS", "ciclo de vida IEC 61511", "conceito", "E", 1, "'até o descarte de um produto' é outra norma"], ["P11", 51, "esp", "ELA", "amp-op integrador", "figura", "C", 3, "derivador tem o capacitor na entrada"], ["P11", 52, "esp", "ELA", "circuito chaveado", "figura", "B", 1, ""], ["P11", 53, "esp", "DIG", "portas lógicas", "figura", "A", 3, "bolinha na saída inverte"], ["P11", 54, "esp", "VAZ", "continuidade em derivações", "figura", "E", 4, ""], ["P11", 55, "esp", "PRE", "manômetro em U", "figura", "E", 2, "usar a densidade do fluido do processo"], ["P11", 56, "esp", "VAZ", "placa de orifício para particulado", "conceito", "D", 5, "topo x base"], ["P11", 57, "esp", "VAL", "seleção de válvula", "afirmativas", "D", 3, "guia só superior suporta MENOS ΔP"], ["P11", 58, "esp", "SEG", "fatores pessoais", "conceito", "D", 1, "ato inseguro é comportamento"], ["P11", 59, "esp", "SEG", "CIPA (NR-5)", "conceito", "E", 2, "pergunta com NÃO"], ["P11", 60, "esp", "ANA", "cromatografia", "conceito", "E", 2, ""], ["P12", 21, "esp", "MET", "conformidade", "figura", "D", 3, "usar a faixa errada"], ["P12", 22, "esp", "MET", "sensibilidade", "calculo", "C", 3, "histerese e linearidade são dados desnecessários"], ["P12", 23, "esp", "VAL", "simbologia pneumática", "figura", "A", 1, ""], ["P12", 24, "esp", "DIG", "resolução de conversor AD", "calculo", "C", 2, "esquecer que o sensor usa só 1/10 da faixa do AD"], ["P12", 25, "esp", "PRE", "sensor de deformação", "conceito", "B", 2, "célula de carga USA strain gauge, mas mede força"], ["P12", 26, "esp", "VAL", "válvula reguladora de fluxo", "figura", "D", 1, "escape x alimentação"], ["P12", 27, "esp", "MAN", "tipos de manutenção", "afirmativas", "C", 5, "desmontar em data marcada é PREVENTIVA, não corretiva"], ["P12", 28, "esp", "DIG", "mapa de Karnaugh", "figura", "A", 1, ""], ["P12", 29, "esp", "TRA", "transmissor inteligente", "afirmativas", "E", 2, "itens II e III parecem verdadeiros"], ["P12", 30, "esp", "VAL", "posicionador", "conceito", "E", 3, "'indicação remota de posição' é chave fim de curso"], ["P12", 31, "esp", "ISA", "símbolo em fluxograma", "figura", "D", 3, ""], ["P12", 32, "esp", "VAL", "simbologia pneumática", "figura", "A", 1, ""], ["P12", 33, "esp", "TRA", "alimentação a 4 fios", "conceito", "C", 2, ""], ["P12", 34, "esp", "DIG", "porta lógica", "figura", "C", 3, ""], ["P12", 35, "esp", "VAL", "lógica pneumática", "figura", "B", 1, "barra de negação nas alternativas"], ["P12", 36, "esp", "TEM", "escala Fahrenheit", "conceito", "E", 2, "−273 é em Celsius"], ["P12", 37, "esp", "VAZ", "medidor sem perda de carga", "conceito", "A", 2, "Coriolis e turbina ficam na linha"], ["P12", 38, "esp", "MAN", "preditiva", "conceito", "D", 5, "intervenção agendada é preventiva"], ["P12", 39, "esp", "UNI", "bar para pascal", "conceito", "E", 2, "1 bar ≈ 14,5 psi (não 10 psi); bar ≠ atm"], ["P12", 40, "esp", "MAN", "análise de óleo", "conceito", "B", 2, "ferrografia é a mais citada, mas não pega < 1 µm"], ["P12", 41, "esp", "RED", "Fieldbus, Bitbus, HART", "afirmativas", "D", 2, "item I diz 'totalmente analógico'"], ["P12", 42, "esp", "SIS", "SIL 2", "calculo", "C", 2, ""], ["P12", 43, "esp", "CLP", "ladder/GRAFCET", "figura", "E", 1, "letras D (retardo) x L (limitado) x S"], ["P12", 44, "esp", "CLP", "temporizador", "figura", "D", 2, "base 0,1 s × 10 = 1 s"], ["P12", 45, "esp", "RED", "token-pass", "conceito", "B", 3, ""], ["P12", 46, "esp", "CLP", "GRAFCET", "figura", "C", 1, ""], ["P12", 47, "esp", "SIS", "SIL 3", "calculo", "A", 2, ""], ["P12", 48, "esp", "CTL", "perturbação constante", "conceito", "E", 3, "PD parece rápido, mas não zera o erro"], ["P12", 49, "esp", "CTL", "sobressinal", "conceito", "A", 3, "aumentar P piora"], ["P12", 50, "esp", "CTL", "efeitos do PI", "conceito", "E", 3, "'nunca instabiliza' é falso"], ["P12", 51, "esp", "DIG", "expressão booleana", "figura", "A", 3, "XOR x OR"], ["P12", 52, "esp", "ELA", "transistor emissor comum", "afirmativas", "C", 2, ""], ["P12", 53, "esp", "ELA", "diodo Zener", "calculo", "A", 1, ""], ["P12", 54, "esp", "SEG", "extintor classe A", "conceito", "A", 1, "CO2 é para elétrico"], ["P12", 55, "esp", "TEM", "termopares", "conceito", "B", 3, "junta de referência = junta fria (não 'a outra')"], ["P12", 56, "esp", "ANA", "analisadores", "afirmativas", "E", 3, "todos verdadeiros"], ["P12", 57, "esp", "SEG", "inflamáveis/GLP", "afirmativas", "E", 1, "aterramento citado como NR-10"], ["P12", 58, "esp", "VAZ", "pressão dinâmica", "calculo", "D", 2, "diâmetro e g são dados desnecessários"], ["P12", 59, "esp", "PRE", "manômetro em U com tubos diferentes", "calculo", "B", 2, "esquecer a correção de área"], ["P12", 60, "esp", "VAZ", "placa de orifício", "afirmativas", "A", 5, "'ilimitada faixa' é falso"], ["P18", 21, "esp", "MET", "incerteza e desvio padrão", "calculo", "B", 2, "usar 2σ"], ["P18", 22, "esp", "MET", "rastreabilidade", "conceito", "D", 2, ""], ["P18", 23, "esp", "MET", "algarismos significativos", "calculo", "B", 1, "dar o resultado com todas as casas"], ["P18", 24, "esp", "TEM", "conversão °F → K", "calculo", "D", 2, "parar em Celsius (50)"], ["P18", 25, "esp", "UNI", "conversão de vazão", "calculo", "C", 1, "multiplicar por 60 só uma vez ou esquecer ×1000"], ["P18", 26, "esp", "MAN", "tipo de manutenção", "conceito", "E", 5, "'paliativa' e 'preventiva' distraem"], ["P18", 27, "esp", "UNI", "inH2O para bar", "calculo", "E", 2, ""], ["P18", 28, "esp", "MAN", "sensor para vibração", "conceito", "D", 2, ""], ["P18", 29, "esp", "MAN", "manutenibilidade", "calculo", "B", 1, ""], ["P18", 30, "esp", "TRA", "transmissor inteligente", "conceito", "E", 2, "indicador de ponteiro não é obrigatório"], ["P18", 31, "esp", "TRA", "características do transmissor", "conceito", "C", 2, "'−4 mA' escondido na alternativa D"], ["P18", 32, "esp", "TRA", "alimentação a 4 fios", "conceito", "A", 2, ""], ["P18", 33, "esp", "ISA", "linhas de sinal ISA 5.1", "figura", "C", 1, ""], ["P18", 34, "esp", "VAL", "partes da válvula", "conceito", "B", 3, "'cabeçote'"], ["P18", 35, "esp", "VAL", "elementos finais", "conceito", "E", 2, "transmissor e CLP não são elemento final"], ["P18", 36, "esp", "ISA", "letras de identificação", "conceito", "B", 3, ""], ["P18", 37, "esp", "ISA", "leitura de P&ID", "figura", "A", 2, "acessível x atrás do painel"], ["P18", 38, "esp", "VAL", "posicionador inteligente", "conceito", "D", 3, "pergunta com NÃO"], ["P18", 39, "esp", "ISA", "segunda letra", "conceito", "A", 3, "inverter variável e função"], ["P18", 40, "esp", "MET", "span", "conceito", "D", 3, "range x span; setpoint"], ["P18", 41, "esp", "CLP", "ladder desligar motor", "figura", "C", 3, "NA x NF"], ["P18", 42, "esp", "SIS", "objetivo do SIS", "conceito", "B", 2, "'apenas a planta'"], ["P18", 43, "esp", "CLP", "características do CLP", "conceito", "E", 2, "scan time não 'reduz velocidade'"], ["P18", 44, "esp", "RED", "topologia", "figura", "A", 3, "árvore x estrela"], ["P18", 45, "esp", "CLP", "ciclo de scan", "conceito", "D", 1, "ordem trocada"], ["P18", 46, "esp", "RED", "Modbus mestre-escravo", "conceito", "E", 1, ""], ["P18", 47, "esp", "SIS", "intertravamento permissivo", "conceito", "D", 2, "ativo x passivo"], ["P18", 48, "esp", "CTL", "2ª ordem criticamente amortecido", "calculo", "D", 1, ""], ["P18", 49, "esp", "CTL", "FT de malha fechada", "calculo", "C", 2, "esquecer realimentação"], ["P18", 50, "esp", "CTL", "erro em regime à rampa", "calculo", "D", 2, ""], ["P18", 51, "esp", "ANA", "pH", "conceito", "D", 3, "faixa 0-14 (não 7-14)"], ["P18", 52, "esp", "ELA", "amp-op inversor", "calculo", "C", 3, "esquecer o sinal negativo"], ["P18", 53, "esp", "VAZ", "elementos primários", "afirmativas", "A", 5, "Venturi tem BAIXA perda de carga; termopar é muito usado"], ["P18", 54, "esp", "ELA", "ganho do transistor", "calculo", "E", 2, "multiplicar em vez de dividir"], ["P18", 55, "esp", "DIG", "circuito lógico", "figura", "D", 3, ""], ["P18", 56, "esp", "VAL", "válvula borboleta", "conceito", "C", 3, "'só fluido limpo'"], ["P18", 57, "esp", "SEG", "cores de tubulação", "conceito", "A", 1, ""], ["P18", 58, "esp", "VAZ", "empuxo", "calculo", "A", 2, ""], ["P18", 59, "esp", "VAZ", "continuidade", "calculo", "B", 4, "inverter a proporção"], ["P18", 60, "esp", "SEG", "cores de sinalização", "conceito", "C", 1, "amarelo = atenção"], ["T23", 21, "esp", "ELA", "valor RMS", "calculo", "B", 1, "pico x pico-a-pico"], ["T23", 22, "esp", "MET", "incerteza combinada", "calculo", "E", 2, "somar as incertezas direto"], ["T23", 23, "esp", "VAZ", "peso específico", "calculo", "B", 2, "usar massa específica (kg/m³)"], ["T23", 24, "esp", "MET", "drift", "conceito", "E", 3, "histerese/zona morta"], ["T23", 25, "esp", "ELA", "SNR", "conceito", "C", 1, ""], ["T23", 26, "esp", "TEM", "termopar a −200 °C", "conceito", "C", 3, "gabarito oficial = N; pela faixa usual o tipo E também cobre −200 °C — questão duvidosa"], ["T23", 27, "esp", "VAL", "simbologia de válvula", "figura", "C", 1, ""], ["T23", 28, "esp", "VAL", "tipo de válvula", "figura", "E", 3, ""], ["T23", 29, "esp", "VAZ", "continuidade", "calculo", "A", 4, "o enunciado diz 'vazão' mas a resposta (0,8) é a razão de VELOCIDADES"], ["T23", 30, "esp", "VAZ", "rangeabilidade", "conceito", "D", 5, "fórmulas com β são distração"], ["T23", 31, "esp", "SIS", "F&G e ESD", "conceito", "A", 2, "'automáticos de segurança'"], ["T23", 32, "esp", "SEG", "mapa de risco", "conceito", "D", 2, ""], ["T23", 33, "esp", "ANA", "sensores analíticos", "conceito", "D", 3, ""], ["T23", 34, "esp", "SIS", "SIL na figura", "figura", "D", 2, ""], ["T23", 35, "esp", "RED", "topologia Profinet", "figura", "B", 3, ""], ["T23", 36, "esp", "DIG", "ADC + transistor no transmissor", "calculo", "C", 2, "bit mais significativo"], ["T23", 37, "esp", "ISA", "fluxograma de engenharia", "figura", "E", 2, ""], ["T23", 38, "esp", "SEG", "NR-35", "conceito", "C", 1, ""], ["T23", 39, "esp", "MET", "campo de tolerância", "conceito", "B", 3, "erro máximo admissível"], ["T23", 40, "esp", "PRE", "sensor capacitivo", "conceito", "C", 2, ""], ["T23", 41, "esp", "CTL", "polo muito afastado", "conceito", "C", 1, "gabarito oficial = dominante (C); pela teoria, polo muito afastado é desprezível (D) — questão duvidosa"], ["T23", 42, "esp", "MET", "calibração, ajuste, verificação", "afirmativas", "A", 1, "calibrar ≠ ajustar"], ["T23", 43, "esp", "VAZ", "Pitot + manômetro", "calculo", "B", 2, "usar só ρHg"], ["T23", 44, "esp", "TRA", "tipos de transmissor", "afirmativas", "D", 2, ""], ["T23", 45, "esp", "VAZ", "vazão por enchimento + transmissor 3-15 psi", "calculo", "B", 2, "esquecer o zero vivo de 3 psi"], ["T23", 46, "esp", "CLP", "correção de ladder", "figura", "C", 3, ""], ["T23", 47, "esp", "ISA", "documentação de projeto", "afirmativas", "A", 2, ""], ["T23", 48, "esp", "ELA", "amp-op com diodo", "calculo", "C", 3, ""], ["T23", 49, "esp", "CLP", "elementos do ladder", "conceito", "B", 2, ""], ["T23", 50, "esp", "RED", "fieldbus", "conceito", "D", 1, ""], ["T23", 51, "esp", "DIG", "flip-flop D", "figura", "E", 1, ""], ["T23", 52, "esp", "CTL", "resposta em frequência (fase)", "figura", "A", 1, ""], ["T23", 53, "esp", "CTL", "resposta em frequência (amplitude)", "figura", "A", 1, ""], ["T23", 54, "esp", "CTL", "tipo do sistema", "figura", "B", 2, "tipo 0 dá erro infinito à rampa"], ["T23", 55, "esp", "CTL", "FT do PID realizável", "conceito", "D", 1, ""], ["T23", 56, "esp", "CTL", "FT de malha fechada", "calculo", "D", 2, ""], ["T23", 57, "esp", "MAN", "comissionamento", "conceito", "B", 2, "'testes de validação'"], ["T23", 58, "esp", "CTL", "ganho do PI", "conceito", "A", 3, ""], ["T23", 59, "esp", "MAN", "curva PF", "figura", "E", 5, "ordem T1/T2/T3"], ["T23", 60, "esp", "CTL", "polos e zeros", "calculo", "C", 1, ""], ["T08", 1, "por", "INT", "causa apresentada no texto (proteger copyright)", "conceito", "A", 0, "alternativa que inverte o motivo"], ["T08", 2, "por", "INT", "julgar afirmativas pelo texto", "conceito", "A", 0, "'obrigatoriamente', 'necessariamente' = extrapolação"], ["T08", 3, "por", "VOC", "sentido de 'eventuais' no contexto", "conceito", "D", 0, ""], ["T08", 4, "por", "INT", "inferir a pergunta pela resposta do texto", "conceito", "E", 0, ""], ["T08", 5, "por", "VOC", "'fictícia' = falsa", "conceito", "B", 0, "famosa/célebre distraem"], ["T08", 6, "por", "REF", "antecedente do pronome relativo 'que'", "conceito", "B", 0, "'que preside' refere-se a 'chefe', não a 'exército'"], ["T08", 7, "por", "COE", "reescrita sem mudar o sentido", "conceito", "D", 0, "alternativas que afirmam o que o texto só duvida"], ["T08", 8, "por", "CRA", "há (tempo) x a x à", "conceito", "D", 0, "'Há vários anos' = tempo passado"], ["T08", 9, "por", "CVE", "sujeito composto com 'tanto... quanto'", "conceito", "C", 0, "'mais de um' pede singular; porcentagem concorda com o especificador"], ["T08", 10, "por", "CON", "valor concessivo de 'por mais que'", "conceito", "C", 0, "'contanto que' é condição"], ["T08", 11, "mat", "EXP", "gráfico de função exponencial crescente", "calculo", "B", 0, ""], ["T08", 12, "mat", "PRO", "dividir intervalo em partes iguais (7 postes → 8 intervalos)", "calculo", "A", 0, "contar postes em vez de intervalos"], ["T08", 13, "mat", "CMB", "probabilidade após eliminar opções (1/3)", "calculo", "B", 0, ""], ["T08", 14, "mat", "PRO", "proporção lida em gráfico (câmbio)", "calculo", "C", 0, ""], ["T08", 15, "mat", "GEO", "área do retângulo × preço do m²", "calculo", "D", 0, ""], ["T08", 16, "mat", "ESP", "volume do cilindro: dobrar raio e altura → ×8", "calculo", "E", 0, "achar que dobra"], ["T08", 17, "mat", "EXP", "decaimento exponencial com logaritmo", "calculo", "A", 0, ""], ["T08", 18, "mat", "EQ", "sistema de 2 equações (soma e diferença)", "calculo", "D", 0, ""], ["T08", 19, "mat", "CMB", "combinação C(10,6)", "calculo", "E", 0, "usar arranjo"], ["T08", 20, "mat", "SEQ", "progressão geométrica de razão 2", "calculo", "B", 0, ""], ["P11", 1, "por", "INT", "informação explícita do parágrafo", "conceito", "D", 0, "'adestração' aparece no texto mas não é a base"], ["P11", 2, "por", "INT", "recursos linguísticos do poema", "conceito", "E", 0, ""], ["P11", 3, "por", "INT", "ideia comum aos dois textos", "conceito", "D", 0, ""], ["P11", 4, "por", "ORT", "grafia de 'discussão' e 'repercutiu'", "conceito", "C", 0, ""], ["P11", 5, "por", "ACE", "acentuação após o Acordo (coco, este, caquis, tem/têm)", "conceito", "B", 0, "'côco' e 'êste' perderam o acento"], ["P11", 6, "por", "MOR", "flexão de verbos irregulares (couberam, puser)", "conceito", "A", 0, "'caberam', 'se pôr'"], ["P11", 7, "por", "CVE", "'fazer' indicando tempo fica no singular", "conceito", "B", 0, "'Fazem dois meses' está errado"], ["P11", 8, "por", "REG", "regência de ir, assistir, lembrar", "conceito", "E", 0, "'Fomos no cinema', 'assistir o filme'"], ["P11", 9, "por", "CNO", "concordância de 'anexo'", "conceito", "C", 0, "'em anexo' é invariável; 'anexo' concorda"], ["P11", 10, "por", "COL", "colocação pronominal na norma-padrão", "conceito", "A", 0, "não iniciar frase com oblíquo átono"], ["P11", 11, "mat", "EQ", "sistema com pontuação (acertos e erros)", "calculo", "C", 0, ""], ["P11", 12, "mat", "EXP", "estimar expoente: 2^(x−2) = 1300", "calculo", "B", 0, ""], ["P11", 13, "mat", "FUN", "crescimento linear a partir do gráfico", "calculo", "B", 0, ""], ["P11", 14, "mat", "PCT", "economia percentual", "calculo", "D", 0, "calcular sobre o valor errado"], ["P11", 15, "mat", "ESP", "volume de fração do cilindro (8/12)", "calculo", "E", 0, "usar diâmetro como raio"], ["P11", 16, "mat", "CMB", "combinação C(6,2)", "calculo", "A", 0, "contar Sandra e Diana"], ["P11", 17, "mat", "EQ", "divisão com resto em problema", "calculo", "D", 0, ""], ["P11", 18, "mat", "CMB", "probabilidade com urna (sistema)", "calculo", "A", 0, ""], ["P11", 19, "mat", "EQ", "frações de um total e diferença", "calculo", "C", 0, ""], ["P11", 20, "mat", "GEO", "área de trapézio dentro de triângulo equilátero", "calculo", "E", 0, ""], ["P12", 1, "por", "CON", "palavras que marcam oposição", "conceito", "E", 0, ""], ["P12", 2, "por", "REF", "referente de 'em ambos os casos'", "conceito", "E", 0, ""], ["P12", 3, "por", "MOR", "grafia de 'veem' (ver) x 'vêm' (vir)", "conceito", "C", 0, "vêm é do verbo vir"], ["P12", 4, "por", "CVE", "'a maioria de' + verbo; haver/existir", "conceito", "C", 0, "'haverão' e 'existe cientistas' erradas"], ["P12", 5, "por", "CRA", "crase e regência mistas ('consiste em')", "conceito", "E", 0, "'à moda', 'à noite', 'àquelas' sem acento nas erradas"], ["P12", 6, "por", "VOC", "sentido de 'cibernéticos'", "conceito", "B", 0, ""], ["P12", 7, "por", "MOR", "formação de substantivo em -mento", "conceito", "A", 0, ""], ["P12", 8, "por", "CON", "valor de 'Já' (contraste)", "conceito", "C", 0, "'já' de tempo x 'já' de oposição"], ["P12", 9, "por", "MOR", "classe de 'segundo' (preposição = conforme)", "conceito", "B", 0, "numeral e substantivo distraem"], ["P12", 10, "por", "ACE", "paroxítonas acentuadas (amável, dócil, fóssil)", "conceito", "A", 0, "'ideia, heroi, jiboia' perderam acento"], ["P12", 11, "mat", "SEQ", "PA com 4 termos", "calculo", "E", 0, ""], ["P12", 12, "mat", "FUN", "função definida por partes contínua", "calculo", "C", 0, ""], ["P12", 13, "mat", "CMB", "princípio multiplicativo com restrição", "calculo", "E", 0, ""], ["P12", 14, "mat", "GEO", "planificação do cubo na folha", "calculo", "D", 0, ""], ["P12", 15, "mat", "EQ", "sistema de misturas (proporções)", "calculo", "A", 0, ""], ["P12", 16, "mat", "FUN", "raízes e vértice de funções quadráticas", "calculo", "B", 0, ""], ["P12", 17, "mat", "POT", "divisão com resto e múltiplos", "calculo", "B", 0, ""], ["P12", 18, "mat", "ESP", "área lateral do cilindro (fita)", "calculo", "C", 0, ""], ["P12", 19, "mat", "EXP", "logaritmo e mudança de base", "calculo", "A", 0, ""], ["P12", 20, "mat", "PCT", "desconto de 5%: 4940 = 0,95·x", "calculo", "B", 0, "calcular 5% de 4940 e somar"], ["P18", 1, "por", "INT", "ideia principal", "conceito", "B", 0, ""], ["P18", 2, "por", "PON", "vírgula entre sujeito e verbo", "conceito", "C", 0, "sujeito longo com vírgula antes do verbo"], ["P18", 3, "por", "CRA", "crase obrigatória ('à população')", "conceito", "D", 0, "'a todas', 'a reconhecer' sem crase"], ["P18", 4, "por", "ORT", "mas (oposição) x mais (intensidade)", "conceito", "D", 0, ""], ["P18", 5, "por", "COL", "próclise com palavra atrativa (embora, não, quando, sempre)", "conceito", "E", 0, ""], ["P18", 6, "por", "REF", "'onde' só para lugar", "conceito", "A", 0, "'onde' para questões/tempo"], ["P18", 7, "por", "CVE", "verbo concorda com o núcleo do sujeito", "conceito", "E", 0, "núcleo longe do verbo"], ["P18", 8, "por", "REG", "regência com pronome relativo (a que, de que)", "conceito", "C", 0, "'que os jornais se referem' falta 'a'"], ["P18", 9, "por", "CRA", "há (passado) x a (futuro/distância)", "conceito", "A", 0, "'daqui há' errado"], ["P18", 10, "por", "CON", "conector de oposição ('embora')", "conceito", "B", 0, "'portanto' é conclusão"], ["P18", 11, "mat", "PCT", "juros compostos em duas parcelas", "calculo", "E", 0, ""], ["P18", 12, "mat", "CMB", "contagem com múltiplos de 4", "calculo", "E", 0, ""], ["P18", 13, "mat", "POT", "divisibilidade de expressão algébrica", "calculo", "B", 0, ""], ["P18", 14, "mat", "MTX", "determinante: det(kA) = k^n·detA", "calculo", "D", 0, "esquecer a potência n"], ["P18", 15, "mat", "EXP", "sistema com log e equação do 2º grau", "calculo", "C", 0, ""], ["P18", 16, "mat", "GEO", "área de triângulo em quadrado", "calculo", "B", 0, ""], ["P18", 17, "mat", "ESP", "volume de sólido recortado", "calculo", "D", 0, ""], ["P18", 18, "mat", "ANA_M", "circunferência e parábola (foco/diretriz)", "calculo", "A", 0, ""], ["P18", 19, "mat", "SEQ", "PA com soma de quadrados", "calculo", "D", 0, ""], ["P18", 20, "mat", "PCT", "porcentagem do total (45% = 9)", "calculo", "B", 0, ""], ["T23", 1, "por", "INT", "objetivo principal do texto", "conceito", "A", 0, "alternativa com detalhe, não o tema central"], ["T23", 2, "por", "INT", "trecho com a proposta do autor", "conceito", "E", 0, ""], ["T23", 3, "por", "REF", "a que se refere 'externalidades negativas'", "conceito", "A", 0, ""], ["T23", 4, "por", "COE", "unir dois períodos com conectivo adequado (oposição)", "conceito", "E", 0, ""], ["T23", 5, "por", "VOC", "sinônimo de 'pujante' (possante)", "conceito", "D", 0, ""], ["T23", 6, "por", "CON", "'portanto' = conclusão", "conceito", "B", 0, ""], ["T23", 7, "por", "REF", "referente correto entre colchetes", "conceito", "C", 0, ""], ["T23", 8, "por", "CRA", "crase antes de palavra feminina regida por 'a'", "conceito", "C", 0, ""], ["T23", 9, "por", "PON", "vírgula: não separar sujeito de verbo; intercalação entre vírgulas", "conceito", "D", 0, ""], ["T23", 10, "por", "CNO", "concordância nominal (adjetivo com dois núcleos)", "conceito", "A", 0, ""], ["T23", 11, "mat", "POT", "comparar potências (mesma base ou expoente)", "calculo", "A", 0, ""], ["T23", 12, "mat", "PCT", "inflação/poder de compra (proporção)", "calculo", "A", 0, ""], ["T23", 13, "mat", "EST", "média ponderada", "calculo", "E", 0, ""], ["T23", 14, "mat", "POT", "quando x ≤ x² é falsa (0 < x < 1)", "calculo", "B", 0, "testar só inteiros"], ["T23", 15, "mat", "EST", "desvio padrão/dispersão entre turmas", "calculo", "E", 0, "média igual não quer dizer dispersão igual"], ["T23", 16, "mat", "EQ", "problema de velocidade (d = v·t)", "calculo", "B", 0, "converter 30 min = 0,5 h"], ["T23", 17, "mat", "PRO", "regra de três composta (torneiras, tempo, volume)", "calculo", "E", 0, "grandeza inversa (mais torneiras, menos tempo)"], ["T23", 18, "mat", "EQ", "equação do 1º grau com 3 partidas", "calculo", "B", 0, ""], ["T23", 19, "mat", "GEO", "Pitágoras + área do triângulo", "calculo", "D", 0, "usar a hipotenusa como base"], ["T23", 20, "mat", "EQ", "sistema linear 2x2", "calculo", "D", 0, ""]];
+const ASSUNTO_CLASSE={"CTL": ["A", 5, 18, [1, 3, 3, 3, 8]], "VAZ": ["A", 5, 17, [3, 3, 3, 3, 5]], "VAL": ["A", 5, 17, [1, 5, 5, 4, 2]], "ISA": ["A", 5, 12, [1, 4, 1, 4, 2]], "CLP": ["A", 5, 12, [1, 3, 3, 3, 2]], "MAN": ["A", 5, 12, [1, 3, 3, 3, 2]], "TRA": ["A", 5, 10, [1, 3, 2, 3, 1]], "ELA": ["A", 5, 10, [1, 2, 2, 2, 3]], "RED": ["A", 5, 9, [1, 2, 2, 2, 2]], "SIS": ["A", 5, 9, [1, 2, 2, 2, 2]], "ANA": ["A", 5, 5, [1, 1, 1, 1, 1]], "MET": ["B", 4, 13, [0, 3, 2, 4, 4]], "DIG": ["B", 4, 8, [0, 1, 4, 1, 2]], "SEG": ["B", 4, 8, [0, 2, 2, 2, 2]], "UNI": ["B", 4, 5, [1, 1, 1, 2, 0]], "TEM": ["B", 4, 5, [0, 1, 2, 1, 1]], "PRE": ["C", 3, 4, [0, 1, 2, 0, 1]], "MAT": ["E", 1, 1, [1, 0, 0, 0, 0]], "INT": ["B", 4, 9, [3, 3, 0, 1, 2]], "REF": ["B", 4, 5, [1, 0, 1, 1, 2]], "CRA": ["B", 4, 5, [1, 0, 1, 2, 1]], "CON": ["B", 4, 5, [1, 0, 2, 1, 1]], "CVE": ["B", 4, 4, [1, 1, 1, 1, 0]], "VOC": ["C", 3, 4, [2, 0, 1, 0, 1]], "MOR": ["D", 2, 4, [0, 1, 3, 0, 0]], "COE": ["D", 2, 2, [1, 0, 0, 0, 1]], "ORT": ["D", 2, 2, [0, 1, 0, 1, 0]], "ACE": ["D", 2, 2, [0, 1, 1, 0, 0]], "REG": ["D", 2, 2, [0, 1, 0, 1, 0]], "CNO": ["D", 2, 2, [0, 1, 0, 0, 1]], "COL": ["D", 2, 2, [0, 1, 0, 1, 0]], "PON": ["D", 2, 2, [0, 0, 0, 1, 1]], "GEO": ["A", 5, 5, [1, 1, 1, 1, 1]], "EQ": ["B", 4, 8, [1, 3, 1, 0, 3]], "CMB": ["B", 4, 6, [2, 2, 1, 1, 0]], "EXP": ["B", 4, 5, [2, 1, 1, 1, 0]], "PCT": ["B", 4, 5, [0, 1, 1, 2, 1]], "ESP": ["B", 4, 4, [1, 1, 1, 1, 0]], "POT": ["C", 3, 4, [0, 0, 1, 1, 2]], "SEQ": ["C", 3, 3, [1, 0, 1, 1, 0]], "PRO": ["D", 2, 3, [2, 0, 0, 0, 1]], "FUN": ["D", 2, 3, [0, 1, 2, 0, 0]], "EST": ["E", 1, 2, [0, 0, 0, 0, 2]], "MTX": ["E", 1, 1, [0, 0, 0, 1, 0]], "ANA_M": ["E", 1, 1, [0, 0, 0, 1, 0]]};
+const NOMES={"MET": "Metrologia", "UNI": "Unidades e conversões", "PRE": "Pressão, nível e sensores", "VAZ": "Vazão e mecânica dos fluidos", "TEM": "Temperatura", "TRA": "Transmissores", "VAL": "Válvulas, atuadores e pneumática", "ISA": "Simbologia ISA e documentação", "CTL": "Controle de processos", "CLP": "CLP, ladder e GRAFCET", "RED": "Redes industriais", "SIS": "SIS / SIL", "ELA": "Eletrônica analógica e sinais", "DIG": "Eletrônica digital e conversão AD", "ANA": "Instrumentação analítica", "MAN": "Manutenção", "SEG": "Segurança do trabalho", "MAT": "Materiais", "INT": "Interpretação de texto", "VOC": "Vocabulário / sentido", "REF": "Referenciação (pronomes)", "CON": "Conectivos e relações lógicas", "COE": "Coesão e reescrita", "CRA": "Crase e há/a", "PON": "Pontuação (vírgula)", "CVE": "Concordância verbal", "CNO": "Concordância nominal", "REG": "Regência", "COL": "Colocação pronominal", "ORT": "Ortografia", "ACE": "Acentuação", "MOR": "Morfologia (flexão, classes, formação)", "PCT": "Porcentagem e juros", "PRO": "Razão, proporção e regra de três", "EQ": "Equações, sistemas e problemas", "FUN": "Funções (afim, quadrática, por partes)", "EXP": "Exponencial e logaritmo", "POT": "Potências, divisibilidade e números", "GEO": "Geometria plana", "ESP": "Geometria espacial (volumes)", "EST": "Estatística (média, desvio)", "CMB": "Contagem e probabilidade", "SEQ": "PA e PG", "MTX": "Matrizes e determinantes", "ANA_M": "Geometria analítica"};
+
+/* ================================================================
+   CALENDÁRIO (11/11 a 06/12/2026) — mesmo plano do documento de análise.
+   ass/pass/mass = códigos de assunto usados no botão "Praticar".
+   Tempo de estudo: 65% Específicas, 20% Português, 15% Matemática.
+   ================================================================ */
+const CAL = [
+{d:"2026-11-11",tipo:"estudo",meta:10,esp:"Conhecer o app e fazer um Café de 10 min",ass:[],por:"—",pass:[],mat:"—",mass:[]},
+{d:"2026-11-12",tipo:"estudo",meta:15,esp:"Metrologia I: rastreabilidade, erro, critério de aceitação e VIM",ass:["MET"],por:"Texto + crase",pass:["CRA","INT"],mat:"Equação do 1º grau",mass:["EQ"]},
+{d:"2026-11-13",tipo:"estudo",meta:15,esp:"Metrologia II: sensibilidade, conformidade, span e incerteza",ass:["MET"],por:"Texto + há/a",pass:["CRA"],mat:"Sistemas 2x2",mass:["EQ"]},
+{d:"2026-11-14",tipo:"simulado",meta:60,esp:"Simulado 1 (diagnóstico): prova Petrobras 2018 completa em PDF, 4 h. A partir de hoje as questões da P18 são liberadas no app.",ass:[],por:"—",pass:[],mat:"—",mass:[]},
+{d:"2026-11-15",tipo:"estudo",meta:30,esp:"Correção do simulado 1 + Manutenção e comissionamento",ass:["MAN"],por:"Texto + vírgula",pass:["PON"],mat:"Porcentagem",mass:["PCT"]},
+{d:"2026-11-16",tipo:"estudo",meta:15,esp:"SIS e SIL",ass:["SIS"],por:"Texto + vírgula",pass:["PON"],mat:"Razão, proporção e regra de três simples",mass:["PRO"]},
+{d:"2026-11-17",tipo:"estudo",meta:15,esp:"Redes industriais",ass:["RED"],por:"Texto + concordância verbal",pass:["CVE"],mat:"Regra de três composta",mass:["PRO"]},
+{d:"2026-11-18",tipo:"estudo",meta:15,esp:"Controle I: ações P, I e D",ass:["CTL"],por:"Texto + concordância nominal",pass:["CNO"],mat:"Pitágoras e áreas",mass:["GEO"]},
+{d:"2026-11-19",tipo:"estudo",meta:15,esp:"Transmissores",ass:["TRA"],por:"Texto + conectivos",pass:["CON"],mat:"Volumes: cilindro",mass:["ESP"]},
+{d:"2026-11-20",tipo:"estudo",meta:15,esp:"ISA e documentação (incluindo lista de instrumentos, diagrama de malha e de interligação)",ass:["ISA"],por:"Texto + coesão e reescrita",pass:["COE","CON"],mat:"Média, mediana e moda",mass:["EST"]},
+{d:"2026-11-21",tipo:"estudo",meta:30,esp:"Analítica e Segurança (incluindo densímetro e analisador de O₂) + Unidades e Temperatura",ass:["ANA","SEG","UNI","TEM"],por:"Texto + referenciação",pass:["REF"],mat:"Desvio padrão e variância",mass:["EST"]},
+{d:"2026-11-22",tipo:"simulado",meta:60,esp:"Simulado 2: prova Transpetro 2023 completa em PDF, 4 h, com correção. A partir de hoje as questões da T23 são liberadas no app.",ass:[],por:"—",pass:[],mat:"—",mass:[]},
+{d:"2026-11-23",tipo:"estudo",meta:15,esp:"Vazão I: continuidade, Bernoulli, pressão dinâmica e Pitot",ass:["VAZ"],por:"Texto + classes de palavras",pass:["MOR"],mat:"Combinatória",mass:["CMB"]},
+{d:"2026-11-24",tipo:"estudo",meta:15,esp:"Vazão II: placa de orifício, Venturi, medidores e rangeabilidade",ass:["VAZ"],por:"Texto + significação das palavras",pass:["VOC"],mat:"Probabilidade",mass:["CMB"]},
+{d:"2026-11-25",tipo:"estudo",meta:15,esp:"Controle II: malha fechada G/(1+GH), erro em regime, tipo do sistema, 2ª ordem e Ziegler-Nichols",ass:["CTL"],por:"Texto + ortografia e acentuação",pass:["ORT","ACE"],mat:"Juros simples e compostos",mass:["PCT"]},
+{d:"2026-11-26",tipo:"estudo",meta:15,esp:"Pressão, nível, sensores e hidrostática",ass:["PRE"],por:"Texto + crase (revisão)",pass:["CRA"],mat:"Exponencial e logaritmo",mass:["EXP"]},
+{d:"2026-11-27",tipo:"estudo",meta:15,esp:"Válvulas I: tipos, partes, elemento final, posicionador, solenoide, filtro regulador e Cv",ass:["VAL"],por:"Texto + vírgula (revisão)",pass:["PON"],mat:"Equação do 2º grau",mass:["EQ"]},
+{d:"2026-11-28",tipo:"estudo",meta:30,esp:"Válvulas II (pneumática) + CLP I: selo, contador e módulos",ass:["VAL","CLP"],por:"Texto + concordância (revisão)",pass:["CVE","CNO"],mat:"Funções afim e quadrática",mass:["FUN"]},
+{d:"2026-11-29",tipo:"estudo",meta:30,esp:"CLP II: temporizador, scan, GRAFCET e diagrama de blocos + Controle III: polos e leitura de gráfico",ass:["CLP","CTL"],por:"Texto + conectivos (revisão)",pass:["CON"],mat:"Potências e conjuntos numéricos",mass:["POT"]},
+{d:"2026-11-30",tipo:"estudo",meta:15,esp:"Eletrônica analógica: amp-op, transistor, Zener, RMS e SNR",ass:["ELA"],por:"Texto + referenciação (revisão)",pass:["REF"],mat:"Trigonometria básica: seno, cosseno e tangente",mass:[]},
+{d:"2026-12-01",tipo:"estudo",meta:20,esp:"Eletrônica digital e AD + refazer os erros de Específicas",ass:["DIG"],por:"Texto + erros",pass:[],mat:"Erros de Matemática",mass:[]},
+{d:"2026-12-02",tipo:"simulado",meta:40,esp:"Simulado 3 (retenção): questões que você errou ou acertou no chute, misturadas, 2 h. Use o botão Simulado › Só erradas.",ass:[],por:"1 texto",pass:[],mat:"5 questões de erro",mass:[]},
+{d:"2026-12-03",tipo:"estudo",meta:20,esp:"Recuperação dos erros do simulado 3 + revisão das fórmulas",ass:[],por:"Texto + erros",pass:[],mat:"Erros de Matemática",mass:[]},
+{d:"2026-12-04",tipo:"descanso",meta:10,esp:"Revisão leve: caderno de fórmulas e pegadinhas. Dormir cedo.",ass:[],por:"—",pass:[],mat:"—",mass:[]},
+{d:"2026-12-05",tipo:"descanso",meta:0,esp:"Descanso. Separar documento e caneta preta de corpo transparente. Viagem para Porto Alegre.",ass:[],por:"—",pass:[],mat:"—",mass:[]},
+{d:"2026-12-06",tipo:"prova",meta:0,esp:"PROVA. Não deixe nenhuma questão em branco: erro não desconta.",ass:[],por:"—",pass:[],mat:"—",mass:[]},
+];
+
+/* ================================================================
+   CADERNO DE FÓRMULAS — só fórmulas usadas nas questões reais ou
+   pedidas pelo edital 2026. "onde" aponta a questão de origem.
+   ================================================================ */
+const FORMULAS = [
+{disc:"esp",grupo:"Metrologia",nome:"Critério de aceitação",f:"|erro| + |incerteza| ≤ CA",vars:"erro = indicação − valor do padrão; incerteza expandida do certificado; CA = critério de aceitação",un:"mesma unidade da grandeza",quando:"Decidir se o instrumento calibrado está aprovado.",ex:"Erro 0,3 °C, incerteza 0,2 °C, CA = 0,6 °C → 0,5 ≤ 0,6 → aprovado.",erros:"Subtrair a incerteza; usar '='.",atalho:"Pior caso: soma tudo e precisa caber.",onde:"P11 Q23"},
+{disc:"esp",grupo:"Metrologia",nome:"Incerteza combinada (soma e subtração)",f:"u = √(u₁² + u₂² + u₃² + …)",vars:"u₁, u₂… = incertezas padrão de cada parcela",un:"mesma unidade",quando:"Resultado calculado por soma ou subtração de medidas.",ex:"u = √(0,1² + 0,2² + 0,2²) = √0,09 = 0,30",erros:"Somar direto; subtrair por causa do sinal da expressão.",atalho:"Sinais da conta não importam: tudo ao quadrado, soma, raiz.",onde:"T23 Q22"},
+{disc:"esp",grupo:"Metrologia",nome:"Desvio padrão pelo nível de confiança",f:"68% → 1σ · 95% → 2σ · 99,7% → 3σ",vars:"σ = desvio padrão",un:"mesma unidade",quando:"O enunciado dá um limite com um nível de confiança.",ex:"Limite 0,003 A a 99,7% → σ = 0,003 ÷ 3 = 0,001 A",erros:"Usar o fator errado.",atalho:"68–95–99,7.",onde:"P18 Q21"},
+{disc:"esp",grupo:"Metrologia",nome:"Sensibilidade",f:"S = Δsaída ÷ Δentrada",vars:"Δsaída = variação do sinal; Δentrada = variação da grandeza medida",un:"ex.: mV/N, mA/°C",quando:"Quanto o sinal muda por unidade medida.",ex:"10 mV para 50 N → 0,2 mV/N",erros:"Usar histerese ou linearidade, que são dados desnecessários.",atalho:"Saída sobre entrada.",onde:"P12 Q22"},
+{disc:"esp",grupo:"Metrologia",nome:"Span (alcance)",f:"Span = limite superior − limite inferior",vars:"limites da faixa (range)",un:"unidade da variável",quando:"Definições de faixa e alcance.",ex:"Faixa 50 a 150 °C → span = 100 °C",erros:"Confundir range (a faixa) com span (a diferença).",atalho:"Span é um número só.",onde:"P18 Q40"},
+{disc:"esp",grupo:"Metrologia",nome:"Resolução do conversor AD",f:"Resolução = faixa ÷ 2ⁿ",vars:"faixa de entrada do AD; n = número de bits",un:"V por passo, depois na unidade da variável",quando:"Questões com conversor de n bits.",ex:"12 bits, 0–10 V: 10 ÷ 4096 = 2,44 mV. Sensor 1 V = 100 °C → 0,24 °C",erros:"Esquecer que o sensor usa só parte da faixa do AD.",atalho:"2¹⁰ = 1024 · 2¹² = 4096.",onde:"P12 Q24"},
+{disc:"esp",grupo:"Sinais",nome:"Sinal 4–20 mA e 3–15 psi",f:"sinal = zero + span × (fração da faixa)",vars:"4–20 mA: zero 4, span 16. 3–15 psi: zero 3, span 12",un:"mA ou psi",quando:"Converter % da faixa em sinal e o contrário.",ex:"50% → 4 + 16 × 0,5 = 12 mA; 9 psi → (9 − 3) ÷ 12 = 50%",erros:"Esquecer o zero vivo (4 mA, 3 psi).",atalho:"Tire o zero antes de calcular a porcentagem.",onde:"T08 Q34 · T23 Q45"},
+{disc:"esp",grupo:"Unidades",nome:"Conversões de pressão",f:"1 Pa = 1 N/m² · 1 bar = 10⁵ Pa ≈ 14,5 psi ≈ 1 atm · 1 inH₂O ≈ 249 Pa",vars:"—",un:"Pa, bar, psi, atm, inH₂O",quando:"Alternativas em unidades diferentes.",ex:"1,5 bar = 1,5 × 10⁵ Pa; 1000 inH₂O ≈ 2,49 bar",erros:"Achar que 1 bar = 10 psi; usar N/cm².",atalho:"1 bar ≈ 1 atm ≈ 14,5 psi ≈ 10 m de coluna d'água.",onde:"T08 Q31 · P11 Q35 · P12 Q39 · P18 Q27"},
+{disc:"esp",grupo:"Unidades",nome:"Conversões de temperatura",f:"°C = (°F − 32) × 5/9 · K = °C + 273,15 · °R = °F + 459,67",vars:"—",un:"°C, °F, K, °R",quando:"'Escala absoluta' = kelvin (ou Rankine, a partir de °F).",ex:"122 °F → 50 °C → 323,15 K",erros:"Parar em Celsius quando a pergunta é kelvin.",atalho:"Zero absoluto: 0 K = −273 °C = −460 °F.",onde:"P12 Q36 · P18 Q24"},
+{disc:"esp",grupo:"Unidades",nome:"Conversão de vazão",f:"1 m³ = 1000 L · 1 h = 60 min = 3600 s",vars:"—",un:"m³/min, L/h, L/s",quando:"Comparar medidores com unidades diferentes.",ex:"0,5 m³/min × 1000 × 60 = 30 000 L/h",erros:"Converter só o volume ou só o tempo.",atalho:"Converta numerador e denominador separadamente.",onde:"P18 Q25"},
+{disc:"esp",grupo:"Fluidos",nome:"Vazão volumétrica",f:"Q = A × v · A = π·D²/4",vars:"A = área (m²); v = velocidade (m/s); D = diâmetro (m)",un:"m³/s (× 1000 = L/s)",quando:"Dá diâmetro e velocidade.",ex:"D = 0,2 m, v = 0,8 m/s → Q = 0,0314 × 0,8 = 0,0251 m³/s = 25,1 L/s",erros:"Usar o diâmetro como raio; esquecer mm → m.",atalho:"πD²/4 com D em metros.",onde:"T08 Q29"},
+{disc:"esp",grupo:"Fluidos",nome:"Equação da continuidade",f:"A₁ × v₁ = A₂ × v₂",vars:"áreas e velocidades nas duas seções",un:"m², m/s",quando:"Tubulação muda de área; regime permanente.",ex:"0,2 × v₁ = 0,04 × 25 → v₁ = 5 m/s",erros:"Inverter a proporção (área maior = velocidade MENOR).",atalho:"Cano largo, fluido lento.",onde:"P11 Q54 · P18 Q59 · T23 Q29"},
+{disc:"esp",grupo:"Fluidos",nome:"Bernoulli e pressão dinâmica",f:"P + ½ρv² + ρgh = constante · Pdin = ½ρv²",vars:"ρ = massa específica (kg/m³); v (m/s); h (m)",un:"Pa",quando:"Pitot, Venturi, pressão dinâmica.",ex:"v = 10 m/s → Pdin = 50ρ",erros:"Usar diâmetro ou g quando a pergunta é só a pressão dinâmica.",atalho:"Dinâmica = metade de ρv².",onde:"P12 Q58 · T23 Q43"},
+{disc:"esp",grupo:"Fluidos",nome:"Pressão hidrostática e nível",f:"P = ρ × g × h",vars:"ρ (kg/m³); g ≈ 10 m/s²; h = altura da coluna (m)",un:"Pa",quando:"Nível por pressão, manômetro, densidade.",ex:"ρ = 800, h = 2 m → 16 000 Pa = 16 kPa",erros:"Usar densidade relativa sem × 1000.",atalho:"10 m de água ≈ 1 bar.",onde:"SIMULADA · T23 Q23"},
+{disc:"esp",grupo:"Fluidos",nome:"Manômetro em U",f:"ΔP = PA − PB = ρ(manométrico) × g × h",vars:"ρ do líquido do manômetro (ex.: mercúrio); h = desnível",un:"Pa",quando:"Leitura de diferença de pressão no tubo em U.",ex:"Mercúrio 13 600 kg/m³, h = 0,1 m → ΔP ≈ 13,6 kPa",erros:"Usar a densidade do fluido do processo.",atalho:"Quem mede é o líquido do manômetro.",onde:"P11 Q55 · P12 Q59"},
+{disc:"esp",grupo:"Fluidos",nome:"Placa de orifício",f:"Q ∝ √ΔP · Rangeabilidade = Qmáx ÷ Qmín",vars:"ΔP = pressão diferencial",un:"—",quando:"Placa, Venturi, bocal.",ex:"Dobrar a vazão → ΔP fica 4 vezes maior",erros:"Achar que vazão e ΔP são proporcionais diretos.",atalho:"Vazão anda com a raiz do ΔP.",onde:"T08 Q32 · P11 Q56 · P12 Q60 · T23 Q30"},
+{disc:"esp",grupo:"Controle",nome:"Função de transferência de malha fechada",f:"C(s)/R(s) = G(s) ÷ [1 + G(s)·H(s)]",vars:"G = ramo direto; H = realimentação (H = 1 se unitária)",un:"—",quando:"Diagrama de blocos com realimentação negativa.",ex:"G = k/s, H = 1 → k/(s + k)",erros:"Esquecer o 1 + GH no denominador.",atalho:"Em cima o caminho direto; embaixo 1 + volta inteira.",onde:"P18 Q49 · T23 Q56"},
+{disc:"esp",grupo:"Controle",nome:"Sistema de 2ª ordem",f:"ωn² ÷ (s² + 2ζωn·s + ωn²)",vars:"ωn = frequência natural; ζ = amortecimento (ζ = 1 crítico; < 1 oscila; > 1 superamortecido)",un:"—",quando:"Pede amortecimento ou ganho para resposta crítica.",ex:"s² + K·s + 49: ωn = 7, ζ = 1 → K = 2 × 1 × 7 = 14",erros:"Esquecer o 2 em 2ζωn.",atalho:"Termo do meio = 2ζωn.",onde:"P18 Q48"},
+{disc:"esp",grupo:"Controle",nome:"Efeito das ações do PID",f:"P: acelera, deixa offset · I: zera offset, pode oscilar · D: amortece, amplifica ruído",vars:"—",un:"—",quando:"Sintonia, offset, sobressinal, ruído.",ex:"Sobressinal alto → menos P e I, mais D",erros:"Achar que mais P melhora tudo.",atalho:"Offset → I. Ruído → tire o D.",onde:"P11 Q44, Q46 · P12 Q48–50"},
+{disc:"esp",grupo:"SIS",nome:"PFD e SIL",f:"PFD = 1 − disponibilidade · Fator de redução de risco = 1 ÷ PFD",vars:"SIL 1: PFD 10⁻¹ a 10⁻² · SIL 2: 10⁻² a 10⁻³ · SIL 3: 10⁻³ a 10⁻⁴",un:"—",quando:"Questões com SIL e disponibilidade em %.",ex:"99% → PFD 0,01 → fator 100 (SIL 2)",erros:"Trocar os expoentes dos níveis.",atalho:"Cada SIL acrescenta um 9 na disponibilidade.",onde:"P12 Q42, Q47"},
+{disc:"esp",grupo:"Eletrônica",nome:"Amplificador operacional",f:"Inversor: Vo = −(Rf ÷ R1)·Vi · Não inversor: Vo = (1 + Rf ÷ R1)·Vi",vars:"Rf = realimentação; R1 = entrada",un:"V",quando:"Circuitos com amp-op.",ex:"Rf = 50, R1 = 10, Vi = 100 mV → −500 mV",erros:"Esquecer o sinal negativo do inversor.",atalho:"Inversor inverte o sinal.",onde:"P11 Q51 · P18 Q52 · T23 Q48"},
+{disc:"esp",grupo:"Eletrônica",nome:"Transistor",f:"IC = β × IB · IE = IC + IB",vars:"β = ganho de corrente",un:"A ou mA",quando:"Ganho de corrente do transistor.",ex:"IC = 10 mA, β = 200 → IB = 0,05 mA",erros:"Multiplicar em vez de dividir.",atalho:"A base é a menor corrente.",onde:"P18 Q54"},
+{disc:"esp",grupo:"Eletrônica",nome:"Valor eficaz (RMS)",f:"Vrms = Vpico ÷ √2",vars:"Vpico = amplitude da senoide",un:"V",quando:"Sinal senoidal.",ex:"Amplitude 2A → 2A ÷ √2 = A·√2",erros:"Usar pico a pico como pico.",atalho:"RMS ≈ 0,707 × pico.",onde:"T23 Q21"},
+{disc:"mat",grupo:"Porcentagem",nome:"Fator de aumento e desconto",f:"Aumento de i%: × (1 + i) · Desconto de i%: × (1 − i)",vars:"i em decimal (5% = 0,05)",un:"—",quando:"Aumentos, descontos, voltar ao valor original.",ex:"Pagou 4.940 com 5% de desconto → 4.940 ÷ 0,95 = 5.200",erros:"Somar porcentagens seguidas (10% + 10% = 21%, não 20%).",atalho:"Volta ao original: divida pelo fator.",onde:"P12 Q20 · P18 Q20"},
+{disc:"mat",grupo:"Porcentagem",nome:"Juros simples e compostos",f:"Simples: M = C(1 + i·t) · Compostos: M = C(1 + i)ᵗ",vars:"C = capital; i = taxa; t = tempo (na mesma unidade da taxa)",un:"R$",quando:"Empréstimos, aplicações, parcelas.",ex:"R$ 1.000 a 10% ao mês por 2 meses: simples 1.200; compostos 1.210",erros:"Taxa ao mês com tempo em anos.",atalho:"Compostos: juros sobre juros.",onde:"P18 Q11 · edital"},
+{disc:"mat",grupo:"Proporção",nome:"Regra de três composta",f:"Arme a tabela; marque as grandezas diretas (↑↑) e inversas (↑↓)",vars:"—",un:"—",quando:"Três ou mais grandezas (torneiras, horas, volume).",ex:"1 torneira = 180 ÷ (3 × 8) = 7,5 m³/h; 5 torneiras = 37,5 m³/h",erros:"Tratar grandeza inversa como direta.",atalho:"Ache o valor de 'uma unidade por hora' primeiro.",onde:"T23 Q17"},
+{disc:"mat",grupo:"Geometria",nome:"Pitágoras e áreas",f:"a² = b² + c² · Triângulo: b·h ÷ 2 · Retângulo: b·h · Círculo: π·r²",vars:"a = hipotenusa; b, c = catetos",un:"cm, cm²",quando:"Triângulo retângulo; áreas.",ex:"Hipotenusa 20, cateto 12 → outro cateto 16 → área 96",erros:"Usar a hipotenusa como base no triângulo retângulo.",atalho:"Triângulos 3-4-5 e múltiplos (12-16-20).",onde:"T23 Q19 · T08 Q15"},
+{disc:"mat",grupo:"Geometria",nome:"Volume do cilindro",f:"V = π·r²·h · Área lateral = 2·π·r·h",vars:"r = raio; h = altura",un:"cm³, cm²",quando:"Tanques, pastilhas, latas.",ex:"Dobrar raio e altura → volume × 8",erros:"Usar o diâmetro como raio.",atalho:"O raio entra ao quadrado.",onde:"T08 Q16 · P11 Q15 · P12 Q18"},
+{disc:"mat",grupo:"Estatística",nome:"Média, mediana, moda e desvio padrão",f:"Média = soma ÷ n · Desvio padrão = √[Σ(x − média)² ÷ n]",vars:"n = quantidade de valores",un:"unidade dos dados",quando:"Comparar grupos; dispersão.",ex:"Notas 0 e 10 (média 5) dispersam mais que 4 e 6 (média 5)",erros:"Achar que mesma média = mesma dispersão.",atalho:"Valores longe da média = desvio grande.",onde:"T23 Q13, Q15"},
+{disc:"mat",grupo:"Contagem",nome:"Combinação simples",f:"C(n, p) = n! ÷ [p!·(n − p)!]",vars:"n = total; p = escolhidos",un:"—",quando:"Escolher grupos sem importar a ordem.",ex:"C(10, 6) = C(10, 4) = 210",erros:"Usar arranjo quando a ordem não importa.",atalho:"C(n, p) = C(n, n − p): use o menor.",onde:"T08 Q19 · P11 Q16"},
+];
+
+/* ================================================================
+   COMO A BANCA PERGUNTA — padrões dos comandos da Cesgranrio
+   encontrados nas 5 provas analisadas.
+   ================================================================ */
+const BANCA = [
+{t:"\"É correto o que se afirma em\" / \"Está(ão) correta(s) APENAS\"",o:"Julgue item por item e marque V ou F ao lado. Comece pelo item de que você tem mais certeza e elimine as alternativas que o contrariam.",ex:"P12 Q27: o item III troca 'preventiva' por 'corretiva' na última palavra."},
+{t:"NÃO, EXCETO, INCORRETA",o:"Circule a palavra. A banca quer a única falsa. Releia a pergunta antes de marcar.",ex:"P11 Q44 (NÃO devem ser empregados), P12 Q37 (NÃO gera perda), P18 Q38 (NÃO faz parte)."},
+{t:"\"respectivamente\"",o:"A ordem importa. Confira cada posição na ordem em que aparece no enunciado.",ex:"T23 Q32: físico, químico e ergonômico = verde, vermelho e amarelo, nessa ordem."},
+{t:"\"aproximadamente\" / \"valor aproximado\"",o:"Faça a conta com números arredondados e escolha a alternativa mais próxima. Em medidas, pense em algarismos significativos.",ex:"P18 Q23: 415,066 → 415,1."},
+{t:"Dados que sobram",o:"Antes de calcular, escreva a fórmula. Use só o que ela pede. Dado extra é armadilha.",ex:"P12 Q22 (histerese e linearidade) e P12 Q58 (diâmetro e g)."},
+{t:"A unidade pedida no fim",o:"Sublinhe a unidade da pergunta. Muitas alternativas são o resultado de parar a conversão no meio.",ex:"P18 Q24: 50 (°C) está nas alternativas, mas a pergunta é em kelvin."},
+{t:"Palavras absolutas",o:"'Sempre', 'nunca', 'somente', 'ilimitada', 'obrigatoriamente' quase sempre tornam a afirmação falsa.",ex:"P12 Q50 ('nunca instabiliza'), P12 Q60 ('ilimitada faixa'), T08 Q2."},
+{t:"Definição com conceito vizinho",o:"A banca põe nas alternativas as definições dos termos vizinhos. Saiba diferenciar pares: range x span, preventiva x preditiva, transdutor x transmissor, ativo x permissivo.",ex:"P18 Q40: as 5 alternativas são definições reais de termos diferentes."},
+{t:"Interpretação de texto",o:"Responda com o que o texto diz, não com o que você acha. Desconfie de alternativa que generaliza ou traz detalhe no lugar do tema.",ex:"T23 Q1 (objetivo principal) e P11 Q1 ('adestração' está no texto, mas não é a resposta)."},
+{t:"Gramática com teste rápido",o:"Crase: troque por masculino (deu 'ao' → tem crase). Concordância: coloque o sujeito antes do verbo. Há x a: dá para trocar por 'faz'? Então é HÁ.",ex:"P18 Q3, P18 Q7, P18 Q9."},
+];
+
+/* ================================================================
+   ROTA INSTRUMENTAÇÃO — lógica do app
+   Estado salvo no navegador (localStorage) e, quando disponível,
+   na conta (db do artifact, privado para quem usa). Exportar/importar
+   no menu Backup.
+   ================================================================ */
+"use strict";
+const PROVA = "2026-12-06";
+const LOCKS = { P18: "2026-11-14", T23: "2026-11-22" }; // provas guardadas para os simulados do calendário
+const DISC = { esp: "Específicas", por: "Português", mat: "Matemática" };
+const KEY = "rotaInstr.v1";
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const nome = a => NOMES[a] || a;
+
+/* ---------- datas (sempre no fuso do aparelho) ---------- */
+function hoje() { const d = new Date(); return ymd(d); }
+function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+function addDias(s, n) { const [y, m, d] = s.split("-").map(Number); const x = new Date(y, m - 1, d + n); return ymd(x); }
+function difDias(a, b) { const [y1, m1, d1] = a.split("-").map(Number), [y2, m2, d2] = b.split("-").map(Number); return Math.round((new Date(y2, m2 - 1, d2) - new Date(y1, m1 - 1, d1)) / 864e5); }
+function fmtData(s) { const [y, m, d] = s.split("-"); const dw = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"][new Date(+y, m - 1, +d).getDay()]; return `${dw} ${d}/${m}`; }
+
+/* ---------- estado ---------- */
+function novoEstado() { return { v: 1, upd: 0, ans: {}, errs: [], topics: {}, cal: {}, days: {}, sims: [], settings: { leitura: true, unlock: false } }; }
+let S = novoEstado();
+let mem = null; // fallback em memória se o localStorage falhar
+function carregarLocal() {
+  try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(novoEstado(), JSON.parse(raw)); }
+  catch (e) { if (mem) S = mem; }
+}
+let dbRef = null, saveTimer = null, syncMsg = "Salvo neste aparelho";
+function salvar() {
+  S.upd = Date.now();
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { mem = S; }
+  if (dbRef) { clearTimeout(saveTimer); saveTimer = setTimeout(salvarNuvem, 1500); }
+}
+async function salvarNuvem() {
+  try { await dbRef.set({ json: JSON.stringify(S), upd: S.upd }); syncMsg = "Salvo na sua conta e neste aparelho"; }
+  catch (e) { syncMsg = "Salvo só neste aparelho (a conta não respondeu)"; }
+  const el = $("#sync"); if (el) el.textContent = syncMsg;
+}
+async function conectarConta() {
+  try {
+    if (!window.claude || !claude.use) return;
+    const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+    if (!db || !user) return;
+    const id = await user.id(); if (!id) return;
+    const ref = db.collection("data/users/" + id).doc("estado");
+    const t = setTimeout(() => {}, 10000);
+    let snap = await ref.get(); clearTimeout(t);
+    let d = snap && (typeof snap.data === "function" ? snap.data() : (snap.data !== undefined ? snap.data : snap));
+    if (d && d.json && (d.upd || 0) > (S.upd || 0)) { S = Object.assign(novoEstado(), JSON.parse(d.json)); try { localStorage.setItem(KEY, d.json); } catch (e) {} render(); }
+    dbRef = ref; syncMsg = "Salvo na sua conta e neste aparelho";
+    if (!d || (S.upd || 0) > (d.upd || 0)) salvarNuvem();
+    const el = $("#sync"); if (el) el.textContent = syncMsg;
+  } catch (e) { /* segue só com o aparelho */ }
+}
+
+/* ---------- banco: disponibilidade ---------- */
+function bloqueada(q) {
+  if (S.settings.unlock || q.simulada) return false;
+  const p = q.orig.slice(0, 3); return LOCKS[p] && hoje() < LOCKS[p];
+}
+function disponiveis() { return BANK.filter(q => !bloqueada(q)); }
+const byId = Object.fromEntries(BANK.map(q => [q.id, q]));
+
+/* ---------- registro de respostas ---------- */
+function registrar(q, letra, viaSim) {
+  const ok = letra === q.gab, d = hoje();
+  const a = S.ans[q.id] || (S.ans[q.id] = { n: 0, c: 0, dias: [], ult: null });
+  a.n++; if (ok) { a.c++; if (!a.dias.includes(d)) a.dias.push(d); }
+  a.ult = { d, ok, ch: letra };
+  S.days[d] = (S.days[d] || 0) + 1;
+  if (!S.topics[q.ass]) S.topics[q.ass] = { first: d, rev: {} };
+  if (!ok) S.errs.push({ id: q.id, ch: letra, d });
+  if (S.errs.length > 600) S.errs = S.errs.slice(-600);
+  salvar(); return ok;
+}
+function erradasIds() { return Object.entries(S.ans).filter(([id, a]) => a.ult && !a.ult.ok && byId[id]).map(([id]) => id); }
+function statsDisc(disc) {
+  let n = 0, c = 0; for (const [id, a] of Object.entries(S.ans)) { const q = byId[id]; if (q && (!disc || q.disc === disc)) { n += a.n; c += a.c; } }
+  return { n, c, p: n ? Math.round(100 * c / n) : null };
+}
+function statsAss() {
+  const m = {}; for (const [id, a] of Object.entries(S.ans)) { const q = byId[id]; if (!q) continue; const s = m[q.ass] || (m[q.ass] = { n: 0, c: 0, dias: new Set(), disc: q.disc }); s.n += a.n; s.c += a.c; a.dias.forEach(x => s.dias.add(x)); }
+  return m;
+}
+function dominados() { return Object.entries(statsAss()).filter(([a, s]) => s.n >= 4 && s.c / s.n >= .8 && s.dias.size >= 2).map(([a]) => a); }
+function revisoesDevidas() {
+  const t = hoje(), out = [];
+  for (const [a, info] of Object.entries(S.topics)) for (const k of [1, 3, 7]) {
+    const due = addDias(info.first, k); if (due <= t && !(info.rev || {})[k]) out.push({ a, k, due });
+  }
+  return out;
+}
+function precisaRevisar() {
+  const s = statsAss(); const fracos = Object.entries(s).filter(([a, v]) => v.n >= 2 && v.c / v.n < .6).map(([a]) => a);
+  return [...new Set([...fracos, ...revisoesDevidas().map(r => r.a)])];
+}
+function sequencia() {
+  let n = 0, d = hoje(); if (!S.days[d]) d = addDias(d, -1);
+  while (S.days[d]) { n++; d = addDias(d, -1); } return n;
+}
+function marcarRevisao(a, k) { if (!S.topics[a]) return; S.topics[a].rev = S.topics[a].rev || {}; S.topics[a].rev[k] = hoje(); salvar(); }
+
+/* ================================================================
+   ROTEAMENTO (#hash)
+   ================================================================ */
+const VIEWS = ["inicio", "questoes", "cafe", "calendario", "mais", "formulas", "erros", "simulado", "analise", "banca", "backup", "quiz"];
+let quiz = null; // sessão em andamento
+function rota() { const h = location.hash.slice(1); return VIEWS.includes(h) ? h : "inicio"; }
+function ir(v) { if (location.hash.slice(1) === v) render(); else location.hash = v; }
+window.addEventListener("hashchange", render);
+function render() {
+  const v = rota(); const app = $("#app");
+  if (v === "quiz" && !quiz) { location.hash = "questoes"; return; }
+  app.innerHTML = (R[v] || R.inicio)();
+  document.querySelectorAll("nav.tabs a").forEach(a => a.classList.toggle("on", a.dataset.v === v || (a.dataset.v === "mais" && ["formulas", "erros", "simulado", "analise", "banca", "backup"].includes(v)) || (a.dataset.v === "questoes" && v === "quiz")));
+  if (v === "quiz") montarQuiz();
+  window.scrollTo(0, 0);
+}
+
+/* ---------- pequenos componentes ---------- */
+function barra(p, cor) { return `<div class="bar"><span style="width:${Math.max(0, Math.min(100, p || 0))}%;${cor ? "background:" + cor : ""}"></span></div>`; }
+function chip(t, cls = "") { return `<span class="chip ${cls}">${esc(t)}</span>`; }
+function diaCal(d) { return CAL.find(c => c.d === d); }
+
+/* ================================================================
+   TELAS
+   ================================================================ */
+const R = {};
+
+R.inicio = () => {
+  const t = hoje(), faltam = difDias(t, PROVA), dc = diaCal(t);
+  const g = statsDisc(), e = statsDisc("esp"), p = statsDisc("por"), m = statsDisc("mat");
+  const meta = dc ? dc.meta : 15, feitas = S.days[t] || 0;
+  const totDias = CAL.filter(c => c.tipo !== "prova").length;
+  const tarefas = CAL.reduce((n, c) => n + Object.values(S.cal[c.d] || {}).filter(Boolean).length, 0);
+  const totTarefas = CAL.reduce((n, c) => n + tarefasDia(c).length, 0);
+  const prog = totTarefas ? Math.round(100 * tarefas / totTarefas) : 0;
+  const dom = dominados(), rev = precisaRevisar();
+  const ult7 = [...Array(7)].map((_, i) => addDias(t, i - 6));
+  const max7 = Math.max(meta, ...ult7.map(d => S.days[d] || 0), 1);
+  return `
+  <section class="hero card">
+    <div class="eyebrow">Contagem regressiva</div>
+    <div class="big">${faltam > 0 ? faltam + (faltam === 1 ? " dia" : " dias") : faltam === 0 ? "É hoje" : "Prova realizada"}</div>
+    <div class="muted">Até a prova — domingo, 06/12/2026 · 40 Específicas + 10 Português + 10 Matemática</div>
+    ${barra(100 * (1 - Math.max(0, faltam) / 26))}
+  </section>
+  <section class="card">
+    <div class="row between"><h2>Hoje · ${fmtData(t)}</h2>${dc ? chip(dc.tipo === "simulado" ? "Simulado" : dc.tipo === "prova" ? "Prova" : dc.tipo === "descanso" ? "Leve" : "Estudo", dc.tipo) : ""}</div>
+    ${dc ? `<p class="plan"><b>Específicas:</b> ${esc(dc.esp)}</p><p class="plan"><b>Português:</b> ${esc(dc.por)} · <b>Matemática:</b> ${esc(dc.mat)}</p>` : `<p class="muted">Fora do período do calendário.</p>`}
+    <div class="row between small"><span>Meta de questões: <b>${feitas} / ${meta}</b></span><span>${feitas >= meta && meta ? "Meta cumprida" : ""}</span></div>
+    ${barra(meta ? 100 * feitas / meta : 0)}
+    <div class="btns">
+      <button class="btn primary" onclick="iniciarCafe()">Café de 10 min</button>
+      ${dc && (dc.ass.length || dc.pass.length || dc.mass.length) ? `<button class="btn" onclick="praticarDia('${dc.d}')">Praticar o tema do dia</button>` : ""}
+    </div>
+  </section>
+  <section class="grid2">
+    <div class="card stat"><div class="muted small">Questões resolvidas</div><div class="num">${g.n}</div></div>
+    <div class="card stat"><div class="muted small">Acerto geral</div><div class="num">${g.p === null ? "—" : g.p + "%"}</div></div>
+    <div class="card stat"><div class="muted small">Sequência de dias</div><div class="num">${sequencia()}</div></div>
+    <div class="card stat"><div class="muted small">Calendário cumprido</div><div class="num">${prog}%</div></div>
+  </section>
+  <section class="card">
+    <h2>Desempenho por disciplina</h2>
+    <p class="muted small">Alvo: 70% em Específicas (28 de 40) e 60% em Português e em Matemática (6 de 10).</p>
+    ${[["Específicas", e, 70, "var(--esp)"], ["Português", p, 60, "var(--por)"], ["Matemática", m, 60, "var(--mat)"]].map(([n, s, alvo, cor]) => `
+      <div class="row between small"><span>${n}</span><span>${s.p === null ? "sem questões ainda" : s.p + "% de " + s.n + (s.p >= alvo ? " · no alvo" : " · alvo " + alvo + "%")}</span></div>${barra(s.p, cor)}`).join("")}
+  </section>
+  <section class="card">
+    <h2>Últimos 7 dias</h2>
+    <div class="spark">${ult7.map(d => `<div class="sb"><span style="height:${Math.round(100 * (S.days[d] || 0) / max7)}%" class="${(S.days[d] || 0) >= meta ? "full" : ""}"></span><small>${d.slice(8)}</small></div>`).join("")}</div>
+    <p class="muted small">Barras escuras = dias em que a meta foi cumprida.</p>
+  </section>
+  <section class="grid2">
+    <div class="card"><h3>Dominados</h3>${dom.length ? dom.map(a => chip(nome(a), "ok")).join(" ") : `<p class="muted small">Ainda nenhum. Um assunto entra aqui com pelo menos 4 respostas, 80% de acerto e acertos em 2 dias diferentes.</p>`}</div>
+    <div class="card"><h3>Precisam de revisão</h3>${rev.length ? rev.map(a => `<button class="chip warn" onclick="praticarAssuntos(['${a}'])">${esc(nome(a))}</button>`).join(" ") : `<p class="muted small">Nada pendente.</p>`}</div>
+  </section>
+  ${revisoesDevidas().length ? `<section class="card"><h3>Revisões espaçadas de hoje</h3>${revisoesDevidas().map(r => `<div class="row between rv"><span>${esc(nome(r.a))} · revisão de ${r.k} dia${r.k > 1 ? "s" : ""}</span><span><button class="btn sm" onclick="praticarAssuntos(['${r.a}'],'${r.a}',${r.k})">Revisar</button></span></div>`).join("")}</section>` : ""}
+  <p class="muted small center" id="sync">${esc(syncMsg)}</p>`;
+};
+
+/* ---------- Questões: filtros ---------- */
+let filtro = { disc: "esp", ass: "", tipo: "", dif: "", modo: "aleatorio", qtd: 10 };
+R.questoes = () => {
+  const disp = disponiveis();
+  const asses = [...new Set(BANK.filter(q => !filtro.disc || q.disc === filtro.disc).map(q => q.ass))];
+  const lista = filtrar();
+  const bloq = BANK.filter(bloqueada).length;
+  return `
+  <section class="card">
+    <h2>Banco de questões</h2>
+    <p class="muted small">${BANK.length} questões: ${BANK.filter(q => !q.simulada).length} originais das provas (gabarito oficial conferido) e ${BANK.filter(q => q.simulada).length} simuladas para itens do edital que nunca caíram.${bloq ? ` ${bloq} estão guardadas para os simulados do calendário e liberam sozinhas na data.` : ""}</p>
+    <label>Disciplina<select onchange="filtro.disc=this.value;filtro.ass='';render()">
+      <option value="">Todas</option>${Object.entries(DISC).map(([k, v]) => `<option value="${k}" ${filtro.disc === k ? "selected" : ""}>${v}</option>`).join("")}</select></label>
+    <label>Assunto<select onchange="filtro.ass=this.value;render()"><option value="">Todos</option>${asses.map(a => `<option value="${a}" ${filtro.ass === a ? "selected" : ""}>${esc(nome(a))} (${BANK.filter(q => q.ass === a).length})</option>`).join("")}</select></label>
+    <div class="grid2">
+      <label>Tipo<select onchange="filtro.tipo=this.value;render()"><option value="">Todos</option><option value="conceito" ${filtro.tipo === "conceito" ? "selected" : ""}>Conceito</option><option value="calculo" ${filtro.tipo === "calculo" ? "selected" : ""}>Cálculo</option><option value="afirmativas" ${filtro.tipo === "afirmativas" ? "selected" : ""}>Afirmativas</option></select></label>
+      <label>Dificuldade<select onchange="filtro.dif=this.value;render()"><option value="">Todas</option><option value="1" ${filtro.dif === "1" ? "selected" : ""}>Fácil</option><option value="2" ${filtro.dif === "2" ? "selected" : ""}>Média</option><option value="3" ${filtro.dif === "3" ? "selected" : ""}>Difícil</option></select></label>
+    </div>
+    <div class="seg">${[["aleatorio", "Aleatórias"], ["ordem", "Na ordem"], ["erradas", "Só erradas"], ["novas", "Não respondidas"]].map(([k, v]) => `<button class="${filtro.modo === k ? "on" : ""}" onclick="filtro.modo='${k}';render()">${v}</button>`).join("")}</div>
+    <label>Quantidade<select onchange="filtro.qtd=+this.value;render()">${[5, 10, 20, 40].map(n => `<option ${filtro.qtd === n ? "selected" : ""}>${n}</option>`).join("")}<option value="999" ${filtro.qtd === 999 ? "selected" : ""}>Todas</option></select></label>
+    <label class="check"><input type="checkbox" ${S.settings.leitura ? "checked" : ""} onchange="S.settings.leitura=this.checked;salvar()"> Antes de responder, identificar o que a banca está cobrando</label>
+    <button class="btn primary full" ${lista.length ? "" : "disabled"} onclick="iniciarTreino(filtrar())">Começar · ${Math.min(lista.length, filtro.qtd)} questões</button>
+    ${lista.length ? "" : `<p class="muted small">Nenhuma questão com esses filtros${filtro.modo === "erradas" ? " (você ainda não errou nenhuma)" : ""}.</p>`}
+  </section>
+  <section class="card"><h3>Questões neste filtro</h3>
+  ${lista.slice(0, 60).map(q => { const a = S.ans[q.id]; return `<div class="qrow"><span class="tag ${q.simulada ? "sim" : ""}">${esc(q.simulada ? "Simulada" : q.orig)}</span><span class="grow">${esc(q.sub)}</span>${a ? chip(a.ult.ok ? "acertou" : "errou", a.ult.ok ? "ok" : "bad") : ""}</div>`; }).join("") || `<p class="muted small">—</p>`}
+  </section>`;
+};
+function filtrar() {
+  let l = disponiveis().filter(q => (!filtro.disc || q.disc === filtro.disc) && (!filtro.ass || q.ass === filtro.ass) && (!filtro.tipo || q.tipo === filtro.tipo) && (!filtro.dif || String(q.dif) === filtro.dif));
+  if (filtro.modo === "erradas") { const e = new Set(erradasIds()); l = l.filter(q => e.has(q.id)); }
+  if (filtro.modo === "novas") l = l.filter(q => !S.ans[q.id]);
+  if (filtro.modo !== "ordem") l = embaralhar(l);
+  return l.slice(0, filtro.qtd);
+}
+function embaralhar(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function praticarAssuntos(lista, revA, revK) {
+  const l = embaralhar(disponiveis().filter(q => lista.includes(q.ass))).slice(0, 10);
+  if (!l.length) { aviso("Ainda não há questões liberadas desse assunto no banco. Use as provas em PDF."); return; }
+  iniciarTreino(l, { revA, revK });
+}
+function praticarDia(d) { const c = diaCal(d); praticarAssuntos([...c.ass, ...c.pass, ...c.mass]); }
+
+/* ---------- Sessão de treino (feedback a cada questão) ---------- */
+function iniciarTreino(lista, extra = {}) {
+  quiz = { modo: "treino", lista: lista.map(q => q.id), i: 0, resp: {}, leitura: {}, fase: S.settings.leitura ? "leitura" : "resposta", acertos: 0, ...extra };
+  ir("quiz");
+}
+function iniciarCafe() {
+  const disp = disponiveis(), dc = diaCal(hoje());
+  const errs = embaralhar(erradasIds().map(id => byId[id]).filter(q => q && !bloqueada(q))).slice(0, 4);
+  const revs = revisoesDevidas().map(r => r.a);
+  const tema = dc ? [...dc.ass, ...dc.pass, ...dc.mass] : [];
+  const pick = (f, n) => embaralhar(disp.filter(f)).slice(0, n);
+  const ids = new Set(errs.map(q => q.id)); const out = [...errs];
+  for (const q of [...pick(q => revs.includes(q.ass), 4), ...pick(q => tema.includes(q.ass), 6), ...pick(q => !S.ans[q.id], 10), ...embaralhar(disp)]) {
+    if (out.length >= 20) break; if (!ids.has(q.id)) { ids.add(q.id); out.push(q); }
+  }
+  quiz = { modo: "cafe", lista: out.map(q => q.id), i: 0, resp: {}, leitura: {}, fase: "leitura", acertos: 0, fim: Date.now() + 10 * 60 * 1000, leituraOk: 0 };
+  ir("quiz");
+}
+
+/* ---------- Simulado (sem gabarito até o fim) ---------- */
+R.simulado = () => `
+  <section class="card">
+    <h2>Simulados</h2>
+    <p class="muted small">No simulado, o gabarito só aparece quando você finalizar. Use a navegação para voltar e marque as questões para revisar.</p>
+    <div class="opt"><b>Rápido · 20 questões, 30 min</b><span class="muted small">12 Específicas, 4 Português, 4 Matemática</span><button class="btn primary" onclick="iniciarSimulado('rapido')">Começar</button></div>
+    <div class="opt"><b>Completo · todas as liberadas, 4 min por questão</b><span class="muted small">Até 40 Específicas, 10 Português e 10 Matemática, como na prova</span><button class="btn" onclick="iniciarSimulado('completo')">Começar</button></div>
+    <div class="opt"><b>Só erradas · retenção</b><span class="muted small">As questões cuja última resposta foi errada, misturadas (Simulado 3 do calendário)</span><button class="btn" onclick="iniciarSimulado('erradas')">Começar</button></div>
+    <p class="muted small">Os simulados 1 e 2 do calendário (14/11 e 22/11) são as provas completas da Petrobras 2018 e da Transpetro 2023 em PDF, feitas no papel em 4 horas.</p>
+  </section>
+  ${S.sims.length ? `<section class="card"><h3>Histórico</h3>${S.sims.slice().reverse().map(s => `<div class="row between small rv"><span>${fmtData(s.d)} · ${esc(s.tipo)}</span><span><b>${s.c}/${s.n}</b> · Esp ${s.por.esp ?? "—"} · Port ${s.por.por ?? "—"} · Mat ${s.por.mat ?? "—"}</span></div>`).join("")}</section>` : ""}`;
+function iniciarSimulado(tipo) {
+  const d = disponiveis(); let l;
+  const pega = (disc, n) => embaralhar(d.filter(q => q.disc === disc && !q.simulada)).slice(0, n);
+  if (tipo === "rapido") l = [...pega("esp", 12), ...pega("por", 4), ...pega("mat", 4)];
+  else if (tipo === "completo") l = [...pega("esp", 40), ...pega("por", 10), ...pega("mat", 10)];
+  else { const e = new Set(erradasIds()); l = embaralhar(d.filter(q => e.has(q.id))); }
+  if (!l.length) { aviso(tipo === "erradas" ? "Você ainda não tem questões erradas. Ótimo sinal, ou ainda é cedo." : "Não há questões liberadas."); return; }
+  const min = tipo === "rapido" ? 30 : Math.max(10, l.length * 4);
+  quiz = { modo: "simulado", tipo, lista: l.map(q => q.id), i: 0, resp: {}, marc: {}, leitura: {}, fim: Date.now() + min * 60000, fase: "resposta" };
+  ir("quiz");
+}
+
+/* ---------- Tela da questão ---------- */
+let tick = null;
+R.quiz = () => `<div id="qz"></div>`;
+function montarQuiz() { clearInterval(tick); if (quiz.fim) tick = setInterval(atualizarRelogio, 1000); desenharQ(); }
+function atualizarRelogio() {
+  const el = $("#clock"); if (!quiz || !quiz.fim) { clearInterval(tick); return; }
+  const s = Math.max(0, Math.round((quiz.fim - Date.now()) / 1000));
+  if (el) el.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+  if (s === 0) { clearInterval(tick); if (quiz.modo === "simulado") finalizarSimulado(); else if (quiz.modo === "cafe" && !quiz.encerrado) { quiz.encerrado = true; if (quiz.fase !== "feedback") resumoSessao(); } }
+}
+function realce(texto, chaves) {
+  let h = esc(texto).replace(/\n/g, "<br>");
+  (chaves || []).forEach(k => { const e = esc(k).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); h = h.replace(new RegExp(e, "i"), m => `<mark>${m}</mark>`); });
+  return h;
+}
+function opcoesLeitura(q) {
+  // 4 opções: o assunto certo + 3 da mesma disciplina
+  const pool = [...new Set(BANK.filter(x => x.disc === q.disc && x.ass !== q.ass).map(x => x.ass))];
+  const ops = embaralhar([q.ass, ...embaralhar(pool).slice(0, 3)]);
+  return ops;
+}
+function desenharQ() {
+  const q = byId[quiz.lista[quiz.i]], box = $("#qz"); if (!q || !box) return;
+  const n = quiz.lista.length, sim = quiz.modo === "simulado", r = quiz.resp[q.id];
+  const topo = `<div class="qtop"><button class="btn sm ghost" onclick="sairQuiz()">Sair</button><span class="muted small">${quiz.modo === "cafe" ? "Café · " : sim ? "Simulado · " : ""}${quiz.i + 1} de ${n}</span>${quiz.fim ? `<span class="clock" id="clock">—</span>` : `<span></span>`}</div>
+    ${barra(100 * (quiz.i + (quiz.fase === "feedback" ? 1 : 0)) / n)}`;
+  const cab = `<div class="row wrap gap">${chip(DISC[q.disc], q.disc)}${q.simulada ? chip("QUESTÃO SIMULADA — ESTILO CESGRANRIO", "sim") : chip(q.orig + " · gabarito oficial", "")}${!sim && quiz.fase !== "leitura" ? chip(nome(q.ass)) : ""}</div>`;
+  const mostrarChaves = quiz.fase === "feedback";
+  const enun = `<div class="enun">${mostrarChaves ? realce(q.enun, q.chaves) : esc(q.enun).replace(/\n/g, "<br>")}</div>`;
+  let corpo = "";
+  if (quiz.fase === "leitura") {
+    if (!quiz.ops || quiz.ops.id !== q.id) quiz.ops = { id: q.id, l: opcoesLeitura(q) };
+    corpo = `<div class="lei"><b>Antes de responder: o que a banca está cobrando?</b><p class="muted small">Leia o comando e procure as palavras-chave. Você não precisa saber a resposta ainda.</p>
+      ${quiz.ops.l.map(a => `<button class="alt" onclick="responderLeitura('${a}')">${esc(nome(a))}</button>`).join("")}
+      <button class="btn sm ghost" onclick="quiz.fase='resposta';desenharQ()">Pular esta etapa</button></div>`;
+  } else {
+    const lido = quiz.leitura[q.id];
+    const fb = quiz.fase === "feedback";
+    corpo = (lido ? `<p class="small ${lido.ok ? "okt" : "badt"}">${lido.ok ? "Leitura certa: é " + esc(nome(q.ass)) + "." : "Leitura: você marcou " + esc(nome(lido.a)) + ". A banca está cobrando " + esc(nome(q.ass)) + "."}</p>` : "")
+      + `<div class="alts">${q.alts.map((t, k) => { const L = "ABCDE"[k]; let cls = ""; if (fb) { if (L === q.gab) cls = "right"; else if (L === r) cls = "wrong"; } else if (L === quiz.sel || (sim && L === r)) cls = "sel";
+        return `<button class="alt ${cls}" ${fb ? "disabled" : ""} onclick="selecionar('${L}')"><b>(${L})</b> ${esc(t)}</button>`; }).join("")}</div>`;
+    if (!fb && !sim) corpo += `<button class="btn primary full" ${quiz.sel ? "" : "disabled"} onclick="confirmar()">Confirmar resposta</button>`;
+    if (sim) corpo += `<div class="row between gap"><button class="btn" ${quiz.i ? "" : "disabled"} onclick="navSim(-1)">Anterior</button><button class="btn ${quiz.marc[q.id] ? "warnb" : ""}" onclick="quiz.marc['${q.id}']=!quiz.marc['${q.id}'];desenharQ()">${quiz.marc[q.id] ? "Marcada" : "Marcar p/ revisar"}</button><button class="btn primary" onclick="navSim(1)">${quiz.i + 1 < n ? "Próxima" : "Revisar e finalizar"}</button></div>
+      <div class="navgrid">${quiz.lista.map((id, k) => `<button class="${k === quiz.i ? "cur" : ""} ${quiz.resp[id] ? "done" : ""} ${quiz.marc[id] ? "mk" : ""}" onclick="quiz.i=${k};desenharQ()">${k + 1}</button>`).join("")}</div>
+      <button class="btn danger full" onclick="pedirFinalizar()">Finalizar simulado</button>`;
+    if (fb) corpo += explicacao(q, r === q.gab) + `<button class="btn primary full" onclick="proxima()">${quiz.i + 1 < n && !quiz.encerrado ? "Próxima questão" : "Ver resultado"}</button>`;
+  }
+  box.innerHTML = `<section class="card qcard">${topo}${cab}${enun}${corpo}</section>`;
+  atualizarRelogio();
+}
+function explicacao(q, ok) {
+  const curto = quiz.modo === "cafe";
+  const blocos = `<div class="exp"><h4>1. O que a banca está cobrando</h4><p>${esc(q.exp.cobra)}</p><h4>2. Como reconhecer</h4><p>${esc(q.exp.reconhecer)}</p><h4>3. Como resolver</h4><p>${esc(q.exp.resolver)}</p><h4>4. Armadilha da banca</h4><p>${esc(q.exp.armadilha)}</p></div>`;
+  return `<div class="fb ${ok ? "ok" : "bad"}"><b>${ok ? "Correto." : "Errado. A resposta é (" + q.gab + ")."}</b><p class="dica">Dica para reconhecer: ${esc(q.dica)}</p></div>
+    ${curto ? `<details><summary>Ver a explicação completa</summary>${blocos}</details>` : blocos}`;
+}
+function responderLeitura(a) { const q = byId[quiz.lista[quiz.i]]; quiz.leitura[q.id] = { a, ok: a === q.ass }; if (a === q.ass) quiz.leituraOk = (quiz.leituraOk || 0) + 1; quiz.fase = "resposta"; quiz.sel = null; desenharQ(); }
+function selecionar(L) { const q = byId[quiz.lista[quiz.i]]; if (quiz.modo === "simulado") { quiz.resp[q.id] = L; desenharQ(); } else { quiz.sel = L; desenharQ(); } }
+function confirmar() { const q = byId[quiz.lista[quiz.i]]; quiz.resp[q.id] = quiz.sel; if (registrar(q, quiz.sel)) quiz.acertos++; quiz.fase = "feedback"; desenharQ(); }
+function proxima() {
+  if (quiz.i + 1 >= quiz.lista.length || quiz.encerrado) { resumoSessao(); return; }
+  quiz.i++; quiz.sel = null; quiz.fase = (quiz.modo === "cafe" || S.settings.leitura) ? "leitura" : "resposta"; desenharQ();
+}
+function navSim(d) { const n = quiz.lista.length; if (quiz.i + d >= n) { pedirFinalizar(); return; } quiz.i = Math.max(0, quiz.i + d); desenharQ(); }
+function pedirFinalizar() {
+  const sem = quiz.lista.filter(id => !quiz.resp[id]).length, mk = quiz.lista.filter(id => quiz.marc[id]).length;
+  dialogo(`Finalizar o simulado?`, `${sem ? sem + " sem resposta. " : ""}${mk ? mk + " marcadas para revisar. " : ""}Na prova, erro não desconta: não deixe nenhuma em branco.`, "Finalizar", finalizarSimulado);
+}
+function finalizarSimulado() {
+  clearInterval(tick); const res = { esp: [0, 0], por: [0, 0], mat: [0, 0] }, fracos = {};
+  for (const id of quiz.lista) { const q = byId[id], L = quiz.resp[id]; res[q.disc][1]++; if (L) { const ok = registrar(q, L, true); if (ok) res[q.disc][0]++; else fracos[q.ass] = (fracos[q.ass] || 0) + 1; } else fracos[q.ass] = (fracos[q.ass] || 0) + 1; }
+  const c = res.esp[0] + res.por[0] + res.mat[0], n = quiz.lista.length;
+  const pct = k => res[k][1] ? Math.round(100 * res[k][0] / res[k][1]) + "%" : null;
+  S.sims.push({ d: hoje(), tipo: { rapido: "Rápido", completo: "Completo", erradas: "Só erradas" }[quiz.tipo], c, n, por: { esp: pct("esp"), por: pct("por"), mat: pct("mat") } }); salvar();
+  quiz.fase = "resultado"; quiz.res = { res, fracos, c, n };
+  const box = $("#qz");
+  box.innerHTML = `<section class="card"><h2>Resultado do simulado</h2><div class="big">${c} / ${n}</div>
+    ${["esp", "por", "mat"].filter(k => res[k][1]).map(k => `<div class="row between small"><span>${DISC[k]}</span><span>${res[k][0]} de ${res[k][1]} · ${pct(k)}</span></div>${barra(100 * res[k][0] / res[k][1], "var(--" + k + ")")}`).join("")}
+    <h3>Assuntos que mais precisam de atenção</h3>${Object.entries(fracos).sort((a, b) => b[1] - a[1]).map(([a, k]) => `<button class="chip warn" onclick="praticarAssuntos(['${a}'])">${esc(nome(a))} · ${k}</button>`).join(" ") || `<p class="muted small">Nenhum erro.</p>`}
+    <h3>Gabarito comentado</h3>${quiz.lista.map((id, k) => { const q = byId[id], L = quiz.resp[id], ok = L === q.gab; return `<details class="rev"><summary><span class="${ok ? "okt" : "badt"}">${k + 1}. ${ok ? "Certa" : L ? "Errada" : "Em branco"}</span> · ${esc(q.orig)} · ${esc(nome(q.ass))}</summary><div class="enun">${esc(q.enun).replace(/\n/g, "<br>")}</div><p class="small">Sua resposta: <b>${L || "—"}</b> · Correta: <b>${q.gab}</b> — ${esc(q.alts["ABCDE".indexOf(q.gab)])}</p>${explicacaoPura(q)}</details>`; }).join("")}
+    <button class="btn primary full" onclick="quiz=null;ir('simulado')">Voltar aos simulados</button></section>`;
+}
+function explicacaoPura(q) { return `<div class="exp"><h4>O que cobra</h4><p>${esc(q.exp.cobra)}</p><h4>Como reconhecer</h4><p>${esc(q.exp.reconhecer)}</p><h4>Como resolver</h4><p>${esc(q.exp.resolver)}</p><h4>Armadilha</h4><p>${esc(q.exp.armadilha)}</p></div>`; }
+function resumoSessao() {
+  clearInterval(tick); const feitas = Object.keys(quiz.resp).length, box = $("#qz"); if (!box) return;
+  if (quiz.revA) marcarRevisao(quiz.revA, quiz.revK);
+  const lidas = Object.keys(quiz.leitura).length;
+  box.innerHTML = `<section class="card"><h2>${quiz.modo === "cafe" ? "Café concluído" : "Sessão concluída"}</h2>
+    <div class="big">${quiz.acertos} / ${feitas}</div><p class="muted">acertos nas questões respondidas${quiz.encerrado ? " (os 10 minutos acabaram)" : ""}.</p>
+    ${lidas ? `<p>Leitura da banca: identificou o assunto em <b>${quiz.leituraOk || 0} de ${lidas}</b>. É essa habilidade que faz você reconhecer a questão com outra roupa.</p>` : ""}
+    ${feitas - quiz.acertos ? `<p class="small">As ${feitas - quiz.acertos} erradas foram para o Caderno de erros e voltam no próximo Café.</p>` : ""}
+    <div class="btns"><button class="btn primary" onclick="quiz=null;ir('inicio')">Início</button><button class="btn" onclick="quiz=null;ir('erros')">Caderno de erros</button></div></section>`;
+}
+function sairQuiz() { if (quiz && quiz.modo === "simulado" && quiz.fase !== "resultado") { dialogo("Sair do simulado?", "As respostas deste simulado não serão salvas.", "Sair", () => { clearInterval(tick); quiz = null; ir("simulado"); }); return; } if (quiz && quiz.modo !== "simulado" && Object.keys(quiz.resp).length && quiz.fase !== "resultado") { resumoSessao(); return; } clearInterval(tick); quiz = null; ir("inicio"); }
+
+/* ---------- Calendário ---------- */
+function tarefasDia(c) {
+  if (c.tipo === "prova") return [];
+  const t = [["esp", "Específicas: " + c.esp]];
+  if (c.por !== "—") t.push(["por", "Português: " + c.por]);
+  if (c.mat !== "—") t.push(["mat", "Matemática: " + c.mat]);
+  if (c.tipo === "estudo") t.push(["rev", "10 min de revisão sem consulta (ontem e 7 dias atrás)"]);
+  return t;
+}
+R.calendario = () => {
+  const t = hoje();
+  return `<section class="card"><h2>Calendário · 11/11 a 06/12</h2><p class="muted small">Tempo de estudo: 65% Específicas, 20% Português e 15% Matemática. As revisões espaçadas (1, 3 e 7 dias depois do primeiro estudo de um assunto) aparecem no dia em que vencem.</p></section>
+  ${CAL.map(c => {
+    const tasks = tarefasDia(c), st = S.cal[c.d] || {}, feitas = tasks.filter(([k]) => st[k]).length;
+    const revs = Object.entries(S.topics).flatMap(([a, i]) => [1, 3, 7].filter(k => addDias(i.first, k) === c.d).map(k => ({ a, k, done: (i.rev || {})[k] })));
+    const q = S.days[c.d] || 0;
+    return `<section class="card day ${c.d === t ? "today" : ""} ${c.d < t ? "past" : ""} ${c.tipo}" id="d${c.d}">
+      <div class="row between"><b>${fmtData(c.d)}${c.d === t ? " · hoje" : ""}</b><span class="small muted">${tasks.length ? feitas + "/" + tasks.length + " feitas" : ""}${c.meta ? " · " + q + "/" + c.meta + " questões" : ""}</span></div>
+      ${c.tipo === "prova" ? `<p><b>${esc(c.esp)}</b></p>` : tasks.map(([k, txt]) => `<label class="check"><input type="checkbox" ${st[k] ? "checked" : ""} onchange="marcarTarefa('${c.d}','${k}',this.checked)"> ${esc(txt)}</label>`).join("")}
+      ${revs.length ? `<div class="revs">${revs.map(r => `<span class="chip ${r.done ? "ok" : "warn"}">Revisar ${esc(nome(r.a))} (${r.k}d)${r.done ? " ✓" : ""}</span>`).join(" ")}</div>` : ""}
+      ${(c.ass.length || c.pass.length || c.mass.length) ? `<button class="btn sm" onclick="praticarDia('${c.d}')">Praticar questões do dia</button>` : ""}
+    </section>`;
+  }).join("")}`;
+};
+function marcarTarefa(d, k, v) { (S.cal[d] = S.cal[d] || {})[k] = v; salvar(); }
+
+/* ---------- Mais ---------- */
+R.mais = () => `<section class="card"><h2>Mais</h2>
+  ${[["formulas", "Caderno de fórmulas", FORMULAS.length + " fórmulas com exemplo e erros comuns"], ["erros", "Caderno de erros", erradasIds().length + " questões para refazer"], ["simulado", "Simulados", "Cronometrados, com gabarito no fim"], ["analise", "Análise das provas", "275 questões de 5 provas classificadas"], ["banca", "Como a banca pergunta", "Comandos da Cesgranrio e como ler cada um"], ["backup", "Backup e configurações", "Exportar, importar e liberar provas"]].map(([v, t, s]) => `<a class="menu" href="#${v}"><b>${t}</b><span class="muted small">${s}</span></a>`).join("")}
+  </section>`;
+
+/* ---------- Fórmulas ---------- */
+let fDisc = "esp";
+R.formulas = () => `<section class="card"><h2>Caderno de fórmulas</h2>
+  <div class="seg">${[["esp", "Específicas"], ["mat", "Matemática"]].map(([k, v]) => `<button class="${fDisc === k ? "on" : ""}" onclick="fDisc='${k}';render()">${v}</button>`).join("")}</div></section>
+  ${[...new Set(FORMULAS.filter(f => f.disc === fDisc).map(f => f.grupo))].map(g => `<h3 class="sec">${esc(g)}</h3>${FORMULAS.filter(f => f.disc === fDisc && f.grupo === g).map(f => `
+    <details class="card fcard"><summary><b>${esc(f.nome)}</b><code>${esc(f.f)}</code></summary>
+      <dl><dt>Variáveis</dt><dd>${esc(f.vars)}</dd><dt>Unidade</dt><dd>${esc(f.un)}</dd><dt>Quando usar</dt><dd>${esc(f.quando)}</dd><dt>Exemplo resolvido</dt><dd>${esc(f.ex)}</dd><dt>Erros comuns</dt><dd>${esc(f.erros)}</dd><dt>Atalho</dt><dd>${esc(f.atalho)}</dd><dt>Onde caiu</dt><dd>${esc(f.onde)}</dd></dl>
+    </details>`).join("")}`).join("")}`;
+
+/* ---------- Caderno de erros ---------- */
+R.erros = () => {
+  const grupos = {}; S.errs.forEach(e => { const g = grupos[e.id] || (grupos[e.id] = { n: 0, ult: e }); g.n++; g.ult = e; });
+  const ids = Object.keys(grupos).filter(id => byId[id]).sort((a, b) => grupos[b].ult.d.localeCompare(grupos[a].ult.d));
+  const porAss = {}; ids.forEach(id => { const a = byId[id].ass; porAss[a] = (porAss[a] || 0) + grupos[id].n; });
+  const ab = erradasIds();
+  return `<section class="card"><h2>Caderno de erros</h2>
+    <p class="muted small">Toda resposta errada entra aqui sozinha. Uma questão sai da lista de "refazer" quando você acerta na próxima tentativa, mas o histórico fica.</p>
+    <button class="btn primary full" ${ab.length ? "" : "disabled"} onclick="iniciarTreino(embaralhar(erradasIds().map(i=>byId[i])))">Refazer as ${ab.length} erradas</button></section>
+    ${Object.keys(porAss).length ? `<section class="card"><h3>Assuntos com mais erros</h3>${Object.entries(porAss).sort((a, b) => b[1] - a[1]).map(([a, n]) => `<div class="row between small rv"><span>${esc(nome(a))}</span><span><b>${n}</b> erro${n > 1 ? "s" : ""} <button class="btn sm" onclick="praticarAssuntos(['${a}'])">Treinar</button></span></div>`).join("")}</section>` : ""}
+    ${ids.map(id => { const q = byId[id], g = grupos[id], ok = S.ans[id] && S.ans[id].ult.ok; return `<details class="card"><summary><span class="tag">${esc(q.orig)}</span> ${esc(nome(q.ass))} · errou ${g.n}x · ${fmtData(g.ult.d)} ${ok ? chip("já acertou depois", "ok") : ""}</summary>
+      <p class="small muted">${DISC[q.disc]} · ${esc(q.sub)}</p><div class="enun">${esc(q.enun).replace(/\n/g, "<br>")}</div>
+      <p class="small">Você marcou <b>(${g.ult.ch})</b> ${esc(q.alts["ABCDE".indexOf(g.ult.ch)] || "")}</p><p class="small okt">Correta <b>(${q.gab})</b> ${esc(q.alts["ABCDE".indexOf(q.gab)])}</p>${explicacaoPura(q)}</details>`; }).join("") || `<section class="card"><p class="muted">Nenhum erro registrado ainda.</p></section>`}`;
+};
+
+/* ---------- Análise das provas ---------- */
+let aF = { disc: "esp", ass: "", classe: "", tipo: "", rep: "" };
+R.analise = () => {
+  const rows = PROVAS_ROWS.filter(r => (!aF.disc || r[2] === aF.disc) && (!aF.ass || r[3] === aF.ass) && (!aF.classe || (ASSUNTO_CLASSE[r[3]] || [])[0] === aF.classe) && (!aF.tipo || r[5] === aF.tipo) && (!aF.rep || r[7] >= 2));
+  const asses = Object.keys(ASSUNTO_CLASSE).filter(a => PROVAS_ROWS.some(r => r[3] === a && (!aF.disc || r[2] === aF.disc)));
+  const resumo = {}; rows.forEach(r => resumo[r[3]] = (resumo[r[3]] || 0) + 1);
+  return `<section class="card"><h2>Análise das provas</h2>
+    <p class="muted small">275 questões classificadas: Transpetro 2008 (15 específicas), Petrobras 2011, 2012 e 2018 e Transpetro 2023. Classes: A = caiu nas 5 provas; B = em 4; C = em 3; D = em 2; E = em 1. Frequência passada não garante cobrança em 2026.</p>
+    <div class="grid2">
+      <label>Disciplina<select onchange="aF.disc=this.value;aF.ass='';render()"><option value="">Todas</option>${Object.entries(DISC).map(([k, v]) => `<option value="${k}" ${aF.disc === k ? "selected" : ""}>${v}</option>`).join("")}</select></label>
+      <label>Assunto<select onchange="aF.ass=this.value;render()"><option value="">Todos</option>${asses.map(a => `<option value="${a}" ${aF.ass === a ? "selected" : ""}>${esc(nome(a))}</option>`).join("")}</select></label>
+      <label>Recorrência<select onchange="aF.classe=this.value;render()"><option value="">Todas</option>${["A", "B", "C", "D", "E"].map(c => `<option ${aF.classe === c ? "selected" : ""}>${c}</option>`).join("")}</select></label>
+      <label>Tipo<select onchange="aF.tipo=this.value;render()"><option value="">Todos</option>${["conceito", "calculo", "figura", "afirmativas"].map(c => `<option value="${c}" ${aF.tipo === c ? "selected" : ""}>${c === "calculo" ? "cálculo" : c}</option>`).join("")}</select></label>
+    </div>
+    <label class="check"><input type="checkbox" ${aF.rep ? "checked" : ""} onchange="aF.rep=this.checked?'1':'';render()"> Só Específicas que se repetem em 2 ou mais provas</label>
+    <p class="small"><b>${rows.length}</b> questões no filtro.</p></section>
+    <section class="card"><h3>Por assunto</h3>${Object.entries(resumo).sort((a, b) => b[1] - a[1]).map(([a, n]) => { const c = ASSUNTO_CLASSE[a] || []; return `<div class="row between small rv"><span>${esc(nome(a))} ${c[0] ? chip("classe " + c[0]) : ""}</span><span>${n} · em ${c[1] || "?"} de 5 provas</span></div>`; }).join("")}</section>
+    <section class="card"><h3>Questões</h3><div class="tbl">${rows.slice(0, 200).map(r => { const id = r[0] + "-" + String(r[1]).padStart(2, "0"); const tem = byId[id] && !bloqueada(byId[id]); return `<div class="trow"><span class="tag">${r[0]} Q${r[1]}</span><span class="grow"><b>${esc(nome(r[3]))}</b> · ${esc(r[4])}${r[8] && r[8] !== "—" ? `<br><span class="muted small">Pegadinha: ${esc(r[8])}</span>` : ""}</span><span class="small">${r[5] === "calculo" ? "cálculo" : esc(r[5])}<br>gab. ${r[6]}${r[7] >= 2 ? "<br>repete " + r[7] + " provas" : ""}</span>${tem ? `<button class="btn sm" onclick="iniciarTreino([byId['${id}']])">Resolver</button>` : ""}</div>`; }).join("")}${rows.length > 200 ? `<p class="muted small">Mostrando 200 de ${rows.length}. Use os filtros.</p>` : ""}</div></section>`;
+};
+
+/* ---------- Como a banca pergunta ---------- */
+R.banca = () => `<section class="card"><h2>Como a banca pergunta</h2><p class="muted small">Padrões dos comandos que se repetem nas provas da Cesgranrio analisadas. Treine com o Café: a etapa "o que a banca está cobrando" exercita exatamente isso.</p></section>
+  ${BANCA.map(b => `<section class="card"><h3>${esc(b.t)}</h3><p>${esc(b.o)}</p><p class="muted small">Exemplo real: ${esc(b.ex)}</p></section>`).join("")}`;
+
+/* ---------- Backup ---------- */
+let downloadsApi = null;
+R.backup = () => `<section class="card"><h2>Backup e configurações</h2>
+  <p class="small" id="sync">${esc(syncMsg)}</p>
+  <h3>Exportar progresso</h3><p class="muted small">Gera um arquivo (ou um texto) com todas as respostas, erros, calendário e simulados.</p>
+  <div class="btns">${downloadsApi ? `<button class="btn" onclick="exportarArquivo()">Baixar arquivo .json</button>` : ""}<button class="btn" onclick="exportarTexto()">Mostrar texto para copiar</button></div>
+  <textarea id="exp" class="hide" readonly></textarea><button id="cpy" class="btn sm hide" onclick="copiar()">Copiar</button>
+  <h3>Importar progresso</h3><input type="file" accept=".json,application/json" onchange="importarArquivo(this.files[0])"><p class="muted small">Ou cole o texto exportado:</p><textarea id="imp" placeholder="Cole aqui o texto exportado"></textarea><button class="btn" onclick="importarTexto()">Importar texto</button>
+  <h3>Provas guardadas para os simulados</h3><p class="muted small">As questões da Petrobras 2018 liberam em 14/11 e as da Transpetro 2023 em 22/11, depois dos simulados no papel. Libere antes só se já fez ou desistiu desses simulados.</p>
+  <label class="check"><input type="checkbox" ${S.settings.unlock ? "checked" : ""} onchange="S.settings.unlock=this.checked;salvar()"> Liberar todas as questões agora</label>
+  <h3>Apagar tudo</h3><button class="btn danger" onclick="dialogo('Apagar todo o progresso?','Respostas, erros, calendário e simulados serão apagados deste aparelho e da sua conta. Exporte antes se quiser guardar.','Apagar',()=>{S=novoEstado();salvar();ir('inicio')})">Apagar progresso</button>
+  </section>`;
+function exportarTexto() { const t = $("#exp"); t.value = JSON.stringify(S); t.classList.remove("hide"); $("#cpy").classList.remove("hide"); t.select(); }
+async function copiar() { try { await navigator.clipboard.writeText($("#exp").value); aviso("Copiado."); } catch (e) { $("#exp").select(); aviso("Selecione o texto e copie manualmente."); } }
+async function exportarArquivo() { try { await downloadsApi.save({ filename: "progresso-instrumentacao-" + hoje() + ".json", data: JSON.stringify(S, null, 1) }); } catch (e) { aviso("O download não foi concluído. Use 'Mostrar texto para copiar'."); } }
+function importar(txt) { try { const o = JSON.parse(txt); if (!o || o.v !== 1 || !o.ans) throw 0; S = Object.assign(novoEstado(), o); salvar(); aviso("Progresso importado."); ir("inicio"); } catch (e) { aviso("Esse texto não é um backup válido deste app."); } }
+function importarTexto() { importar($("#imp").value.trim()); }
+function importarArquivo(f) { if (!f) return; const r = new FileReader(); r.onload = () => importar(r.result); r.readAsText(f); }
+
+/* ---------- avisos e diálogos dentro da página ---------- */
+function aviso(t) { const el = $("#toast"); el.textContent = t; el.classList.add("show"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("show"), 3200); }
+function dialogo(tit, txt, ok, fn) {
+  const d = $("#dlg"); d.innerHTML = `<div class="dbox"><h3>${esc(tit)}</h3><p>${esc(txt)}</p><div class="btns"><button class="btn" id="dno">Cancelar</button><button class="btn primary" id="dok">${esc(ok)}</button></div></div>`;
+  d.classList.add("show"); $("#dno").onclick = () => d.classList.remove("show"); $("#dok").onclick = () => { d.classList.remove("show"); fn(); };
+}
+
+/* ---------- início ---------- */
+carregarLocal(); render(); conectarConta();
+(async () => { try { if (window.claude && claude.use) { downloadsApi = await claude.use("downloads"); if (rota() === "backup") render(); } } catch (e) {} })();
+
+/* ---------- Café: tela de entrada (quando aberto pelo link #cafe) ---------- */
+R.cafe = () => `<section class="card"><h2>Café de 10 minutos</h2>
+  <p>Uma rodada rápida para a hora do café: até 20 questões em 10 minutos.</p>
+  <ol class="small"><li>Primeiro voltam as questões que você errou.</li><li>Depois, os assuntos com revisão vencendo (1, 3 e 7 dias).</li><li>Depois, o tema do dia no calendário e questões que você ainda não respondeu.</li></ol>
+  <p class="small">Em cada questão, antes de responder, você diz <b>o que a banca está cobrando</b>. É o treino de leitura do enunciado.</p>
+  <button class="btn primary full" onclick="iniciarCafe()">Começar agora</button></section>`;
+
+</script>
+</body>
+</html>

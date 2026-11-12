@@ -1,0 +1,5 @@
+# Gera index.html a partir de src/ (rode: python3 build.py)
+t=open('src/template.html').read()
+data="\n".join(open('src/'+f).read() for f in ['bank.js','analise.js','content.js','app.js'])
+open('index.html','w').write(t.replace('/*__DATA__*/',data))
+print('index.html gerado')
